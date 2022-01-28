@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_styles %}
+{% endblock %}
+{% block title %}SPIU{% endblock %}
+{% block extra_scripts %}
+{% endblock extra_scripts %}
+{% block main_content %}
+    <style>
+        form {
+            padding: 20px 22px;
+            background: #fff9fc !important
+
+        }
+
+        p {
+            color: red
+        }
+
+        .container {
+            background: none !important;
+        }
+    </style>
+    <div class="container" style="margin-top: 30px;margin-bottom: 40px">
+        <div class="row">
+            <form method="post" action="{% url "disclaimer" %}">
+                {% csrf_token %}
+                <div class="row" align="center">
+                    <div class="col-md-12">
+                        <img class="img-responsive" id="img_logo"
+                             src={% static "assets/img/epd.jpg" %} height="200px"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <p style="font-size:14pt;text-align: justify; font-family: 'Cambria','times roman',serif;">The
+                        information contained in this website is for general information purposes only. While we
+                        endeavour to keep the
+                        information up to date and correct, we make no representations or warranties of any kind,
+                        express or implied, about the completeness, accuracy, reliability, suitability or availability
+                        with respect to the website or the information, products, services, or related graphics
+                        contained on the website for any purpose. Any reliance you place on such information is
+                        therefore strictly at your own risk. </p>
+                    <p style="font-size:14pt;text-align: justify; font-family: 'Cambria','times roman',serif;">
+                        So, this tool is just for visualization, errors and omissions can be expected, so for
+                        exact status and suitability of your new site please contact with your respective district
+                        office at address mention on this link <a
+                            href="https://epd.punjab.gov.pk/district_field_offices">https://epd.punjab.gov.pk/district_field_offices</a>
+                        or in Environment Protection Department Head Quarter at this address <a
+                            href="https://epd.punjab.gov.pk/epa_directorate">https://epd.punjab.gov.pk/epa_directorate</a>
+                    </p>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="chk_disclaimer_agreed" id="chk_disclaimer_agreed">
+                            <label class="form-check-label" for="chk_disclaimer_agreed">I agree to all above mention text</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary col-md-12 ">Accept this</button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="next" value="{{ next }}"/>
+                <div class="checkbox"></div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

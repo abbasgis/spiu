@@ -1,0 +1,328 @@
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SPIU EPD, Punjab</title>
+    <link rel="shortcut icon" href="%PUBLIC_URL%/static/assets/img/logo/gop.png"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link href="{% static "spiu_assets/css/ferrp.css" %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-custom navbar-fixed-top">
+    {#    <div class="container-fluid">#}
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+            <i class="fa fa-bars fa-2x"></i>
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="#"><img src="{% static "spiu_assets/img/logo/gop.png" %}" height="50px"></a>
+        <a href="https://epd.punjab.gov.pk/" target="_blank"><img src="{% static "assets/img/epd.jpg" %}"
+                                                                  height="50px"></a>
+
+    </div>
+
+    {#        {{--<div class="collapse navbar-right navbar-collapse navbar-main-collapse">--}}#}
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+            <li class="hidden">
+                <a href="#page-top"></a>
+            </li>
+            <li>
+                <a class="page-scroll" href="#about">WHO WE ARE</a>
+            </li>
+            <li>
+                <a class="page-scroll" href="#departments">Departments</a>
+            </li>
+            <li>
+                <a class="dropdown-toggle a-div" role=button data-toggle="dropdown">Services
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{% url "home" %}"
+                           target="_blank">Spatial Efficient Decision Making (SEDM)</a></li>
+                </ul>
+
+            </li>
+            <li>
+                <a class="dropdown-toggle a-div" role=button data-toggle="dropdown">Advertisment
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{% static "spiu_assets/docs/Job details EPD_01_07_2020.pdf" %}"
+                           target="_blank">SPIU Jobs</a></li>
+                </ul>
+
+            </li>
+            <li>
+                <a class="page-scroll" href="#contact">Contact</a>
+            </li>
+
+        </ul>
+
+    </div>
+    {#    </div>#}
+</nav>
+
+<!-- Intro Header -->
+<header class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="col-md-7">
+                <h3 class="brand-heading"><span class="color">SP&IU,PGDP <br/>EPD PUNJAB</span></h3>
+                <p class="intro-text1">Strategic Planning and Implementation Unit (SPIU) <br/>
+                    Punjab Green Development Program (PGDP)<br/>
+                    Environment Protection Department, Punjab
+                </p>
+                <p class="intro-text" font-family="Metrophobic" , Arial, serif;>Punjab Green Development Program is a
+                    World Bank funded program of worth US$ 273 Million. The share of World Bank and
+                    Government of the Punjab is US$ 200 Million and US$ 73 Million
+                    respectively. The key objectives of PGDP are (a) Strengthening
+                    Environmental Governance and (b) Promoting Green Investments.
+                    The Implementing Agencies of this program are Environment
+                    Department, Industries Department, Energy Department,
+                    Transport Department, Finance Department and P&D
+                    Department.</p>
+            </div>
+            <div class="col-md-5">
+                <ul class="list-inline lead">
+                    <li>
+                        <a href="#about" class="btn btn-primary btn-lg page-scroll"><i class="fa fa-chevron-down"></i>
+                            WHO WE ARE</a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="btn btn-default btn-lg page-scroll"><i class="fa fa-chevron-down"></i>
+                            CONTACT US</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- News and Alerts -->
+<!--<section id="countdown" class="container-fluid text-center">-->
+<!--<h2 class="headerline">News and Alerts</h2>-->
+<!--<ul>-->
+<!--<li align="justify">Progress review meeting held on 19.07.2016 (Tuesday) at 02:00 PM. under the Chairmanship of Secretary, P&D Department in the Commitee Room # 1, regardding progress review / implementation status of subject projects.</li>-->
+<!--</ul>-->
+<!--&lt;!&ndash;<a href="https://wrapbootstrap.com/theme/lovehub-multipurpose-non-profit-theme-WB0T1J69J" class="btn btn-primary btn-lg">Love Hub Pro Version!</a>&ndash;&gt;-->
+<!--</section>-->
+
+<!-- About Section -->
+<section id="about" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 split-padding3">
+            <h2 class="headerline">WHO WE ARE</h2>
+            <p style="text-align: justify">The SPIU at the EPD will have overall responsibility for monitoring and reporting on the Program’s
+                results. It will conduct regular M&E reporting on progress in each of the results areas, including the
+                collection of output milestones for intermediate indicators
+                and DLIs. A private firm will be competitively recruited by GoPunjab to conduct independent verification
+                of achievement of the different targets set under each DLI.</p>
+
+            <p style="text-align: justify">The SPIU will support the EPD, the Project Coordination Unit, and the PSC to monitor overall Program
+                implementation, including
+                the application of E&S safeguard measures according to domestic requirements. Each implementing
+                agency will use its existing institutional set-up to monitor the implementation of its respective
+                Program activities. The SPIU will regularly collect M&E information from the implementing agencies and
+                compile
+                Program-level M&E reports for review by the Program Coordination Unit, the PSC, and the World Bank.</p>
+
+            <p style="text-align: justify">The SPIU at the EPD will be responsible for preparing programlevel annual consolidated financial
+                statements, which will be audited by the Department of the Auditor General of Pakistan. Audit reports
+                will be submitted to the World Bank within six months after the close
+                of each financial year.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Departments Section -->
+<section id="departments" class="container-fluid text-center">
+
+    <div class="row">
+        <h2 class="headerline">Our Departments</h2><br>
+        <div class="panel panel-default col-lg-3 col-md-6">
+            <div class="panel-heading" style="min-height: 70px; max-height: 70px"><h4 class="headerline">Environment
+                Protection Department, Punjab</h4></div>
+            <div class="panel-body" style="min-height: 550px; max-height: 550px;overflow-y: auto;">
+                <p><a href="https://epd.punjab.gov.pk/" target="_blank">
+                    <img src="{% static "assets/img/epd.jpg" %}" width="200" height="200"
+                         class="img-responsive center-block"
+                         alt=""></a></p>
+                <ul align="justify">EPD is an implementation agency for the following DLI:
+                    <li> DLI-1: Improving EPD Capacity.</li>
+                    <li> DLI-2: Air and Water Quality Monitoring.</li>
+                    <li> DLI-3: Disclosure of Environmental Information and Citizen Engagement.</li>
+                    <li> DLI-4: Sound Management of Plastics.</li>
+                    <li> DLI-8: Mobilization of Sustainable Green Financing</li>
+                    <li> For DLI-8, Environment Department along Finance Department will act as implementing agency</li>
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <ul class="list-inline lead">
+                    <li><a href="#" target="_blank"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="https://www.facebook.com/ferrp.official" target="_blank"><span class="fa-stack"><i
+                            class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="https://plus.google.com/collection/YSQksB" target="_blank"><span class="fa-stack"><i
+                            class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-google-plus fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="mailto:pcuferrp@gmail.com"><span class="fa-stack"><i
+                            class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default col-lg-3 col-md-6">
+            <div class="panel-heading" style="min-height: 70px; max-height: 70px"><h4 class="headerline">Energy
+                Department, Government of Punjab</h4></div>
+            <div class="panel-body" style="min-height: 550px; max-height: 550px;overflow-y: auto;">
+                <p><a href="https://energy.punjab.gov.pk/" target="_blank">
+                    <img src="{% static "spiu_assets/img/logo/gop.png" %}" width="160" height="200"
+                         class="img-responsive center-block"
+                         alt=""></a>
+                </p>
+                <ul align="justify">Energy Department is an implementation agency. Their tasks include:
+                    <li> DLI-5: Energy Efficiency Investments in Public Institutions</li>
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <ul class="list-inline lead">
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-google-plus fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="mailto:"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default col-lg-3 col-md-6">
+            <div class="panel-heading" style="min-height: 70px; max-height: 70px"><h4 class="headerline">Transport
+                Department,
+                Government of Punjab</h4></div>
+            <div class="panel-body" style="min-height: 550px; max-height: 550px;overflow-y: auto;">
+                <p><a href="https://transport.punjab.gov.pk/" target="_blank">
+                    <img src="{% static "spiu_assets/img/logo/gop.png" %}" width="160" height="200"
+                         class="img-responsive center-block"
+                         alt=""></a></p>
+                <ul align="justify">Transport Department is an implementation agency. Their tasks include:
+                    <li> DLI-6: Vehicle Compliance with Emission Standards</li>
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <ul class="list-inline lead">
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-google-plus fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="mailto:"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default col-lg-3 col-md-6">
+            <div class="panel-heading" style="min-height: 70px; max-height: 70px"><h4 class="headerline">Industries
+                Department GOVERNMENT OF PUNJAB</h4></div>
+            <div class="panel-body" style="min-height: 550px; max-height: 550px;overflow-y: auto;">
+                <p><a href="https://icid.punjab.gov.pk/" target="_blank">
+                    <img src="{% static "spiu_assets/img/logo/industry.webp" %}" width="130" height="200"
+                         class="img-responsive center-block"
+                         alt=""></a>
+                </p>
+                <ul align="justify">Industries Department is an implementation agency. Their tasks include:
+                    <li>DLI-7: Green Investments by Polluting Industries.</li>
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <ul class="list-inline lead">
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-google-plus fa-stack-1x fa-inverse"></i></span></a></li>
+                    <li><a href="mailto:"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                            class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="container-fluid text-center">
+    <div class="overlay"></div>
+    <div class="col-lg-6 col-lg-offset-3">
+        <h2 class="headerline">Contact Us</h2>
+        <p>SP&IU, Environment Protection Department, Lahore</p>
+        <h3><i class="fa fa-phone"></i> +9242-36313161</h3>
+        <ul class="list-inline lead">
+            <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                    class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a></li>
+            <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                    class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
+            <li><a href="#"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                    class="fa fa-google-plus fa-stack-1x fa-inverse"></i></span></a></li>
+            <li><a href="mailto:"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i
+                    class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></a></li>
+        </ul>
+        <p> 5th Floor Building # 2, Aiwan-e-Iqbal Complex، Egerton Rd, Garhi Shahu, Lahore, Punjab 54000</p><br/>
+        <i class="fa fa-map-marker"></i>
+        <a target="_blank"
+           href="https://goo.gl/maps/Z9e2MMtrXsxmPMRu8">
+            Site Map</a>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13598.665268054598!2d74.330383!3d31.560771!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x63df11461db81e7b!2sAiwan-e-Iqbal%20Complex!5e0!3m2!1sen!2s!4v1640160470638!5m2!1sen!2s"
+                width="600" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <!--<p class="text-muted">Copyright &copy; Your Website 2015</p>-->
+    </div>
+</section>
+
+<!-- jQuery -->
+{#<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>#}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+{#<!-- Plugin JavaScript -->#}
+<script src="{% static "spiu_assets/js/jquery.easing.min.js" %}"></script>
+<script src="{% static "spiu_assets/js/jquery.countdown.min.js" %}"></script>
+<script src="{% static "spiu_assets/js/smoothscroll.js" %}"></script>
+
+{#<!-- Header Background Slider -->#}
+<script src="{% static "spiu_assets/js/jquery.backstretch.min.js" %}"></script>
+<script type="text/javascript">
+    $(".intro").backstretch([
+        "{% static "spiu_assets/img/1.jpg" %}"
+        , "{% static "spiu_assets/img/2.jpg" %}"
+        , "{% static "spiu_assets/img/3.jpg" %}"
+        , "{% static "spiu_assets/img/4.jpg" %}"
+
+    ], {duration: 4000, fade: 1000, centeredX: true, centeredY: true});
+</script>
+
+<!-- Custom Theme JavaScript -->
+<script src="{% static "spiu_assets/js/ferrp.js" %}"></script>
+</body>
+</html>

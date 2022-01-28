@@ -1,0 +1,78 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% load i18n %}
+{% block blockbots %}
+    {{ block.super }}
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive_rtl.css" %}"/>
+{% endblock %}
+{% block title %}Administration {% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static "external/bootstrap-3.3.7/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "../../wasa_gis/static/assets/css/webgis.css" %}">
+    <style>
+        #header {
+            background-color: rgb(12, 12, 12) !important;
+            margin-top: -1.5%;
+            height: 40px;
+        }
+
+        td, th {
+            padding: 10px !important;
+        }
+
+        .submit-row a.deletelink {
+            display: table !important;
+
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block extrahead %}
+    <script src="{% static "external/jquery/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "external/bootstrap-3.3.7/js/bootstrap.min.js" %}"></script>
+    {% if request.current_app  == 'admin_planning' or request.current_app  == 'admin_monitoring' %}
+        {% include "admin/includes/navbar_base_site_ppms.html" %}
+    {% else %}
+        {% include "includes/navbar.html" %}
+    {% endif %}
+
+{% endblock %}
+
+{% block content_title %}
+
+    {#{% if request.get_full_path|chk_admin:"admin" == False %}#}
+    <!--   <h3> {#{{ title }}#}</h3>
+    {#{% endif %}#}!-->
+
+{% endblock %}
+{% block userlinks %}
+    {% if site_url %}
+
+        {#        <a href="{{ site_url }}">{% trans 'View site' %}</a> /#}
+        <a href="/">>>View site</a>>>
+    {% endif %}
+    {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}
+            <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> >>
+        {% endif %}
+    {% endif %}
+    {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
+    {% endif %}
+    {#  <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>  #}
+
+{% endblock %}
+{% block breadcrumbs %}
+    {#    <div class="breadcrumbs">#}
+    {#        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>#}
+    {#        {% if title %} &rsaquo; {{ title }}{% endif %}#}
+    {#    </div>#}
+{% endblock %}
+{% block footer %}
+    {#    {% include "includes/footer.html" %}#}
+{% endblock %}
