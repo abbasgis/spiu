@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 import os
 
 import sys
+
 sys.path.append('/home/env/python-www/spiu')
 sys.path.append('/home/env/python-www/spiu/venv/lib/python3.9/site-packages')
 
@@ -17,7 +18,6 @@ from django.contrib.staticfiles.handlers import StaticFilesHandler
 from django.core.wsgi import get_wsgi_application
 
 from spiu import settings
-
 
 #
 # # add the virtualenv site-packages path to the sys.path
