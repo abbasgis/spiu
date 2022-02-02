@@ -28,4 +28,5 @@ urlpatterns = [
                   path('gis/', include('spiu_gis.urls')),
                   path('signup/', signup, name='signup'),
                   path('', spiu_page, name='spiu'),
+                  path('spiu/', spiu_page, name='spiu'),
               ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)
