@@ -24,8 +24,8 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('^', include('django.contrib.auth.urls')),
                   path('disclaimer/', disclaimer_page, name='disclaimer'),
-                  path('', homepage, name='home'),
+                  path('home/', homepage, name='home'),
                   path('gis/', include('spiu_gis.urls')),
                   path('signup/', signup, name='signup'),
-                  path('spiu/', spiu_page, name='spiu'),
+                  path('', spiu_page, name='spiu'),
               ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)
