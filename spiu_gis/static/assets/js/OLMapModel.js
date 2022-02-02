@@ -195,7 +195,7 @@ var OLMapModel = function (mapTarget, viewModel, token) {
         });
         // me.zoomToGeoserverWMSLayerExtent('tbl_divisions');
         me.addGeoServerLayers();
-        me.addWeatherLayers();
+        // me.addWeatherLayers();
         me.graticuleControl = new ol.control.Graticule({
             step: 0.001,
             stepCoord: .5,

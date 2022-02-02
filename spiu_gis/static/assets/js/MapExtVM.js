@@ -953,7 +953,7 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
         me.toolbar.push('-');
         var btnLocation = Ext.create('Ext.Button', {
             icon: '/static/assets/img/icons/location.png',
-            tooltip: "Go To Lat Long",
+            tooltip: "Search Site for New Poultry Farm",
             id: "btn-location",
             handler: function () {
                 me.showGoToLatLongWindow();
@@ -1017,7 +1017,8 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
                     }
                 }
         };
-        me.toolbar.push(searchField);
+        // me.toolbar.push(searchField);
+
         // var btnPrint = Ext.create('Ext.Button', {
         //     //     text: "Clear Selection",
         //     icon: '/static/assets/img/icons/print.png',
@@ -1086,7 +1087,7 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
         }
         var win = Ext.create('Ext.window.Window', {
                 id: 'goTo',
-                title: 'Go To Lat/Long',
+                title: 'Search Site for New Poultry Farm',
                 layout: 'fit',
                 width: 320,
                 //x: 990,
