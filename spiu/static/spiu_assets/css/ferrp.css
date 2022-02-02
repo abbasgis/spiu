@@ -405,7 +405,13 @@ a:hover .fa-circle {
     -moz-background-size: cover;
     background-size: cover;
 }
-
+#directorates {
+    width: 100%;
+    background: url(../img/directorates.jpg)  no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
 @media(max-width:768px) {
     #about,
     #about2,
