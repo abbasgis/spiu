@@ -3,7 +3,13 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib.gis.admin import GeoModelAdmin
 
-from spiu_gis.models import TblPoultryFarms
+from spiu_gis.models import TblPoultryFarms, SpiuProfile
+
+
+@admin.register(SpiuProfile)
+class TblMunicipalityAdmin(admin.ModelAdmin):
+    list_display = ('id','user', 'email', 'district', 'mobile_no', 'cnic', 'is_disclaimer_agreed')
+    ordering = ('district',)
 
 
 @admin.register(TblPoultryFarms)
@@ -20,6 +26,7 @@ class TblMunicipalityAdmin(GeoModelAdmin):
     default_zoom = 10
     map_srid = 4326
     display_srid = 4326
+
     # template_name = 'gis/admin/osm.html'
 
     # actions = ['add_property_detail']

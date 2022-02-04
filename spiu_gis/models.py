@@ -1,4 +1,19 @@
+from django.contrib.auth.models import User
 from django.contrib.gis.db import models
+
+
+class SpiuProfile(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    email = models.CharField(max_length=150, blank=True, null=True)
+    mobile_no = models.BigIntegerField(blank=True, null=True)
+    cnic = models.CharField(max_length=32, blank=True, null=True)
+    district = models.CharField(max_length=100, blank=True, null=True)
+    user = models.OneToOneField(User, models.DO_NOTHING)
+    is_disclaimer_agreed = models.BooleanField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'spiu_profile'
 
 
 # Create your models here.
@@ -58,6 +73,7 @@ class TblPoultryFarms(models.Model):
     environmental_approval_obtained = models.CharField(max_length=255, blank=True, null=True)
     environmental_approval_date = models.CharField(max_length=255, blank=True, null=True)
     geom = models.GeometryField(blank=True, null=True)
+
     # objects = models.GeoManager()
 
     class Meta:
