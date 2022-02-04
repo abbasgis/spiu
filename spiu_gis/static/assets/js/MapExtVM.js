@@ -954,6 +954,7 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
         var btnLocation = Ext.create('Ext.Button', {
             icon: '/static/assets/img/icons/location.png',
             tooltip: "Search Site for New Poultry Farm",
+            text: "<b style='font-size: medium'>Search Site for Construction of New Poultry Farm</b>",
             id: "btn-location",
             handler: function () {
                 me.showGoToLatLongWindow();
