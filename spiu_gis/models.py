@@ -217,6 +217,7 @@ class PoultryFarms(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     geom = models.GeometryField(srid=4326, blank=True, null=True)
+    unique_code = models.CharField(unique=True, blank=True, null=True, max_length=100, db_index=True)
 
     # objects = models.GeoManager()
 

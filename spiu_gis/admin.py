@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.contrib.gis.admin import GeoModelAdmin
 
 from spiu.models import Profile
+from spiu_gis.controller.admin_controller import generate_unique_code
 from spiu_gis.forms.frm_pultry_farm import PoultryFarmsForm
 from spiu_gis.models import TblPoultryFarms, PoultryFarms, TblDistrictsIncharge, TblIndustryMainCategory, \
     TblIndustryCategory, TblDistricts
@@ -18,7 +19,8 @@ class SpiuProfileAdmin(admin.ModelAdmin):
 
 @admin.register(TblDistricts)
 class TblDistrictsAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in TblDistricts._meta.fields]
+    list_display = ("district_name", "division", "district_code")
+    fields = ("district_name", "division")
 
 
 @admin.register(TblIndustryMainCategory)
@@ -56,7 +58,7 @@ class TblDistrictsInchargeAdmin(admin.ModelAdmin):
 
 @admin.register(PoultryFarms)
 class TblPoultryFarmsAdmin(GeoModelAdmin):
-    list_display = ('district_id', 'district_incharge',
+    list_display = ('unique_code', 'district_id', 'district_incharge',
                     'name_poultry_farm', 'type_poultry_farm', 'area_poultry_farm', 'owner_name', 'production_capacity',
                     'latitude', 'longitude', 'approval_construction_phase', 'construction_phase_approval_date',
                     'approval_operational_phase', 'operational_phase_approval_date', 'created_by', 'created_at')
@@ -76,6 +78,16 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
     #           'name_poultry_farm', 'type_poultry_farm', 'area_poultry_farm', 'owner_name', 'production_capacity',
     #           'latitude', 'longitude', 'approval_construction_phase', 'construction_phase_approval_date',
     #           'approval_operational_phase', 'operational_phase_approval_date',)
+
+    def save_model(self, request, obj, form, change):
+        if obj.id is None:
+            obj.created_by = request.user
+            super().save_model(request, obj, form, change)
+        else:
+            obj.updated_by = request.user.id
+        code = generate_unique_code(obj.district_id.district_code, 1, obj.id)
+        obj.unique_code = code
+        super().save_model(request, obj, form, change)
 
     def has_add_permission(self, request, obj=None):
         if request.user.is_superuser:
