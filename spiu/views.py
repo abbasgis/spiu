@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
-
 from .models import Profile
 
 
@@ -49,9 +48,8 @@ def signup(request):
             password = form.cleaned_data.get('password1')
             user = User.objects.create_user(user_name, email, password)
             user.profile.mobile_no = form.cleaned_data.get('mobile_no')
-            user.profile.cnic = form.cleaned_data.get('cnic')
             user.profile.email = form.cleaned_data.get('email')
-            user.profile.district = form.cleaned_data.get('district')
+            user.profile.district_id = form.cleaned_data.get('district_id')
             user.save()
             # Profile.objects.get(user_id=user.id).update(cnic=cnic)
             # load the profile instance created by the signal

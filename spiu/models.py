@@ -3,14 +3,25 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from spiu_gis.models import TblDistricts
+
+DESIGNATION = (
+    ('AD', 'Assistant Director'),
+    ('DD', 'Deputy Director'),
+)
+
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField(max_length=150, blank=True)
-    mobile_no = models.BigIntegerField(max_length=254, blank=True)
-    cnic = models.CharField(max_length=100, blank=True)
-    district = models.CharField(max_length=100, blank=True)
-    is_disclaimer_agreed = models.BooleanField(default=False)
+    id = models.BigAutoField(primary_key=True)
+    email = models.CharField(max_length=150, blank=True, null=True)
+    mobile_no = models.BigIntegerField(blank=True, null=True)
+    cnic = models.CharField(max_length=32, blank=True, null=True)
+    district = models.CharField(max_length=100, blank=True, null=True)
+    district_id = models.OneToOneField(TblDistricts, models.DO_NOTHING, db_column='district_id', blank=True, null=True)
+    district_incharge = models.CharField(max_length=100, blank=True, null=True)
+    district_incharge_designation = models.CharField(max_length=100, blank=True, null=True, choices=DESIGNATION)
+    user = models.OneToOneField(User, models.DO_NOTHING)
+    is_disclaimer_agreed = models.BooleanField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username

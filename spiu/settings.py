@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap_admin',
     'django.contrib.admin',
     'django.contrib.gis',
     'django.contrib.auth',
@@ -37,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'spiu',
-    'spiu_gis'
+    'spiu_gis',
 ]
-
+BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,6 +66,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'custom_templatetag': 'spiu.templatetags.forms_widget',
+
+            }
         },
     },
 ]
@@ -79,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'spiu',
         'USER': 'postgres',  # Not used with sqlite3.
-        'PASSWORD': 'postgres@spiu',  # Not used with sqlite3.
+        'PASSWORD': '123',  # 'postgres@spiu',  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         # 'PASSWORD': 'wasa123@pg',  # Not used with sqlite3.
         # 'HOST': '116.58.43.35',  # Set to empty string for localhost. Not used with sqlite3.

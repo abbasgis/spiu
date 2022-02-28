@@ -1,0 +1,112 @@
+{#{% extends 'base.html' %}#}
+{#{% block title %}Login{% endblock %}#}
+{#{% block main_content %}#}
+{#    <h2>Login</h2>#}
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit">Login</button>#}
+{#    </form>#}
+{#{% endblock %}#}
+{% extends "base.html" %}
+{% load static %}
+{% block main_content %}
+    <style>
+        form {
+            padding: 20px 22px;
+            background: #fff9fc !important
+
+        }
+
+        p {
+            color: red
+        }
+
+        .container {
+            background: none !important;
+        }
+    </style>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            {#                     <img src={% static "assets/img/FERRP-logo-footer.png" %} height="35px"/>#}
+                            <img class="img-responsive" id="img_logo"
+                                 src={% static "assets/img/epd.jpg" %} height="200px"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email">User:</label>
+                                <input type="text" class="form-control" id="email" placeholder="Enter username"
+                                       name="username">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="pwd">Password:</label>
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter password"
+                                       name="password">
+                            </div>
+                        </div>
+                    </div>
+                    {% if form.errors %}
+                        <p>Your username and password didn't match. Please try again.</p>
+                    {% endif %}
+
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                            <p>Your account doesn't have access to this page. To proceed,
+                                please login with an account that has access or contact with administrator at
+                                <a href="mailto:ep.spiu@gmail.com">ep.spiu@gmail.com</a>
+                            </p>
+
+                        {% else %}
+                            <p>Please login to see this page.</p>
+                        {% endif %}
+                    {% endif %}
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="remember"> Remember me</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary col-md-12 ">Login</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {#            <input class="btn-success" type="submit" value="login"/>#}
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                    {# Assumes you setup the password_reset view in your URLconf #}
+                    <div class="checkbox"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="container col-md-12"><a href="{% url 'password_reset' %}">Forget
+                                    Password?</a></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="container col-md-12"><a href="{% url 'signup' %}">New User?
+                                    CLick for Sign Up, Please.</a></label>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+{% endblock %}

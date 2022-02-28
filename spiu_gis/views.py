@@ -1,7 +1,18 @@
 import json
 import requests
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.template import loader
+
 from spiu.utils import date_handler, getResultFromDB, get_model_by_db_table, getJSONFromDB
+from spiu_gis.models import TblIndustryCategory
+
+
+@login_required
+def get_forms_page(request):
+    # p = TblIndustryCategory.objects.get(user_id=request.user.id)
+    template = loader.get_template('industry_forms.html')
+    return HttpResponse(template.render({}, request))
 
 
 def get_population_count(request):

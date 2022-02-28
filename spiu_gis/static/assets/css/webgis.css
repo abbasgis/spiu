@@ -4,6 +4,10 @@
     /*background-color: black;*/
 }
 
+body, html {
+    overflow: hidden
+}
+
 .ol-control.ol-geobt {
     top: 3em !important;
     left: auto !important;
