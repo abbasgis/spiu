@@ -20,6 +20,26 @@
                 toggleVerified($(this).val());
             });
         });
+        $(function () {
+            var selectField = $('#id_approval_construction_phase'),
+                verified = $('.field-construction_phase_approval_date');
+
+            function toggleVerified(value) {
+                if (value === 'Yes' || value === 'Under Process') {
+                    verified.show();
+                } else {
+                    verified.hide();
+                }
+            }
+
+            // show/hide on load based on existing value of selectField
+            toggleVerified(selectField.val());
+
+            // show/hide on change
+            selectField.change(function () {
+                toggleVerified($(this).val());
+            });
+        });
     });
 
 })(django.jQuery);
