@@ -5,7 +5,7 @@
                 verified = $('.field-operational_phase_approval_date');
 
             function toggleVerified(value) {
-                if (value === 'Yes') {
+                if (value === 'Yes' || value === 'Under Process') {
                     verified.show();
                 } else {
                     verified.hide();
