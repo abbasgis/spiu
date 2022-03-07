@@ -23,12 +23,22 @@
         $(function () {
             var selectField = $('#id_approval_construction_phase'),
                 verified = $('.field-construction_phase_approval_date');
+            var operational_field = $('.field-approval_operational_phase');
+            var operational_date = $('.field-operational_phase_approval_date');
 
             function toggleVerified(value) {
-                if (value === 'Yes' || value === 'Under Process') {
+                if (value === 'Yes') {
                     verified.show();
+                    operational_field.show();
+                    operational_date.show();
+                } else if (value === 'Under Process') {
+                    verified.show();
+                    operational_field.hide();
+                    operational_date.hide();
                 } else {
                     verified.hide();
+                    operational_field.hide();
+                    operational_date.hide();
                 }
             }
 
