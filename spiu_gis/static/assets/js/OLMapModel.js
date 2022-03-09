@@ -405,7 +405,7 @@ var OLMapModel = function (mapTarget, viewModel, token) {
                     new ol.layer.Tile({
                         name: 'Road Map',
                         type: "base",
-                        visible: true,
+                        visible: false,
                         displayInLayerSwitcher: true,
                         source: new ol.source.OSM({
                             url: "http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
@@ -422,7 +422,7 @@ var OLMapModel = function (mapTarget, viewModel, token) {
                     new ol.layer.Tile({
                         name: "Satellite",
                         type: "base",
-                        visible: false,
+                        visible: true,
                         source: new ol.source.OSM({
                             url: "http://mt{0-3}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
                             // attributions: [new ol.Attribution({
