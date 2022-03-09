@@ -403,6 +403,19 @@ var OLMapModel = function (mapTarget, viewModel, token) {
                         })
                     }),
                     new ol.layer.Tile({
+                        name: "Satellite",
+                        type: "base",
+                        visible: true,
+                        source: new ol.source.OSM({
+                            url: "http://mt{0-3}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+                            // attributions: [new ol.Attribution({
+                            //                             //     html: "© Google"
+                            //                             // }), new ol.Attribution({
+                            //                             //     html: '<a href="https://developers.google.com/maps/terms">Terms of Use.</a>'
+                            //                             // })]
+                        })
+                    }),
+                    new ol.layer.Tile({
                         name: 'Road Map',
                         type: "base",
                         visible: false,
@@ -419,19 +432,7 @@ var OLMapModel = function (mapTarget, viewModel, token) {
                             //]
                         })
                     }),
-                    new ol.layer.Tile({
-                        name: "Satellite",
-                        type: "base",
-                        visible: true,
-                        source: new ol.source.OSM({
-                            url: "http://mt{0-3}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
-                            // attributions: [new ol.Attribution({
-                            //                             //     html: "© Google"
-                            //                             // }), new ol.Attribution({
-                            //                             //     html: '<a href="https://developers.google.com/maps/terms">Terms of Use.</a>'
-                            //                             // })]
-                        })
-                    }),
+
                     new ol.layer.Tile({
                         name: "OSM",
                         type: "base",
