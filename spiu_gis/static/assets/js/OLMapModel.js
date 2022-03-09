@@ -35,10 +35,10 @@ var OLMapModel = function (mapTarget, viewModel, token) {
     me.csrfToken = token;
     me.geocoder = null;
     me.geolocation = null;
-    me.geoServerPort = '9012';
+    me.geoServerPort = '8080';
     me.httpProtocol = 'http';
     if (location.protocol === 'https:') {
-        me.geoServerPort = '82';
+        me.geoServerPort = '8080';
         me.httpProtocol = 'https';
     }
     me.setViewModel = function (viewModel) {
