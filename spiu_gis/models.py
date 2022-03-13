@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
+from django.core.validators import RegexValidator
 
 
 class TblDivisions(models.Model):
@@ -158,9 +159,13 @@ class TblDistrictsIncharge(models.Model):
     name = models.CharField(max_length=254)
     designation = models.CharField(max_length=255, blank=True, null=True, choices=DESIGNATION)
     district_id = models.ForeignKey(TblDistricts, on_delete=models.CASCADE, db_column='district_id', blank=True,
-                                    null=True)
+                                    null=True, verbose_name="District")
     email = models.EmailField(max_length=254)
-    mobile_no = models.IntegerField(blank=True, null=True, help_text="3334567788")
+    # mobile_no = models.IntegerField(blank=True, null=True, help_text="3334567788")
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message="Phone number must be entered in the format: '03000000000'. Up to 11 digits allowed.")
+    mobile_no = models.CharField(validators=[phone_regex], max_length=11, blank=True,
+                                 null=True)  # validators should be a list
     remarks = models.CharField(max_length=254, blank=True, null=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', blank=True, null=True)
     updated_by = models.IntegerField(blank=True, null=True)
@@ -204,11 +209,11 @@ class PoultryFarms(models.Model):
     longitude = models.FloatField(blank=True, null=True,
                                   help_text="Longitude in Decimal Degree format upto 6 decimals like XX.XXXXXX, value would be between 60 to 80")
     approval_construction_phase = models.CharField(max_length=255, blank=True, null=True, choices=ENV_APPROVAL,
-                                                   help_text="Environmental Approval for Section 12 of PEPA (amended 2012) Construction Phase Obtained, Date (if Yes, then provide the following date)")
+                                                   help_text="Environmental Approval for Construction Phase Obtained?, Date (if Yes, then provide the following date)")
     construction_phase_approval_date = models.DateField(blank=True, null=True,
                                                         help_text="approval date or in case of under process enter application date")
     approval_operational_phase = models.CharField(max_length=255, blank=True, null=True, choices=ENV_APPROVAL,
-                                                  help_text="Environmental Approval for Section 12 of PEPA (amended 2012) Operation Phase Obtained, Date (if Yes, then provide the following date)")
+                                                  help_text="Environmental Approval for Operation Phase Obtained, Date (if Yes, then provide the following date)")
     operational_phase_approval_date = models.DateField(blank=True, null=True,
                                                        help_text="operationla phase approval date or in case of under process enter application date")
     remarks = models.CharField(max_length=254, blank=True, null=True)
@@ -225,3 +230,49 @@ class PoultryFarms(models.Model):
         managed = True
         db_table = 'tbl_poultry_farms_data'
         verbose_name_plural = 'Poultry Farms'
+
+
+class Establishments(models.Model):
+    ENV_APPROVAL = (
+        ('Yes', 'Yes'),
+        ('No', 'No'),
+        ('Under Process', 'Under Process')
+    )
+    district_id = models.ForeignKey(TblDistricts, models.DO_NOTHING, verbose_name="Name of District")
+    district_incharge = models.ForeignKey(TblDistrictsIncharge, models.DO_NOTHING,
+                                          verbose_name="Name of District Incharge")
+    main_category = models.ForeignKey(TblIndustryMainCategory, models.DO_NOTHING,
+                                      verbose_name="Name of Main Category")
+    category = models.ForeignKey(TblIndustryCategory, models.DO_NOTHING,
+                                 verbose_name="Name of Category")
+    name_of_establishment = models.CharField(max_length=255, null=True,
+                                             verbose_name="Name of Establishment")
+    area_in_kanals = models.FloatField(blank=True, null=True, verbose_name="Area in Kanals")
+    owner_name = models.CharField(max_length=255, blank=True, null=True, verbose_name="Name of Owner")
+    capacity = models.IntegerField(blank=True, null=True)
+    latitude = models.FloatField(null=True,
+                                 help_text="Latitude in Decimal Degree format upto 6 decimals like XX.XXXXXX, value would be between 25 to 40")
+    longitude = models.FloatField(null=True,
+                                  help_text="Longitude in Decimal Degree format upto 6 decimals like XX.XXXXXX, value would be between 60 to 80")
+    approval_construction_phase = models.CharField(max_length=255, null=True, choices=ENV_APPROVAL,
+                                                   help_text="Environmental Approval for Construction Phase Obtained?, Date (if Yes, then provide the following date)")
+    construction_phase_approval_date = models.DateField(blank=True, null=True,
+                                                        help_text="approval date or in case of under process enter application date")
+    approval_operational_phase = models.CharField(max_length=255, blank=True, null=True, choices=ENV_APPROVAL,
+                                                  help_text="Environmental Approval for Operation Phase Obtained, Date (if Yes, then provide the following date)")
+    operational_phase_approval_date = models.DateField(blank=True, null=True,
+                                                       help_text="operationla phase approval date or in case of under process enter application date")
+    remarks = models.TextField(blank=True, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', blank=True, null=True)
+    updated_by = models.IntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    geom = models.GeometryField(srid=4326, blank=True, null=True)
+    unique_code = models.CharField(unique=True, blank=True, null=True, max_length=100, db_index=True)
+
+    # objects = models.GeoManager()
+
+    class Meta:
+        managed = True
+        db_table = 'tbl_establishments'
+        verbose_name_plural = 'Establishments'

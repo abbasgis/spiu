@@ -4,10 +4,12 @@ from django.contrib import admin
 from django.contrib.gis.admin import GeoModelAdmin
 
 from spiu.models import Profile
-from spiu_gis.controller.admin_controller import generate_unique_code
-from spiu_gis.forms.frm_pultry_farm import PoultryFarmsForm
-from spiu_gis.models import TblPoultryFarms, PoultryFarms, TblDistrictsIncharge, TblIndustryMainCategory, \
-    TblIndustryCategory, TblDistricts
+from spiu.utils import updateRecordInDB
+from spiu_gis.controller.admin_controller import generate_unique_code, update_geom_column, EstablishmentsAdmin
+from spiu_gis.models import PoultryFarms, TblDistrictsIncharge, TblIndustryMainCategory, \
+    TblIndustryCategory, TblDistricts, Establishments
+
+admin.site.register(Establishments, EstablishmentsAdmin)
 
 
 @admin.register(Profile)
@@ -54,6 +56,7 @@ class TblIndustryCategoryAdmin(admin.ModelAdmin):
 @admin.register(TblDistrictsIncharge)
 class TblDistrictsInchargeAdmin(admin.ModelAdmin):
     list_display = ('name', 'designation', 'district_id', 'email', 'mobile_no', 'created_by', 'created_at')
+    fields = ('name', 'designation', 'district_id', 'email', 'mobile_no')
 
 
 @admin.register(PoultryFarms)
@@ -73,6 +76,7 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
     map_srid = 4326
     display_srid = 4326
     exclude = ('created_by', 'created_at', 'updated_by', 'geom')
+    readonly_fields = ('unique_code', 'created_at')
 
     # fields = ('district_id', 'district_incharge',
     #           'name_poultry_farm', 'type_poultry_farm', 'area_poultry_farm', 'owner_name', 'production_capacity',
@@ -82,12 +86,14 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
     def save_model(self, request, obj, form, change):
         if obj.id is None:
             obj.created_by = request.user
-            super().save_model(request, obj, form, change)
+            # super().save_model(request, obj, form, change)
         else:
             obj.updated_by = request.user.id
-        code = generate_unique_code(obj.district_id.district_code, 1, obj.id)
-        obj.unique_code = code
+        if obj.unique_code is None:
+            code = generate_unique_code(obj.district_id.district_code, 1, obj.id)
+            obj.unique_code = code
         super().save_model(request, obj, form, change)
+        update_geom_column(obj)
 
     def has_add_permission(self, request, obj=None):
         if request.user.is_superuser:
