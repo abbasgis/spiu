@@ -1,8 +1,11 @@
 # f'{n:03}'
-from django.contrib.gis.admin import GeoModelAdmin
+import json
 
-from spiu.utils import updateRecordInDB
-from spiu_gis.models import Establishments
+from django.contrib.gis.admin import GeoModelAdmin
+from django.http import HttpResponse
+
+from spiu.utils import updateRecordInDB, date_handler
+from spiu_gis.models import Establishments, TblIndustryMainCategory, TblIndustryCategory
 
 
 def generate_unique_code(district_code, category_code, industry_code):
@@ -22,6 +25,19 @@ def update_geom_column(obj):
 def update_unique_code(obj):
     code = generate_unique_code(obj.district_id.district_code, obj.category.id, obj.id)
     obj.unique_code = code
+    obj.save()
+
+
+def get_categories_list(request):
+    main_category = request.GET.get('main_category', '-1')
+    rs = TblIndustryCategory.objects.filter(main_category=int(main_category))
+    data = list(rs.values('name', 'id'))
+    response = json.dumps(data, default=date_handler)
+    return HttpResponse(response)
+
+
+def update_category_code(obj):
+    obj.category_code = f'{obj.id:03}'
     obj.save()
 
 

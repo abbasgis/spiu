@@ -1,5 +1,6 @@
 from django.urls import path
 
+from spiu_gis.controller.admin_controller import get_categories_list
 from spiu_gis.views import get_population_count, get_feature_geom, get_population_count_by_taskid, get_forms_page
 
 urlpatterns = [
@@ -8,5 +9,6 @@ urlpatterns = [
     path('get_population_count_by_taskid/', get_population_count_by_taskid, name='get_population_count_by_taskid'),
     path('get_feature_geom/', get_feature_geom, name='get_feature_geom'),
     path('forms_page/', get_forms_page, name='forms_page'),
+    path('get_categories_list/', get_categories_list, name='get_categories_list'),
 
 ]

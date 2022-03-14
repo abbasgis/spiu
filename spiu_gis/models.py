@@ -134,7 +134,7 @@ class TblIndustryMainCategory(models.Model):
 class TblIndustryCategory(models.Model):
     name = models.CharField(max_length=254)
     description = models.CharField(max_length=254, blank=True, null=True)
-    code = models.CharField(max_length=254)
+    code = models.CharField(blank=True, null=True,max_length=254)
     main_category = models.ForeignKey(TblIndustryMainCategory, models.DO_NOTHING)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', blank=True, null=True)
     updated_by = models.IntegerField(blank=True, null=True)
@@ -197,6 +197,8 @@ class PoultryFarms(models.Model):
     district_id = models.ForeignKey(TblDistricts, models.DO_NOTHING, verbose_name="Name of District")
     district_incharge = models.ForeignKey(TblDistrictsIncharge, models.DO_NOTHING,
                                           verbose_name="Name of District Incharge")
+    category = models.ForeignKey(TblIndustryCategory, models.DO_NOTHING, null=True,
+                                 verbose_name="Name of Category")
     name_poultry_farm = models.CharField(max_length=255, blank=True, null=True,
                                          verbose_name="Name of Poultry Farm/ Control Shed")
     type_poultry_farm = models.CharField(max_length=255, blank=True, null=True, choices=PF_TYPE,

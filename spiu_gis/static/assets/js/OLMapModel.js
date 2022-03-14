@@ -98,6 +98,14 @@ var OLMapModel = function (mapTarget, viewModel, token) {
             'isVisible': true,
             'group': 'General Layers'
         },
+          {
+            'title': 'Establishments',
+            'namespace': 'cite',
+            'name': 'tbl_establishments',
+            'displayInSwitcher': true,
+            'isVisible': true,
+            'group': 'General Layers'
+        },
     ];
     me.weatherLayers = [
         {

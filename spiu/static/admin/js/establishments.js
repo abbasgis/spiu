@@ -50,6 +50,33 @@
                 toggleVerified($(this).val());
             });
         });
+        $('#id_main_category').on('change', function (e) {
+            var val = $('#id_main_category').val();
+            if (val !== "") {
+                var url = "/gis/get_categories_list/?main_category=" + val;
+                $.ajax({
+                    url: url,
+                    success: function (data, status, xhr) {
+                        $('#id_category').empty();
+                        $('#id_category').append('<option>Select One</option>');
+                        data = JSON.parse(data);
+                        if (data.length > 0) {
+                            for (var key in data) {
+                                var prop = data[key];
+                                var txtOption = '<option value="' + prop.name + '"';
+                                txtOption += '>' + prop.id + '</option>';
+                                $('#id_category').append(txtOption);
+                            }
+                        }
+                        // $('.selectpicker').selectpicker('refresh');
+
+                    },
+                    error: function (xhr, status, error) {
+
+                    }
+                });
+            }
+        });
     });
 
 })(django.jQuery);

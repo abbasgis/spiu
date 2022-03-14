@@ -5,7 +5,8 @@ from django.contrib.gis.admin import GeoModelAdmin
 
 from spiu.models import Profile
 from spiu.utils import updateRecordInDB
-from spiu_gis.controller.admin_controller import generate_unique_code, update_geom_column, EstablishmentsAdmin
+from spiu_gis.controller.admin_controller import generate_unique_code, update_geom_column, EstablishmentsAdmin, \
+    update_category_code
 from spiu_gis.models import PoultryFarms, TblDistrictsIncharge, TblIndustryMainCategory, \
     TblIndustryCategory, TblDistricts, Establishments
 
@@ -29,7 +30,7 @@ class TblDistrictsAdmin(admin.ModelAdmin):
 class TblIndustryMainCategoryAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblIndustryMainCategory._meta.fields if
                     field.name not in ("id", "updated_by", "updated_at")]
-
+    fields = ('name', 'description')
     def save_model(self, request, obj, form, change):
         if obj.id is None:
             obj.created_by = request.user
@@ -43,14 +44,15 @@ class TblIndustryMainCategoryAdmin(admin.ModelAdmin):
 class TblIndustryCategoryAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblIndustryCategory._meta.fields if
                     field.name not in ("id", "updated_by", "updated_at")]
+    fields = ('name', 'description', 'main_category')
 
     def save_model(self, request, obj, form, change):
         if obj.id is None:
             obj.created_by = request.user
-            super().save_model(request, obj, form, change)
         else:
             obj.updated_by = request.user.id
-            super().save_model(request, obj, form, change)
+        super().save_model(request, obj, form, change)
+        update_category_code(obj)
 
 
 @admin.register(TblDistrictsIncharge)
@@ -122,6 +124,8 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
                 field.initial = obj.district_id
             if db_field.name == 'district_incharge':
                 field.initial = obj.district_incharge
+            if db_field.name == 'category':
+                field.initial = obj.category
             if db_field.name == 'type_poultry_farm':
                 field.initial = obj.type_poultry_farm
         return field
