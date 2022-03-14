@@ -36,6 +36,9 @@ var OLMapModel = function (mapTarget, viewModel, token) {
     me.geocoder = null;
     me.geolocation = null;
     me.geoServerPort = '8080';
+    if (location.hostname === 'localhost') {
+        me.geoServerPort = '9012';
+    }
     me.httpProtocol = 'http';
     if (location.protocol === 'https:') {
         me.geoServerPort = '8080';
@@ -90,7 +93,7 @@ var OLMapModel = function (mapTarget, viewModel, token) {
             'isVisible': true,
             'group': 'General Layers'
         },
-                {
+        {
             'title': 'Poultry Farms',
             'namespace': 'cite',
             'name': 'tbl_poultry_farms',
@@ -98,7 +101,7 @@ var OLMapModel = function (mapTarget, viewModel, token) {
             'isVisible': true,
             'group': 'General Layers'
         },
-          {
+        {
             'title': 'Establishments',
             'namespace': 'cite',
             'name': 'tbl_establishments',
@@ -339,7 +342,7 @@ var OLMapModel = function (mapTarget, viewModel, token) {
             var layer = me.weatherLayers[i];
             var layerName = layer.name;
             var group_name = layer.group;
-            var url = 'https://tile.openweathermap.org/map/' + layerName + '/{z}/{x}/{y}.png?appid='+me.weatherApiKey
+            var url = 'https://tile.openweathermap.org/map/' + layerName + '/{z}/{x}/{y}.png?appid=' + me.weatherApiKey
             if (layerName == 'clouds_new') {
                 url = 'http://maps.openweathermap.org/maps/2.0/weather/WND/{z}/{x}/{y}?date=1527811099&use_norm=true&arrow_step=128&appid=' + me.weatherApiKey
             }

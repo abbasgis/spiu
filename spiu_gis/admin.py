@@ -31,6 +31,7 @@ class TblIndustryMainCategoryAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblIndustryMainCategory._meta.fields if
                     field.name not in ("id", "updated_by", "updated_at")]
     fields = ('name', 'description')
+
     def save_model(self, request, obj, form, change):
         if obj.id is None:
             obj.created_by = request.user
@@ -44,7 +45,7 @@ class TblIndustryMainCategoryAdmin(admin.ModelAdmin):
 class TblIndustryCategoryAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblIndustryCategory._meta.fields if
                     field.name not in ("id", "updated_by", "updated_at")]
-    fields = ('name', 'description', 'main_category')
+    fields = ('name', 'description', 'main_category', 'capacity_unit')
 
     def save_model(self, request, obj, form, change):
         if obj.id is None:

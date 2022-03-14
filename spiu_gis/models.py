@@ -134,7 +134,8 @@ class TblIndustryMainCategory(models.Model):
 class TblIndustryCategory(models.Model):
     name = models.CharField(max_length=254)
     description = models.CharField(max_length=254, blank=True, null=True)
-    code = models.CharField(blank=True, null=True,max_length=254)
+    capacity_unit = models.CharField(max_length=254, blank=True, null=True, verbose_name="Capacity Unit")
+    code = models.CharField(blank=True, null=True, max_length=254)
     main_category = models.ForeignKey(TblIndustryMainCategory, models.DO_NOTHING)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', blank=True, null=True)
     updated_by = models.IntegerField(blank=True, null=True)
