@@ -10,6 +10,7 @@ from spiu_gis.controller.admin_controller import generate_unique_code, update_ge
 from spiu_gis.models import PoultryFarms, TblDistrictsIncharge, TblIndustryMainCategory, \
     TblIndustryCategory, TblDistricts, Establishments
 
+admin.site.enable_nav_sidebar = False
 admin.site.register(Establishments, EstablishmentsAdmin)
 
 
@@ -45,7 +46,7 @@ class TblIndustryMainCategoryAdmin(admin.ModelAdmin):
 class TblIndustryCategoryAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblIndustryCategory._meta.fields if
                     field.name not in ("id", "updated_by", "updated_at")]
-    fields = ('name', 'description', 'main_category', 'capacity_unit')
+    fields = ('name', 'description', 'main_category', 'capacity_unit', 'is_area_field_shown')
 
     def save_model(self, request, obj, form, change):
         if obj.id is None:
