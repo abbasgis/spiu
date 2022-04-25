@@ -39,7 +39,7 @@ def get_population_count(request):
         pop_data = getResultFromDB(pop_sql)
         data = {'total_population': pop_data[0]['sum'], 'status_code': 200}
         code = 200  # data having rows more than 500
-        river_sql = "SELECT ST_Intersects(ST_Transform(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), 3857), geom) as rs from tbl_rivers_punjab;"
+        river_sql = "SELECT ST_Intersects(ST_Buffer(ST_Transform(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), 3857),300),geom) as rs from tbl_rivers_punjab;"
         sensitive_area_sql = "select  ST_Intersects(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), geom) as rs from sensitive_areas;"
         rivers_rs = getResultFromDB(river_sql)
         sensitive_area_rs = getResultFromDB(sensitive_area_sql)
