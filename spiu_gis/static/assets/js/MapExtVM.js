@@ -1214,7 +1214,12 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
                 // else {
                 // me.getPopulationCountByTaskId(data.taskid, pf_count)
                 // }
-                me.showPFSuitAbility(pop_count, pf_count)
+                if (data.is_in_rivers === false && data.is_in_sensitive === false) {
+                     me.showPFSuitAbility(pop_count, pf_count)
+                }else{
+                    alert("Marked location is either in rivers or sensitive area")
+                }
+
 
             } else {
                 alert(data.error_message)

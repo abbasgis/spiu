@@ -280,3 +280,26 @@ class Establishments(models.Model):
         managed = True
         db_table = 'tbl_establishments'
         verbose_name_plural = 'Establishments'
+
+
+class GpsData(models.Model):
+    id = models.AutoField(primary_key=True)
+    sr_no = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    name_of_industry = models.CharField(max_length=255, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    category = models.CharField(max_length=255, blank=True, null=True)
+    sub_category = models.CharField(max_length=255, blank=True, null=True)
+    process = models.CharField(max_length=255, blank=True, null=True)
+    date = models.CharField(max_length=255, blank=True, null=True)
+    time = models.CharField(max_length=255, blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    accuracy = models.FloatField(blank=True, null=True)
+    remarks = models.CharField(max_length=255, blank=True, null=True)
+    district = models.CharField(max_length=255, blank=True, null=True)
+    name_of_inspector = models.CharField(max_length=255, blank=True, null=True)
+    contact_number_of_inspector = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'gps_data'

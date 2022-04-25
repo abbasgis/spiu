@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block extra_styles %}
 {% endblock %}
 {% block title %}SPIU{% endblock %}
@@ -9,37 +8,35 @@
 {% block main_content %}
     <div class="container">
         <div class="row">
-           <ul class="stepper" data-mdb-stepper="stepper">
-  <li class="stepper-step stepper-active">
-    <div class="stepper-head">
-      <span class="stepper-head-icon"> 1 </span>
-      <span class="stepper-head-text"> step1 </span>
-    </div>
-    <div class="stepper-content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      magna aliqua.
-    </div>
-  </li>
-  <li class="stepper-step">
-    <div class="stepper-head">
-      <span class="stepper-head-icon"> 2 </span>
-      <span class="stepper-head-text"> step2 </span>
-    </div>
-    <div class="stepper-content">
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </div>
-  </li>
-  <li class="stepper-step">
-    <div class="stepper-head">
-      <span class="stepper-head-icon"> 3 </span>
-      <span class="stepper-head-text"> step3 </span>
-    </div>
-    <div class="stepper-content">
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    </div>
-  </li>
-</ul>
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <a href="/home">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            <strong style="font-size: large">New Poultry Farm Site</strong>
+                        </div>
+                        <img src="{% static "assets/img/poultry_farm.jpg" %}" class="card-img-top" height="300"
+                             alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Search Site for Construction of New Poultry Farm.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="http://103.119.125.200/admin/spiu_gis/establishments/add/">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            <strong style="font-size: large">Data Entry Farm</strong>
+                        </div>
+                        <img src="{% static "assets/img/data_entr.jpg" %}" class="card-img-top" height="300" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Data Entry Form for 50 Categories of Establishments in Punjab</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-2"></div>
         </div>
-
     </div>
 {% endblock %}

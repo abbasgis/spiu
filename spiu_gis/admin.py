@@ -48,6 +48,8 @@ class TblIndustryCategoryAdmin(admin.ModelAdmin):
                     field.name not in ("id", "updated_by", "updated_at")]
     fields = ('name', 'description', 'main_category', 'capacity_unit', 'is_area_field_shown')
 
+    list_filter = ('main_category',)
+
     def save_model(self, request, obj, form, change):
         if obj.id is None:
             obj.created_by = request.user

@@ -94,6 +94,22 @@ var OLMapModel = function (mapTarget, viewModel, token) {
             'group': 'General Layers'
         },
         {
+            'title': 'Rivers',
+            'namespace': 'cite',
+            'name': 'tbl_rivers_punjab',
+            'displayInSwitcher': true,
+            'isVisible': true,
+            'group': 'General Layers'
+        },
+        {
+            'title': 'Sensitive Areas',
+            'namespace': 'cite',
+            'name': 'sensitive_areas',
+            'displayInSwitcher': true,
+            'isVisible': true,
+            'group': 'General Layers'
+        },
+        {
             'title': 'Poultry Farms',
             'namespace': 'cite',
             'name': 'tbl_poultry_farms',

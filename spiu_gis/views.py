@@ -21,6 +21,8 @@ def get_population_count(request):
     r = request.GET.get('r', 'null')  # radious
     data = {}
     pf_count = 0
+    is_in_rivers = False
+    is_in_sensitive = False
     try:
         # sql = "SELECT st_asgeojson(ST_Buffer(ST_GeomFromText('POINT(" + long + " " + lat + ")',4326),0.004, 'quad_segs=8'))"
         # data = getResultFromDB(sql)
@@ -37,9 +39,20 @@ def get_population_count(request):
         pop_data = getResultFromDB(pop_sql)
         data = {'total_population': pop_data[0]['sum'], 'status_code': 200}
         code = 200  # data having rows more than 500
+        river_sql = "SELECT ST_Intersects(ST_Transform(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), 3857), geom) as rs from tbl_rivers_punjab;"
+        sensitive_area_sql = "select  ST_Intersects(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), geom) as rs from sensitive_areas;"
+        rivers_rs = getResultFromDB(river_sql)
+        sensitive_area_rs = getResultFromDB(sensitive_area_sql)
+        for r in rivers_rs:
+            if r['rs']:
+                is_in_rivers = True
+        for i in sensitive_area_rs:
+            if i['rs']:
+                is_in_sensitive = True
     except:
         code = 400
-    response = {'code': code, 'data': data, 'pf_count': pf_count}
+    response = {'code': code, 'data': data, 'pf_count': pf_count, "is_in_rivers": is_in_rivers,
+                "is_in_sensitive": is_in_sensitive}
     response = json.dumps(response, default=date_handler)
     return HttpResponse(response)
 
