@@ -23,6 +23,7 @@ def get_population_count(request):
     pf_count = 0
     is_in_rivers = False
     is_in_sensitive = False
+    is_in_punjab = False
     try:
         # sql = "SELECT st_asgeojson(ST_Buffer(ST_GeomFromText('POINT(" + long + " " + lat + ")',4326),0.004, 'quad_segs=8'))"
         # data = getResultFromDB(sql)
@@ -30,7 +31,7 @@ def get_population_count(request):
         # url = 'https://api.worldpop.org/v1/services/stats?dataset=wpgppop&year=2020&geojson=' + g
         # response = requests.get(url)
         # task_id = response.json()['taskid']
-        query = "SELECT * from tbl_poultry_farms where st_within(geom,st_buffer(ST_GeomFromText('POINT(" + long + " " + lat + ")',4326),0.008))"
+        query = "SELECT * from tbl_poultry_farms_data where st_within(geom,st_buffer(ST_GeomFromText('POINT(" + long + " " + lat + ")',4326),0.008))"
         pf = getResultFromDB(query)
         pf_count = len(pf)
         # res = requests.get('https://api.worldpop.org/v1/tasks/' + task_id)
@@ -40,19 +41,20 @@ def get_population_count(request):
         data = {'total_population': pop_data[0]['sum'], 'status_code': 200}
         code = 200  # data having rows more than 500
         river_sql = "SELECT ST_Intersects(ST_Buffer(ST_Transform(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), 3857),300),geom) as rs from tbl_rivers_punjab;"
-        sensitive_area_sql = "select  ST_Intersects(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), geom) as rs from sensitive_areas;"
+        punjab_bdry_sql = "SELECT ST_Intersects(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326),geom) as rs from tbl_divisions;"
+        # sensitive_area_sql = "select  ST_Intersects(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), geom) as rs from sensitive_areas;"
         rivers_rs = getResultFromDB(river_sql)
-        sensitive_area_rs = getResultFromDB(sensitive_area_sql)
+        punjab_bdry_rs = getResultFromDB(punjab_bdry_sql)
         for r in rivers_rs:
             if r['rs']:
-                is_in_rivers = True
-        for i in sensitive_area_rs:
-            if i['rs']:
-                is_in_sensitive = True
+                is_in_punjab = True
+        # for i in punjab_bdry_rs:
+        #     if i['rs']:
+        #         is_in_sensitive = True
     except:
         code = 400
     response = {'code': code, 'data': data, 'pf_count': pf_count, "is_in_rivers": is_in_rivers,
-                "is_in_sensitive": is_in_sensitive}
+                "is_in_sensitive": is_in_sensitive, "is_in_punjab": is_in_punjab}
     response = json.dumps(response, default=date_handler)
     return HttpResponse(response)
 

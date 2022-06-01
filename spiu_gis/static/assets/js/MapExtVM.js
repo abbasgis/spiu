@@ -1106,17 +1106,18 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
                     Ext.create('Ext.form.Panel', {
                         width: 300,
                         bodyPadding: 10,
-                        items: [{
-                            xtype: 'numberfield',
-                            anchor: '100%',
-                            name: 'bottles',
-                            id: 'fd-lat',
-                            fieldLabel: 'Latitude',
-                            decimalPrecision: 6,
-                            emptyText: '31.5118868',
-                            value: 31.5118868,
-                            minValue: 0
-                        },
+                        items: [
+                            {
+                                xtype: 'numberfield',
+                                anchor: '100%',
+                                name: 'bottles',
+                                id: 'fd-lat',
+                                fieldLabel: 'Latitude',
+                                decimalPrecision: 6,
+                                emptyText: '31.5118868',
+                                value: 31.5118868,
+                                minValue: 0
+                            },
                             {
                                 xtype: 'numberfield',
                                 anchor: '100%',
@@ -1127,7 +1128,15 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
                                 emptyText: '74.3333826',
                                 value: 74.3333826,
                                 minValue: 0
-                            }
+                            },
+                            {
+                                xtype: 'label',
+                                style: {
+                                    color: 'red',
+                                    align: 'justify'
+                                },
+                                html: 'Disclaimer: Please, avoid selection of new site on public land or natural resources (Rivers, Canals, Mountains, Forests, Mining Area etc). For further detail, please visit <a target="_blank" href="/disclaimer/">Disclaimer Page</a>'
+                            },
                         ],
                         buttons: [{
                             text: 'Go',
@@ -1204,25 +1213,26 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
         var layerName = requestdata['LAYER'];
         var response = JSON.parse(result.responseText);
         if (response.code === 200) {
-            var data = response.data;
-            if (data.status_code === 200) {
-                var pf_count = response.pf_count;
-                var pop_count = 0;
-                if (data.total_population) {
-                    pop_count = data.total_population
-                }
-                // else {
-                // me.getPopulationCountByTaskId(data.taskid, pf_count)
-                // }
-                if (response.is_in_rivers === false && response.is_in_sensitive === false) {
-                     me.showPFSuitAbility(pop_count, pf_count)
-                }else{
-                    alert("Marked location is either in rivers or sensitive area")
-                }
+            if (response.is_in_punjab === true) {
+                var data = response.data;
+                if (data.status_code === 200) {
+                    var pf_count = response.pf_count;
+                    var pop_count = 0;
+                    if (data.total_population) {
+                        pop_count = data.total_population
+                    }
+                    if (response.is_in_rivers === false) {
+                        me.showPFSuitAbility(pop_count, pf_count)
+                    } else {
+                        alert("Marked location is in rivers, please select some other location")
+                    }
 
 
-            } else {
-                alert(data.error_message)
+                } else {
+                    alert(data.error_message)
+                }
+            }else{
+                alert("Marked Location is out of Punjab Boundary");
             }
         }
 
@@ -1264,7 +1274,7 @@ var ExtToolbarModel = function (mapExtVM, olMapModel) {
                     bodyPadding: 10,
                     items: [{
                         xtype: 'label',
-                        text: 'For new Poultry Farm suitability it is a law that there would be no poultry farm within buffer of 1 km from the selected location and also population count within 500 meter from the suggested location not greater than 500. your value at the marked location are ..'
+                        html: 'For new Poultry Farm suitability, only two aspects has been considered,<br> <br> (i) There would be no poultry farm within buffer of 1 km from the selected location <br> (ii) Population count within 500 meter from the suggested location not greater than 500. <br><br> Your values at the marked location are ..<br><br>'
                     },
                         {
                             xtype: 'textfield',

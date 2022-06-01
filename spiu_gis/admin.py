@@ -6,12 +6,12 @@ from django.contrib.gis.admin import GeoModelAdmin
 from spiu.models import Profile
 from spiu.utils import updateRecordInDB
 from spiu_gis.controller.admin_controller import generate_unique_code, update_geom_column, EstablishmentsAdmin, \
-    update_category_code
+    update_category_code, update_unique_code
 from spiu_gis.models import PoultryFarms, TblDistrictsIncharge, TblIndustryMainCategory, \
     TblIndustryCategory, TblDistricts, Establishments
 
 admin.site.enable_nav_sidebar = False
-admin.site.register(Establishments, EstablishmentsAdmin)
+# admin.site.register(Establishments, EstablishmentsAdmin)
 
 
 @admin.register(Profile)
@@ -27,7 +27,7 @@ class TblDistrictsAdmin(admin.ModelAdmin):
     fields = ("district_name", "division")
 
 
-@admin.register(TblIndustryMainCategory)
+# @admin.register(TblIndustryMainCategory)
 class TblIndustryMainCategoryAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblIndustryMainCategory._meta.fields if
                     field.name not in ("id", "updated_by", "updated_at")]
@@ -42,7 +42,7 @@ class TblIndustryMainCategoryAdmin(admin.ModelAdmin):
             super().save_model(request, obj, form, change)
 
 
-@admin.register(TblIndustryCategory)
+# @admin.register(TblIndustryCategory)
 class TblIndustryCategoryAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblIndustryCategory._meta.fields if
                     field.name not in ("id", "updated_by", "updated_at")]
@@ -67,12 +67,11 @@ class TblDistrictsInchargeAdmin(admin.ModelAdmin):
 
 @admin.register(PoultryFarms)
 class TblPoultryFarmsAdmin(GeoModelAdmin):
-    list_display = ('unique_code', 'district_id', 'district_incharge',
+    list_display = ('unique_code','district_id',
                     'name_poultry_farm', 'type_poultry_farm', 'area_poultry_farm', 'owner_name', 'production_capacity',
-                    'latitude', 'longitude', 'approval_construction_phase', 'construction_phase_approval_date',
-                    'approval_operational_phase', 'operational_phase_approval_date', 'created_by', 'created_at')
+                    'latitude', 'longitude', 'approval_construction_phase',)
     # form = PoultryFarmsForm
-    search_fields = ('name_poultry_farm', 'district_id',)
+    search_fields = ('name_poultry_farm','district_id')
     list_filter = ('district_id',)
     # fields = ('municipality_name',)
     ordering = ('district_id',)
@@ -81,13 +80,20 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
     default_zoom = 10
     map_srid = 4326
     display_srid = 4326
-    exclude = ('created_by', 'created_at', 'updated_by', 'geom')
+    exclude = ('created_by', 'created_at', 'updated_by', 'geom', 'category')
     readonly_fields = ('unique_code', 'created_at')
 
-    # fields = ('district_id', 'district_incharge',
-    #           'name_poultry_farm', 'type_poultry_farm', 'area_poultry_farm', 'owner_name', 'production_capacity',
-    #           'latitude', 'longitude', 'approval_construction_phase', 'construction_phase_approval_date',
-    #           'approval_operational_phase', 'operational_phase_approval_date',)
+    fieldsets = (
+        (None, {
+            'fields': (
+                'district_id', 'district_incharge', 'type_poultry_farm',
+                ('name_poultry_farm', 'area_poultry_farm', 'owner_name'), ('production_capacity',
+                                                                           'latitude', 'longitude'),
+                'approval_construction_phase', 'construction_phase_approval_date',
+                'approval_operational_phase', 'operational_phase_approval_date',
+            ),
+        }),
+    )
 
     def save_model(self, request, obj, form, change):
         if obj.id is None:
@@ -95,11 +101,10 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
             # super().save_model(request, obj, form, change)
         else:
             obj.updated_by = request.user.id
-        if obj.unique_code is None:
-            code = generate_unique_code(obj.district_id.district_code, 1, obj.id)
-            obj.unique_code = code
+        obj.category = TblIndustryCategory.objects.get(id=1)
         super().save_model(request, obj, form, change)
-        update_geom_column(obj)
+        update_unique_code(obj)
+        is_updated = update_geom_column(obj)
 
     def has_add_permission(self, request, obj=None):
         if request.user.is_superuser:

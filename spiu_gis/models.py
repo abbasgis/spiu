@@ -207,7 +207,7 @@ class PoultryFarms(models.Model):
                                          verbose_name="Type of Poultry Farm / Control Shed")
     area_poultry_farm = models.FloatField(blank=True, null=True, verbose_name="Area in Kanals")
     owner_name = models.CharField(max_length=255, blank=True, null=True, verbose_name="Name of Owner")
-    production_capacity = models.IntegerField(blank=True, null=True)
+    production_capacity = models.IntegerField(blank=True, null=True,verbose_name="No of Birds")
     latitude = models.FloatField(blank=True, null=True,
                                  help_text="Latitude in Decimal Degree format upto 6 decimals like XX.XXXXXX, value would be between 25 to 40")
     longitude = models.FloatField(blank=True, null=True,
@@ -233,7 +233,7 @@ class PoultryFarms(models.Model):
     class Meta:
         managed = True
         db_table = 'tbl_poultry_farms_data'
-        verbose_name_plural = 'Poultry Farms'
+        verbose_name_plural = 'Poultry Farms Data'
 
 
 class Establishments(models.Model):

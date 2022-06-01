@@ -131,7 +131,13 @@ def update_geom_column(obj):
     if obj.latitude is not None:
         sql = "UPDATE " + obj._meta.db_table + " SET geom = ST_SetSRID(ST_MakePoint(" + str(obj.longitude) + ", " \
               + str(obj.latitude) + "), 4326) where id=" + str(obj.id)
-        updateRecordInDB(sql)
+        rs = updateRecordInDB(sql)
+        # sql = "UPDATE " + obj._meta.db_table + " SET geom =  st_geomfromtext('POINT(" + str(obj.longitude) + " " \
+        #       + str(obj.latitude) + ")', 4326) where id=" + str(obj.id)
+        # rs = updateRecordInDB(sql)
+        # sql = "UPDATE " + obj._meta.db_table + " SET geom =  ST_SetSRID(geom, 4326) where id=" + str(obj.id)
+        # rs = updateRecordInDB(sql)
+        return rs
 
 
 def update_unique_code(obj):

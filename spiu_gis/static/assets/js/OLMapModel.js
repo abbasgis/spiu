@@ -112,19 +112,19 @@ var OLMapModel = function (mapTarget, viewModel, token) {
         {
             'title': 'Poultry Farms',
             'namespace': 'cite',
-            'name': 'tbl_poultry_farms',
+            'name': 'tbl_poultry_farms_data',
             'displayInSwitcher': true,
             'isVisible': true,
             'group': 'General Layers'
         },
-        {
-            'title': 'Establishments',
-            'namespace': 'cite',
-            'name': 'tbl_establishments',
-            'displayInSwitcher': true,
-            'isVisible': true,
-            'group': 'General Layers'
-        },
+        // {
+        //     'title': 'Establishments',
+        //     'namespace': 'cite',
+        //     'name': 'tbl_establishments',
+        //     'displayInSwitcher': true,
+        //     'isVisible': true,
+        //     'group': 'General Layers'
+        // },
     ];
     me.weatherLayers = [
         {
