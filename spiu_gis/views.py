@@ -23,7 +23,7 @@ def get_population_count(request):
     pf_count = 0
     is_in_rivers = False
     is_in_sensitive = False
-    is_in_punjab = False
+    is_in_punjab = True
     try:
         # sql = "SELECT st_asgeojson(ST_Buffer(ST_GeomFromText('POINT(" + long + " " + lat + ")',4326),0.004, 'quad_segs=8'))"
         # data = getResultFromDB(sql)
@@ -40,14 +40,14 @@ def get_population_count(request):
         pop_data = getResultFromDB(pop_sql)
         data = {'total_population': pop_data[0]['sum'], 'status_code': 200}
         code = 200  # data having rows more than 500
-        river_sql = "SELECT ST_Intersects(ST_Buffer(ST_Transform(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), 3857),300),geom) as rs from tbl_rivers_punjab;"
-        punjab_bdry_sql = "SELECT ST_Intersects(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326),geom) as rs from tbl_divisions;"
+        # river_sql = "SELECT ST_Intersects(ST_Buffer(ST_Transform(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), 3857),300),geom) as rs from tbl_rivers_punjab;"
+        # punjab_bdry_sql = "SELECT ST_Intersects(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326),geom) as rs from tbl_divisions;"
         # sensitive_area_sql = "select  ST_Intersects(ST_SetSRID( ST_Point( " + long + ", " + lat + "), 4326), geom) as rs from sensitive_areas;"
-        rivers_rs = getResultFromDB(river_sql)
-        punjab_bdry_rs = getResultFromDB(punjab_bdry_sql)
-        for r in rivers_rs:
-            if r['rs']:
-                is_in_punjab = True
+        # rivers_rs = getResultFromDB(river_sql)
+        # punjab_bdry_rs = getResultFromDB(punjab_bdry_sql)
+        # for r in rivers_rs:
+        #     if r['rs']:
+        #         is_in_punjab = True
         # for i in punjab_bdry_rs:
         #     if i['rs']:
         #         is_in_sensitive = True
