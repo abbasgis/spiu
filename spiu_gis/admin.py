@@ -11,6 +11,8 @@ from spiu_gis.models import PoultryFarms, TblDistrictsIncharge, TblIndustryMainC
     TblIndustryCategory, TblDistricts, Establishments
 
 admin.site.enable_nav_sidebar = False
+
+
 # admin.site.register(Establishments, EstablishmentsAdmin)
 
 
@@ -67,13 +69,14 @@ class TblDistrictsInchargeAdmin(admin.ModelAdmin):
 
 @admin.register(PoultryFarms)
 class TblPoultryFarmsAdmin(GeoModelAdmin):
-    list_display = ('unique_code','district_id',
+    list_display = ('unique_code', 'district_id',
                     'name_poultry_farm', 'type_poultry_farm', 'area_poultry_farm', 'owner_name', 'production_capacity',
                     'latitude', 'longitude', 'approval_construction_phase',)
     # form = PoultryFarmsForm
-    search_fields = ('name_poultry_farm','district_id')
-    list_filter = ('district_id',)
+    search_fields = ('name_poultry_farm','district_id__district_name','type_poultry_farm')
+    list_filter = ('district_id', 'type_poultry_farm')
     # fields = ('municipality_name',)
+    date_hierarchy = 'created_at'
     ordering = ('district_id',)
     default_lon = 74.3333826
     default_lat = 31.5118868
@@ -107,19 +110,19 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
         is_updated = update_geom_column(obj)
 
     def has_add_permission(self, request, obj=None):
-        if request.user.is_superuser:
+        if request.user.is_superuser or request.user.groups.filter(name='EPA').exists():
             return True
         else:
             return False
 
     def has_change_permission(self, request, obj=None):
-        if request.user.is_superuser:
+        if request.user.is_superuser or request.user.groups.filter(name='EPA').exists():
             return True
         else:
             return False
 
     def has_delete_permission(self, request, obj=None):
-        if request.user.is_superuser:
+        if request.user.is_superuser or request.user.groups.filter(name='EPA').exists():
             return True
         else:
             return False
