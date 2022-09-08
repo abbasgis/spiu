@@ -164,3 +164,5 @@ def get_category_detail(request):
 def update_category_code(obj):
     obj.category_code = f'{obj.id:03}'
     obj.save()
+
+

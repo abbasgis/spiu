@@ -18,13 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 from spiu import settings
-from spiu.views import homepage, signup, disclaimer_page, spiu_page
+from spiu.views import homepage, signup, disclaimer_page, spiu_page, dashboard_page
 
 urlpatterns = [
                   # path('grappelli/', include('grappelli.urls')),  # grappelli URLS
                   path('admin/', admin.site.urls),
                   path('^', include('django.contrib.auth.urls')),
                   path('disclaimer/', disclaimer_page, name='disclaimer'),
+                  path('dashboard/', dashboard_page, name='dashboard'),
                   path('home/', homepage, name='home'),
                   path('gis/', include('spiu_gis.urls')),
                   path('signup/', signup, name='signup'),

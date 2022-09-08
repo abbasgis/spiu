@@ -4,8 +4,9 @@
     /*background-color: black;*/
 }
 
-body, html {
-    overflow: hidden
+body {
+    min-height: 75rem;
+    padding-top: 4.5rem;
 }
 
 .ol-control.ol-geobt {
@@ -62,4 +63,9 @@ body, html {
     color: white;
     font-weight: bolder;
     font-size: x-large;
+}
+
+.header_title {
+    text-align: center;
+    font-size: xxx-large;
 }

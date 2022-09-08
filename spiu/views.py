@@ -1,10 +1,18 @@
+import json
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
+
+from spiu_gis.models import PoultryFarms
 from .models import Profile
+
+from .forms import SignUpForm
+from .utils import date_handler
 
 
 def spiu_page(request):
@@ -31,7 +39,24 @@ def disclaimer_page(request):
     return HttpResponse(template.render({}, request))
 
 
-from .forms import SignUpForm
+def dashboard_page(request):
+    rs = (PoultryFarms.objects.all())
+    total_records = rs.count()
+    district_count = (rs.values('district_id_id__district_name')
+                      .annotate(dcount=Count('*'))
+                      .order_by('district_id_id__district_name')
+                      )
+    data = list(district_count)
+    district_count = json.dumps(data, default=date_handler)
+    rs = (rs.values('approval_construction_phase')
+          .annotate(dcount=Count('*'))
+          .order_by('approval_construction_phase')
+          )
+    data = list(rs)
+    approval = json.dumps(data, default=date_handler)
+    template = loader.get_template('dashboard.html')
+    return HttpResponse(
+        template.render({'total': total_records, 'district_count': district_count, 'approval': approval}, request))
 
 
 # newly added function

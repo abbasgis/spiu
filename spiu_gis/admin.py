@@ -25,8 +25,13 @@ class SpiuProfileAdmin(admin.ModelAdmin):
 
 @admin.register(TblDistricts)
 class TblDistrictsAdmin(admin.ModelAdmin):
-    list_display = ("district_name", "division", "district_code")
+    list_display = ("district_name", "division", "district_code", "records_count")
     fields = ("district_name", "division")
+
+    def records_count(self, obj):
+        pf_count = PoultryFarms.objects.filter(district_id=obj.district_id).count()
+        # PoultryFarms.objects.values("district_id__name").annotate(Count("district_id"))
+        return pf_count
 
 
 # @admin.register(TblIndustryMainCategory)
@@ -73,7 +78,7 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
                     'name_poultry_farm', 'type_poultry_farm', 'area_poultry_farm', 'owner_name', 'production_capacity',
                     'latitude', 'longitude', 'approval_construction_phase',)
     # form = PoultryFarmsForm
-    search_fields = ('name_poultry_farm','district_id__district_name','type_poultry_farm')
+    search_fields = ('name_poultry_farm', 'district_id__district_name', 'type_poultry_farm')
     list_filter = ('district_id', 'type_poultry_farm')
     # fields = ('municipality_name',)
     date_hierarchy = 'created_at'

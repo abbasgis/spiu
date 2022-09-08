@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static "external/jqwidgets/styles/jqx.base.css" %}"/>
+{% endblock %}
+{% block extra_scripts %}
+    <script src="{% static "external/jqwidgets/jqx-all.js" %}"></script>
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+    <script type="text/javascript" src="{% static "assets/js/dashboard.js" %}"></script>
+    <script>
+        var token = '{{ csrf_token }}';
+    </script>
+{% endblock extra_scripts %}
+{% block main_content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card text-white bg-primary">
+                    <div class="card-header header_title">
+                        <span>456</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center">Total</h5>
+                        <p class="card-text">Total Records Enter till date in Punjab</p>
+                    </div>
+                    {#                    <div class="card-footer"></div>#}
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-white bg-success">
+                    <div class="card-header header_title">
+                        <span>100</span>
+                        <span style="font-size: large">( 21% )</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center">YES</h5>
+                        <p class="card-text">Having Environmental Approval</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-white bg-warning">
+                    <div class="card-header header_title">
+                        <span>156</span>
+                        <span style="font-size: large">( 21% )</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center">Under Process</h5>
+                        <p class="card-text">Env. Approval Under Process</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-white bg-danger">
+                    <div class="card-header header_title">
+                        <span>200</span>
+                        <span style="font-size: large">( 43% )</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center">No</h5>
+                        <p class="card-text">Environmental Approval Not Acquired</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px !important;"></div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Desilting Map</div>
+                    <div id="highMap" class="panel-body" style="height: 450px"></div>
+                </div>
+                <div id="popup" class="ol-popup">
+                    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                    <div id="popup-content"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-danger">Data Report
+                        <div id='btngrid' style='float: right;'>
+                            <img data-toggle="tooltip" title="Export to Excel" style='float: left;'
+                                 src="{% static "assets/img/download1.png" %}"/>
+                        </div>
+                    </div>
+                    <div id="barchart" class="panel-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
