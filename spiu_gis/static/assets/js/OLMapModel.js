@@ -1923,7 +1923,6 @@ var OLMapModel = function (mapTarget, viewModel, token) {
         me.removeAllInteraction();
         var dragBox = new ol.interaction.DragBox();
         me.map.addInteraction(dragBox);
-
         dragBox.on('boxend', function () {
             // features that intersect the box are added to the collection of
             // selected features
