@@ -27,8 +27,12 @@ var DesiltingDashboard = function () {
         var obj = {};
         for (var k in t) {
             let row = t[k];
-            obj[row['approval_construction_phase']] = row['dcount']
-            total = total + row['dcount']
+            let dcount = row['dcount'];
+            if (typeof (dcount) === "undefined") {
+                dcount = 0;
+            }
+            obj[row['approval_construction_phase']] = dcount
+            total = total + dcount
         }
         obj['total'] = total;
         me.setTilesValues(obj);
@@ -36,6 +40,10 @@ var DesiltingDashboard = function () {
 
     }
     me.setTilesValues = function (obj) {
+        // var c = ((a < b) ? 'minor' : 'major');
+        obj["Yes"] = ((obj.hasOwnProperty("Yes")) ? obj["Yes"] : 0)
+        obj["Under Process"] = ((obj.hasOwnProperty("Under Process")) ? obj["Under Process"] : 0)
+        obj["No"] = ((obj.hasOwnProperty("No")) ? obj["No"] : 0)
         document.getElementById("total").innerHTML = obj["total"]
         document.getElementById("yes").innerHTML = obj["Yes"]
         document.getElementById("p_yes").innerHTML = Math.round((obj["Yes"] / obj["total"] * 100)) + " %"
@@ -156,7 +164,7 @@ var DesiltingDashboard = function () {
                 name: 'Punjab Divisions',
                 dataLabels: {
                     enabled: true,
-                    format: '{point.properties.district_name}'
+                    format: '{point.properties.name}'
                 },
                 // custom: {
                 //     mapView
@@ -247,12 +255,12 @@ var DesiltingDashboard = function () {
         }
         var series = [
             {
-                name: 'Under Process', data: arr_up,color: '#f7bb07'
+                name: 'Under Process', data: arr_up, color: '#f7bb07'
             }, {
-                name: 'No', data: arr_no,color: '#d53343'
+                name: 'No', data: arr_no, color: '#d53343'
             },
             {
-                name: 'Yes', data: arr_yes,color: '#198754'
+                name: 'Yes', data: arr_yes, color: '#198754'
             }
         ]
         return series;
