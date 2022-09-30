@@ -13,6 +13,12 @@ from .models import Profile
 
 from .forms import SignUpForm
 from .utils import date_handler
+from django.template.defaultfilters import register
+
+
+@register.filter(name='has_group')
+def has_group(user, group_name):
+    return user.groups.filter(name=group_name).exists()
 
 
 def spiu_page(request):
@@ -39,6 +45,7 @@ def disclaimer_page(request):
     return HttpResponse(template.render({}, request))
 
 
+@login_required
 def dashboard_page(request):
     rs = (PoultryFarms.objects.all())
     total_records = rs.count()

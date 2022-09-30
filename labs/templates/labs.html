@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_styles %}
+    <style>
+        .marketing .row {
+            margin-top: 20% !important;
+            text-align: center;
+        }
+
+        .marketing .col-lg-4 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .marketing h2 {
+            font-weight: normal;
+        }
+
+        .marketing .col-lg-4 p {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .vertical-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+    </style>
+{% endblock %}
+{% block title %}Home{% endblock %}
+{% block main_content %}
+    <div class="container marketing">
+        <div class="row ">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-3 ">
+                <a href="/admin/labs/tblreportswastewater/">
+                    <img class="img-circle"
+                         src="{% static "assets/img/water-quality.jpg" %}"
+                         alt="Water Quality Reports" width="250" height="250">
+                    <h2>Water Quality Reports</h2>
+                    <p></p>
+                    <p><a class="btn btn-default" href="/admin/labs/tblreportswastewater/add/" role="button">Add New Report &raquo;</a></p>
+                </a>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-2"></div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <img class="img-circle"
+                         src="{% static "assets/img/air-quality.jpg" %}"
+                         alt="Air Quality Reports" width="250" height="250">
+                    <h2>Air Quality Reports</h2>
+                    <p></p>
+                    <p><a class="btn btn-default" href="#" role="button">Add New Report
+                        &raquo;</a></p>
+                </a>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-2">
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+    </div>
+{% endblock %}

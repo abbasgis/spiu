@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         {% block title %}
+
         {% endblock %}
     </title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
@@ -21,8 +22,8 @@
     {% block extra_scripts %}
     {% endblock %}
 </head>
-<body>
-{% include "includes/navbar_spiu.html" %}
+<body >
+{% include "navbar_fires.html" %}
 <main class="container-fluid">
     {% block main_content %}
     {% endblock %}

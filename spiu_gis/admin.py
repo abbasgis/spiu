@@ -79,7 +79,7 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
                     'latitude', 'longitude', 'approval_construction_phase',)
     # form = PoultryFarmsForm
     search_fields = ('name_poultry_farm', 'district_id__district_name', 'type_poultry_farm')
-    list_filter = ('district_id', 'type_poultry_farm')
+    list_filter = ('district_id__district_name', 'type_poultry_farm')
     # fields = ('municipality_name',)
     date_hierarchy = 'created_at'
     ordering = ('district_id',)
@@ -90,7 +90,6 @@ class TblPoultryFarmsAdmin(GeoModelAdmin):
     display_srid = 4326
     exclude = ('created_by', 'created_at', 'updated_by', 'geom', 'category')
     readonly_fields = ('unique_code', 'created_at')
-
     fieldsets = (
         (None, {
             'fields': (

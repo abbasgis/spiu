@@ -17,6 +17,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from fire_points.views import get_fire_points, get_fp_page
 from spiu import settings
 from spiu.views import homepage, signup, disclaimer_page, spiu_page, dashboard_page
 
@@ -31,4 +32,7 @@ urlpatterns = [
                   path('signup/', signup, name='signup'),
                   path('', spiu_page, name='spiu'),
                   path('spiu/', spiu_page, name='spiu'),
+                  path('labs/', include('labs.urls')),
+                  path('fire_points/', get_fire_points, name='fire_points'),
+                  path('fp/', get_fp_page, name='fp'),
               ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

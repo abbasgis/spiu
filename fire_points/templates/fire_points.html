@@ -1,0 +1,91 @@
+{% extends 'base_fires.html' %}
+{% load static %}
+{% block title %}Fire Locations{% endblock %}
+{% block extra_styles %}
+    <link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
+     <link href="{% static "assets/css/fire_points.css" %}" rel="stylesheet">
+{% endblock %}
+{% block extra_scripts %}
+    <script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/tableExport.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script type="text/javascript" src="{% static "assets/fire_points.js" %}"></script>
+{% endblock extra_scripts %}
+{% block main_content %}
+    <div class="row container">
+    <form class="row gy-2 gx-3 align-items-center">
+        <div class="col-6">
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" style="font-size: large; font-weight: bold">
+                    Duration:
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="rd_period" value="24h" id="rd_24h" checked>
+                <label class="form-check-label" for="rd_24h">
+                    Last 24 Hour
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="48h" name="rd_period" id="rd_48h">
+                <label class="form-check-label" for="rd_48h">
+                    Last 48 Hour
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="7d" name="rd_period" id="rd_7d">
+                <label class="form-check-label" for="rd_7d">
+                    Last 7 Days
+                </label>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" style="font-size: large; font-weight: bold">
+                    Satellite:
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="modis" name="rd_satellite" id="rd_modis">
+                <label class="form-check-label" for="rd_modis">
+                    MODIS
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="noaa" name="rd_satellite" id="rd_noaa">
+                <label class="form-check-label" for="rd_noaa">
+                    NOAA
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="suomi" name="rd_satellite" id="rd_suomi" checked>
+                <label class="form-check-label" for="rd_suomi">
+                    SUOMI
+                </label>
+            </div>
+        </div>
+        <div class="col-1">
+            <button type="button" id="btnDownload" class="btn btn-primary">Download</button>
+        </div>
+    </form>
+    </div>
+    <div class="row" style="height: 10px"></div>
+    <div class="row">
+        <table id="table">
+            <thead>
+            <tr>
+
+                <th data-field="" data-sortable="true" data-formatter="serialFormatter">Sr.No.</th>
+                <th data-field="district" data-sortable="true">District Name</th>
+                <th data-field="acq_date" data-sortable="true">Date</th>
+                <th data-field="latitude">Latitude</th>
+                <th data-field="longitude">Longitude</th>
+                <th data-field="gmap_link" data-formatter="gMapFormatter">Google Map Link</th>
+
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="overlay"></div>
+{% endblock %}

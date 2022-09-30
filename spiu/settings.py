@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'spiu',
     'spiu_gis',
+    'labs',
+    'fire_points'
 ]
 BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 MIDDLEWARE = [

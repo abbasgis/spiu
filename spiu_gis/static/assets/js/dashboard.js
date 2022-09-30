@@ -6,30 +6,9 @@ var DesiltingDashboard = function () {
     var me = this;
     me.barchart = null;
     me.initialize = function () {
-        var url = 'https://gis.wasalhr.pk/wgis/get_attribute_table/?layer=ohr&town_id=2&sub_div_id=12';
-
-        $.getJSON('http://whateverorigin.org/get?url=' +
-            encodeURIComponent(url) + '&callback=?',
-            function (data) {
-                console.log(data.contents);
-            });
-
-        $.ajax({
-            url: 'https://gis.wasalhr.pk/wgis/get_attribute_table/?layer=ohr&town_id=2&sub_div_id=12&callback=?',
-            dataType: 'json',
-            type: "GET",
-            cors: true,
-            crossDomain: true,
-            success: function (data) {
-                alert('success');
-                console.log(data);
-            },
-            error: function (xhr, status, error) {
-                alert(error);
-            },
-        });
-
-
+        me.getDivisionLevelStats();
+    }
+    me.getDivisionLevelStats = function () {
         $.ajax({
             url: "/gis/get_highmap_json?level=division", success: function (response) {
                 response = JSON.parse(response);
@@ -37,8 +16,34 @@ var DesiltingDashboard = function () {
                 data = JSON.parse(data)
                 me.createHighMaps(data[0].geojson);
                 me.createBarChart(response);
+                me.updateTiles(response);
             }
         });
+    }
+    me.updateTiles = function (data) {
+        let tiles = data.tiles_data;
+        let t = JSON.parse(tiles);
+        let total = 0;
+        var obj = {};
+        for (var k in t) {
+            let row = t[k];
+            obj[row['approval_construction_phase']] = row['dcount']
+            total = total + row['dcount']
+        }
+        obj['total'] = total;
+        me.setTilesValues(obj);
+
+
+    }
+    me.setTilesValues = function (obj) {
+        document.getElementById("total").innerHTML = obj["total"]
+        document.getElementById("yes").innerHTML = obj["Yes"]
+        document.getElementById("p_yes").innerHTML = Math.round((obj["Yes"] / obj["total"] * 100)) + " %"
+        document.getElementById("up").innerHTML = obj["Under Process"]
+        document.getElementById("p_up").innerHTML = Math.round((obj["Under Process"] / obj["total"] * 100)) + " %"
+        document.getElementById("no").innerHTML = obj["No"]
+        document.getElementById("p_no").innerHTML = Math.round((obj["No"] / obj["total"] * 100)) + " %"
+
     }
     me.createHighMaps = function (input_data) {
         const drilldown = async function (e) {
@@ -70,8 +75,11 @@ var DesiltingDashboard = function () {
                 const data = Highcharts.geojson(input_data);
                 // Set a non-random bogus value
                 data.forEach((d, i) => {
-                    d.value = d.properties.total;
-                    d.name = d.properties.name
+                    if (d.properties) {
+                        d.value = d.properties.total;
+                        d.name = d.properties.name
+                    }
+
                 });
                 // Apply the recommended map view if any
                 chart.mapView.update(Highcharts.merge({insets: undefined}, "map"), false);
@@ -85,6 +93,7 @@ var DesiltingDashboard = function () {
                     }
                 });
                 me.createBarChart(res);
+                me.updateTiles(res);
             }
         };
 // On drill up, reset to the top-level map view
@@ -92,6 +101,7 @@ var DesiltingDashboard = function () {
             if (e.seriesOptions.custom && e.seriesOptions.custom.mapView) {
                 e.target.mapView.update(e.seriesOptions.custom.mapView, false);
             }
+            me.getDivisionLevelStats();
         };
         const data = Highcharts.geojson(input_data);
         data.forEach((d, i) => {
@@ -213,7 +223,7 @@ var DesiltingDashboard = function () {
     me.create_barchart_categories = function (data) {
         var categories = [];
         for (var i = 0; i < data.length; i++) {
-            var key = data[i].district_id__division__division_name;
+            var key = data[i].name;
             if (categories.indexOf(key) === -1) {
                 categories.push(key)
             }
@@ -237,12 +247,12 @@ var DesiltingDashboard = function () {
         }
         var series = [
             {
-                name: 'Under Process', data: arr_up
+                name: 'Under Process', data: arr_up,color: '#f7bb07'
             }, {
-                name: 'No', data: arr_no
+                name: 'No', data: arr_no,color: '#d53343'
             },
             {
-                name: 'Yes', data: arr_yes
+                name: 'Yes', data: arr_yes,color: '#198754'
             }
         ]
         return series;
@@ -251,7 +261,7 @@ var DesiltingDashboard = function () {
         var row = {'name': key, 'up': 0, 'yes': 0, 'no': 0}
         for (var i = 0; i < data.length; i++) {
             var obj = data[i];
-            if (obj.district_id__division__division_name === key) {
+            if (obj.name === key) {
                 var count = parseInt(obj.dcount);
                 if (typeof (count) == "undefined" || count == null || count < 0) {
                     count = 0;
