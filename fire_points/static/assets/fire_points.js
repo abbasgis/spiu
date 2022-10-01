@@ -12,9 +12,15 @@ $(document).ready(function () {
         getDataFromServer(false)
     })
     $("#btnDownload").click(function () {
-
-        getDataFromServer(true);
+        let period = $("input[name='rd_period']:checked").val();
+        let sat = $("input[name='rd_satellite']:checked").val();
+        let file_name = "fire_locations_" + sat + "_" + period
+        $table.tableExport({type: 'excel', fileName: file_name});
     });
+    $("#btnSearch").click(function () {
+        getDataFromServer(false);
+    });
+
 
     function getDataFromServer(isDownload) {
         let period = $("input[name='rd_period']:checked").val();
@@ -48,6 +54,7 @@ function gMapFormatter(value) {
         '<a class="like" target="_blank" href="' + value + '" title="Link"> Click to View on Map',
         '</a>'].join('');
 }
-function serialFormatter(v,r,i){
-    return i+1;
+
+function serialFormatter(v, r, i) {
+    return i + 1;
 }

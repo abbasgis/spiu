@@ -13,9 +13,9 @@
     <script type="text/javascript" src="{% static "assets/fire_points.js" %}"></script>
 {% endblock extra_scripts %}
 {% block main_content %}
-    <div class="row container">
+    <div class="row " style="background-color: #b6d4ec">
     <form class="row gy-2 gx-3 align-items-center">
-        <div class="col-6">
+        <div class="col-5">
             <div class="form-check form-check-inline">
                 <label class="form-check-label" style="font-size: large; font-weight: bold">
                     Duration:
@@ -36,7 +36,7 @@
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" value="7d" name="rd_period" id="rd_7d">
                 <label class="form-check-label" for="rd_7d">
-                    Last 7 Days
+                    Last 7 Day
                 </label>
             </div>
         </div>
@@ -66,23 +66,24 @@
             </div>
         </div>
         <div class="col-1">
+            <button type="button" id="btnSearch" class="btn btn-warning">Search</button>
+        </div>
+        <div class="col-1">
             <button type="button" id="btnDownload" class="btn btn-primary">Download</button>
         </div>
     </form>
     </div>
-    <div class="row" style="height: 10px"></div>
+    <div class="row" style="height: 10px; background-color: #b6d4ec"></div>
     <div class="row">
         <table id="table">
             <thead>
             <tr>
-
                 <th data-field="" data-sortable="true" data-formatter="serialFormatter">Sr.No.</th>
                 <th data-field="district" data-sortable="true">District Name</th>
                 <th data-field="acq_date" data-sortable="true">Date</th>
                 <th data-field="latitude">Latitude</th>
                 <th data-field="longitude">Longitude</th>
                 <th data-field="gmap_link" data-formatter="gMapFormatter">Google Map Link</th>
-
             </tr>
             </thead>
         </table>
