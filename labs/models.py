@@ -133,7 +133,7 @@ class TblWasteWaterParameters(models.Model):
         return self.parameter
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'tbl_waste_water_parameters'
         verbose_name = "Waste Water Parameters"
         verbose_name_plural = "Waste Water Parameters"
