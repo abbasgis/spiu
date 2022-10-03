@@ -58,7 +58,7 @@ class TblReportsWasteWater(models.Model):
     laboratory_name = models.ForeignKey(TblLaboratories, models.DO_NOTHING, verbose_name="Name of Laboratory")
     letter_no = models.CharField(max_length=254, verbose_name="Letter No")
     letter_date = models.DateField(verbose_name="Letter Date")
-    letter_issued_by = models.CharField(max_length=254,blank=True, null=True, verbose_name="Letter Issued By")
+    letter_issued_by = models.CharField(max_length=254, blank=True, null=True, verbose_name="Letter Issued By")
     name_industry = models.CharField(max_length=254, verbose_name="Name of Industry")
     address_industry = models.CharField(max_length=354, verbose_name="Address of Industry")
     district_id = models.ForeignKey(TblDistricts, models.DO_NOTHING, verbose_name="Name of District from Address")
@@ -70,7 +70,7 @@ class TblReportsWasteWater(models.Model):
     process_generating_wastewater = models.CharField(max_length=254, default="Not Provided",
                                                      verbose_name="Process Generating Waste Water")
     discharge = models.CharField(max_length=254, default="Not Provided")
-    sampling_date = models.DateField( verbose_name="Sample Date")
+    sampling_date = models.DateField(verbose_name="Sample Date")
     sample_receiving_date = models.DateField(blank=True, null=True, verbose_name="Date of Sample Receiving in Lab")
     sample_id_no = models.CharField(max_length=254, verbose_name="Sample ID No")
     sample_received_from = models.CharField(max_length=254, verbose_name="Sample Received From")
@@ -88,6 +88,9 @@ class TblReportsWasteWater(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
+    def __str__(self):
+        return str(self.sample_id_no)
+
     class Meta:
         managed = True
         db_table = 'tbl_reports_waste_water'
@@ -100,12 +103,12 @@ class TblLabAnalysisWasteWater(models.Model):
         ('Complies PEQS', 'Complies PEQS'),
         ('Non Complies PEQS', 'Non Complies PEQS')
     )
-    report_id = models.ForeignKey(TblReportsWasteWater, models.DO_NOTHING)
+    report_id = models.ForeignKey(TblReportsWasteWater, models.DO_NOTHING,verbose_name="Report ID")
     sample_id_no = models.CharField(max_length=254)
     parameter = models.CharField(max_length=254)
-    peqs_limit = models.CharField(max_length=254)
+    peqs_limit = models.CharField(max_length=254, verbose_name="PEQS Limit")
     concentration = models.FloatField(blank=True, null=True)
-    method_used = models.CharField(max_length=254)
+    method_used = models.CharField(max_length=254, verbose_name="Method Used")
     remarks = models.CharField(max_length=254, blank=True, null=True, choices=REMARKS, default="Complies PEQS")
     remarks_calculated = models.CharField(max_length=254, blank=True, null=True)
 

@@ -26,7 +26,7 @@ class TblWasteWaterParametersAdmin(admin.ModelAdmin):
 class TblLabAnalysisWasteWaterInline(admin.TabularInline):
     model = TblLabAnalysisWasteWater
     fields = ('report_id', 'peqs_limit', 'concentration', 'method_used', 'remarks')
-    readonly_fields = ('peqs_limit',)
+    # readonly_fields = ('peqs_limit',)
     extra = 9
     can_delete = False
 
