@@ -1,0 +1,4 @@
+.dropdown-menu {
+    position: revert !important;
+    z-index: 1000 !important;
+}

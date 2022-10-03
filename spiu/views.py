@@ -49,21 +49,11 @@ def disclaimer_page(request):
 def dashboard_page(request):
     rs = (PoultryFarms.objects.all())
     total_records = rs.count()
-    district_count = (rs.values('district_id_id__district_name')
-                      .annotate(dcount=Count('*'))
-                      .order_by('district_id_id__district_name')
-                      )
-    data = list(district_count)
-    district_count = json.dumps(data, default=date_handler)
-    rs = (rs.values('approval_construction_phase')
-          .annotate(dcount=Count('*'))
-          .order_by('approval_construction_phase')
-          )
-    data = list(rs)
-    approval = json.dumps(data, default=date_handler)
+    start_date = str(rs.earliest('updated_at').updated_at.date())
+    end_date = str(rs.latest('updated_at').updated_at.date())
     template = loader.get_template('dashboard.html')
     return HttpResponse(
-        template.render({'total': total_records, 'district_count': district_count, 'approval': approval}, request))
+        template.render({'total': total_records, 'start_date': start_date, 'end_date': end_date}, request))
 
 
 # newly added function

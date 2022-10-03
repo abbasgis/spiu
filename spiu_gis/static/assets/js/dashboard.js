@@ -5,8 +5,11 @@ $(document).ready(function () {
 var DesiltingDashboard = function () {
     var me = this;
     me.barchart = null;
+    me.gridVM = null;
     me.initialize = function () {
         me.getDivisionLevelStats();
+        me.gridVM = new DashboardGridsModel();
+        me.gridVM.createReportGrid();
     }
     me.getDivisionLevelStats = function () {
         $.ajax({

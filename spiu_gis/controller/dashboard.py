@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.db.models import Count, F
@@ -45,4 +46,20 @@ def get_highmap_json(request):
     data = json.dumps(rs, default=date_handler)
     response = {'high_maps': jsonData, 'chart': data, 'tiles_data': tiles_data}
     response = json.dumps(response, default=date_handler)
+    return HttpResponse(response)
+
+
+def get_district_count_report_json(request):
+    start_date = request.POST.get('start_date', '')
+    end_date = request.POST.get('end_date', '')
+    if start_date != '':
+        start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+    if end_date != '':
+        end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+    data = PoultryFarms.objects.filter(updated_at__gte=start_date, updated_at__lte=end_date).values(
+        'district_id__district_name').annotate(
+        name=F('district_id__district_name'),
+        dcount=Count('*')).order_by('district_id__district_name')
+    data = list(data)
+    response = json.dumps(data, default=date_handler)
     return HttpResponse(response)
