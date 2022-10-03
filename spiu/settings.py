@@ -84,9 +84,11 @@ WSGI_APPLICATION = 'spiu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'spiu_sc',
+        # 'NAME': 'spiu_sc',
         'USER': 'postgres',  # Not used with sqlite3.
-        'PASSWORD': '123',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
+        'NAME': 'spiu',
+        'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
+        # 'PASSWORD': '123',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432'
         # , 'OPTIONS': {
