@@ -33,7 +33,7 @@ class TblLaboratories(models.Model):
         return str(self.lab_name)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'tbl_laboratories'
         ordering = ['lab_name', ]
         verbose_name_plural = "Laboratories Detail"
