@@ -103,11 +103,11 @@ class TblLabAnalysisWasteWater(models.Model):
         ('Complies PEQS', 'Complies PEQS'),
         ('Non Complies PEQS', 'Non Complies PEQS')
     )
-    report_id = models.ForeignKey(TblReportsWasteWater, models.DO_NOTHING,verbose_name="Report ID")
+    report_id = models.ForeignKey(TblReportsWasteWater, models.DO_NOTHING, verbose_name="Report ID")
     sample_id_no = models.CharField(max_length=254)
     parameter = models.CharField(max_length=254)
     peqs_limit = models.CharField(max_length=254, verbose_name="PEQS Limit")
-    concentration = models.FloatField(blank=True, null=True)
+    concentration = models.FloatField(blank=True, null=True, verbose_name="Concentration/Results")
     method_used = models.CharField(max_length=254, verbose_name="Method Used")
     remarks = models.CharField(max_length=254, blank=True, null=True, choices=REMARKS, default="Complies PEQS")
     remarks_calculated = models.CharField(max_length=254, blank=True, null=True)
@@ -125,7 +125,7 @@ class TblLabAnalysisWasteWater(models.Model):
 class TblWasteWaterParameters(models.Model):
     parameter = models.CharField(max_length=254)
     peqs_limit = models.CharField(max_length=254)
-    concentration = models.FloatField(blank=True, null=True)
+    concentration = models.FloatField(blank=True, null=True, verbose_name="Concentration/Results")
     method_used = models.CharField(max_length=254)
     remarks = models.CharField(max_length=254, blank=True, null=True)
 
