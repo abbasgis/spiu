@@ -4,6 +4,12 @@ from django.db import models
 
 from spiu_gis.models import TblDistricts, TblIndustryMainCategory, TblIndustryCategory
 
+REPORT_TYPE = (
+    ('Water', 'Water'),
+    ('Air', 'Air'),
+    ('Noise', 'Noise'),
+)
+
 
 class TblLaboratories(models.Model):
     DESIGNATION = (
@@ -33,7 +39,7 @@ class TblLaboratories(models.Model):
         return str(self.lab_name)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'tbl_laboratories'
         ordering = ['lab_name', ]
         verbose_name_plural = "Laboratories Detail"
@@ -92,10 +98,56 @@ class TblReportsWasteWater(models.Model):
         return str(self.sample_id_no)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'tbl_reports_waste_water'
         verbose_name = "Waste Water Report"
         verbose_name_plural = "Waste Water Reports"
+
+
+class TblReportsAir(models.Model):
+    REPORT_TITLE = (
+        ('Air', 'Air'),
+        ('Noise', 'Surface Water'),
+        ('Air and Noise', 'Air and Noise')
+    )
+    # gid = models.AutoField()
+    report_title = models.CharField(max_length=254, default="Air", verbose_name="Report Title",
+                                    choices=REPORT_TITLE)
+    report_no = models.CharField(max_length=254, verbose_name="Sample/Report No")
+    laboratory_name = models.ForeignKey(TblLaboratories, models.DO_NOTHING, verbose_name="Name of Laboratory")
+    letter_no = models.CharField(max_length=254, verbose_name="Letter No")
+    letter_date = models.DateField(verbose_name="Letter Date")
+    letter_issued_by = models.CharField(max_length=254, blank=True, null=True, verbose_name="Letter Issued By")
+    name_industry = models.CharField(max_length=254, verbose_name="Name of Industry")
+    address_industry = models.CharField(max_length=354, verbose_name="Address of Industry")
+    district_id = models.ForeignKey(TblDistricts, models.DO_NOTHING, verbose_name="Name of District from Address")
+    category = models.ForeignKey(TblIndustryCategory, models.DO_NOTHING, verbose_name="Name of Category")
+    sampling_source = models.CharField(max_length=254, default="Not Provided", verbose_name="Sampling/Emission Source")
+    monitoring_date = models.DateField(verbose_name="Monitoring Date")
+    fuel_type = models.CharField(max_length=254, default="Not Provided", verbose_name="Type of Fuel")
+    emission_control_system = models.CharField(max_length=254, default="Not Provided",
+                                               verbose_name="Emission Control System")
+    sample_monitored_by = models.CharField(max_length=254, verbose_name="Sample Monitored By")
+    latitude = models.FloatField(blank=True, null=True,
+                                 help_text="up to 6 decimals between 25 to 40")
+    longitude = models.FloatField(blank=True, null=True,
+                                  help_text="up to 6 decimals between 60 to 80")
+    form_d_path = models.FileField(upload_to='form_d', verbose_name="Form-D", blank=True, null=True)
+    form_b_path = models.FileField(upload_to='form_b', verbose_name="Form-B", blank=True, null=True)
+    letter_path = models.FileField(upload_to='letters', verbose_name="Letter", blank=True, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', blank=True, null=True)
+    updated_by = models.IntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.report_no)
+
+    class Meta:
+        managed = True
+        db_table = 'tbl_reports_air'
+        verbose_name = "Air Quality Report"
+        verbose_name_plural = "Air Quality Reports"
 
 
 class TblLabAnalysisWasteWater(models.Model):
@@ -111,15 +163,41 @@ class TblLabAnalysisWasteWater(models.Model):
     method_used = models.CharField(max_length=254, verbose_name="Method Used")
     remarks = models.CharField(max_length=254, blank=True, null=True, choices=REMARKS, default="Complies PEQS")
     remarks_calculated = models.CharField(max_length=254, blank=True, null=True)
+    report_type = models.CharField(max_length=254, blank=True, null=True, choices=REPORT_TYPE)
+
+    def __str__(self):
+        return self.parameter
+
+    class Meta:
+        managed = False
+        db_table = 'tbl_lab_analysis_waste_water'
+        verbose_name = "Lab Analysis Waste Water"
+        verbose_name_plural = "Lab Analysis Waste Water"
+
+
+class TblLabAnalysis(models.Model):
+    REMARKS = (
+        ('Complies PEQS', 'Complies PEQS'),
+        ('Non Complies PEQS', 'Non Complies PEQS')
+    )
+    report_id = models.ForeignKey(TblReportsAir, models.DO_NOTHING, verbose_name="Report ID")
+    sample_id_no = models.CharField(max_length=254,blank=True, null=True)
+    parameter = models.CharField(max_length=254)
+    peqs_limit = models.CharField(max_length=254, verbose_name="PEQS Limit")
+    concentration = models.FloatField(blank=True, null=True, verbose_name="Concentration/Results")
+    method_used = models.CharField(max_length=254, verbose_name="Method Used")
+    remarks = models.CharField(max_length=254, blank=True, null=True, choices=REMARKS, default="Complies PEQS")
+    remarks_calculated = models.CharField(max_length=254, blank=True, null=True)
+    report_type = models.CharField(max_length=254, blank=True, null=True, choices=REPORT_TYPE)
 
     def __str__(self):
         return self.parameter
 
     class Meta:
         managed = True
-        db_table = 'tbl_lab_analysis_waste_water'
-        verbose_name = "Lab Analysis Waste Water"
-        verbose_name_plural = "Lab Analysis Waste Water"
+        db_table = 'tbl_lab_analysis'
+        verbose_name = "Lab Analysis"
+        verbose_name_plural = "Lab Analysis"
 
 
 class TblWasteWaterParameters(models.Model):
@@ -128,12 +206,13 @@ class TblWasteWaterParameters(models.Model):
     concentration = models.FloatField(blank=True, null=True, verbose_name="Concentration/Results")
     method_used = models.CharField(max_length=254)
     remarks = models.CharField(max_length=254, blank=True, null=True)
+    report_type = models.CharField(max_length=254, blank=True, null=True, choices=REPORT_TYPE)
 
     def __str__(self):
         return self.parameter
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'tbl_waste_water_parameters'
-        verbose_name = "Waste Water Parameters"
-        verbose_name_plural = "Waste Water Parameters"
+        verbose_name = "Report Parameters"
+        verbose_name_plural = "Report Parameters"
