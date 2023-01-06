@@ -37,11 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'spiu',
     'spiu_gis',
     'labs',
     'fire_points'
 ]
+GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
 BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,11 +87,12 @@ WSGI_APPLICATION = 'spiu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        # 'NAME': 'spiu_sc',
         'USER': 'postgres',  # Not used with sqlite3.
         'NAME': 'spiu',
+        # 'PASSWORD': '123',
+        # For server below
+        # 'NAME': 'spiu',
         'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
-        # 'PASSWORD': '123',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432'
         # , 'OPTIONS': {
@@ -129,6 +133,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ep.spiu@gmail.com'
