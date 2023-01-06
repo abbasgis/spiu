@@ -89,10 +89,10 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'USER': 'postgres',  # Not used with sqlite3.
         'NAME': 'spiu',
-        'PASSWORD': '123',
+        # 'PASSWORD': '123',
         # For server below
         # 'NAME': 'spiu',
-        # 'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
+        'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432'
         # , 'OPTIONS': {
