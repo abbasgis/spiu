@@ -34,7 +34,18 @@
 {% block main_content %}
     <div class="container marketing">
         <div class="row ">
-            <div class="col-lg-2"></div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <a href="/labs/labs_dashboard/">
+                    <img class="img-circle"
+                         src="{% static "assets/img/dashboard.png" %}"
+                         alt="Reports Dashboard Page" width="250" height="250">
+                    <h2>Lab Reports Dashboard</h2>
+                    <p></p>
+                    <p><a class="btn btn-default" href="/labs/labs_dashboard/" role="button">View Dashboard &raquo;</a></p>
+                </a>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-1"></div>
             <div class="col-lg-3 ">
                 <a href="/admin/labs/tblreportswastewater/">
                     <img class="img-circle"
@@ -45,7 +56,6 @@
                     <p><a class="btn btn-default" href="/admin/labs/tblreportswastewater/add/" role="button">Add New Report &raquo;</a></p>
                 </a>
             </div><!-- /.col-lg-4 -->
-            <div class="col-lg-2"></div>
             <div class="col-lg-3">
                 <a href="/admin/labs/tblreportsair/">
                     <img class="img-circle"
@@ -57,7 +67,7 @@
                         &raquo;</a></p>
                 </a>
             </div><!-- /.col-lg-4 -->
-            <div class="col-lg-2">
+            <div class="col-lg-1">
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
     </div>

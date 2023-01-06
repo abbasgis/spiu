@@ -2,6 +2,8 @@ from django.contrib import admin
 
 # Register your models here.
 from django.http import HttpResponseRedirect
+from import_export import resources
+from import_export.admin import ExportActionMixin
 
 from labs.models import TblReportsWasteWater, TblLabAnalysisWasteWater, TblWasteWaterParameters, TblLaboratories, \
     TblReportsAir, TblLabAnalysis
@@ -41,12 +43,13 @@ class TblLabAnalysisInline(admin.TabularInline):
 
 
 @admin.register(TblReportsWasteWater)
-class TblReportsWasteWaterAdmin(admin.ModelAdmin):
+class TblReportsWasteWaterAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = [field.name for field in TblReportsWasteWater._meta.fields if
                     field.name not in ("id",)]
     inlines = [TblLabAnalysisWasteWaterInline, ]
     save_on_bottom = True
     exclude = ('created_by', 'updated_by')
+    list_filter = ('created_by', 'updated_at')
     fieldsets = (
         (None, {
             'fields': (
@@ -141,6 +144,7 @@ class TblReportsAirAdmin(admin.ModelAdmin):
             return []
 
     def insert_lab_analysis_air_parameters(self, obj):
+
         rows = list(TblWasteWaterParameters.objects.filter(report_type=obj.report_title).values())
         for r in rows:
             r['report_id'] = TblReportsAir.objects.get(id=obj.pk)
@@ -149,6 +153,26 @@ class TblReportsAirAdmin(admin.ModelAdmin):
             del r['id']
             new_r = TblLabAnalysis(**r)
             new_r.save(force_insert=True)
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        self.add_update_lab_analysis_parameters(object_id)
+        extra_context = extra_context or {}
+        return super().change_view(
+            request, object_id, form_url, extra_context=extra_context,
+        )
+
+    def add_update_lab_analysis_parameters(self, object_id):
+        obj = TblReportsAir.objects.get(id=object_id)
+        rows = list(TblWasteWaterParameters.objects.filter(report_type=obj.report_title).values())
+        for r in rows:
+            r['report_id'] = TblReportsAir.objects.get(id=obj.pk)
+            r['sample_id_no'] = obj.report_no  # No sample id so report no
+            r['report_type'] = obj.report_title
+            del r['id']
+            rs = TblLabAnalysis.objects.filter(report_id=obj.pk, parameter=r['parameter'])
+            if rs.count() == 0:
+                new_r = TblLabAnalysis(**r)
+                new_r.save(force_insert=True)
 
     class Media:
         js = ('/static/admin/js/show_hide_fields.js',)

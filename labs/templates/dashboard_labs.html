@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static "external/jqwidgets/styles/jqx.base.css" %}"/>
+    <style>
+        body {
+            font-family: "open sans", Arial, sans-serif;
+            color: #000;
+            background-color: #b6d4ec;
+        }
+
+        .panel-heading {
+            background-color: #1192A5 !important;
+            color: white !important;
+            margin-top: 10px !important;
+        {#margin-bottom: 10px !important;#} padding: 10px !important;
+        }
+    </style>
+{% endblock %}
+{% block extra_scripts %}
+    <script src="{% static "external/jqwidgets/jqx-all.js" %}"></script>
+    <script src="{% static "external/jqwidgets/jqxdata.js" %}"></script>
+
+    <script src="{% static "external/jqwidgets/jqxdata.export.js" %}"></script>
+    <script src="{% static "external/jqwidgets/jqxgrid.export.js" %}"></script>
+    <script src="{% static "external/jqwidgets/jqxexport.js" %}"></script>
+    <script src="{% static "external/jszip/jszip.min.js" %}"></script>
+
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+    <script type="text/javascript" src="{% static "assets/js/dashboard_labs_main.js" %}">
+    </script>
+    <script type="text/javascript" src="{% static "assets/js/dashboard_labs.js" %}"></script>
+    <script>
+        var token = '{{ csrf_token }}';
+    </script>
+{% endblock extra_scripts %}
+{% block main_content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card text-white bg-primary">
+                    <div class="card-header header_title">
+                        <span id="total">456</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center">Total Reports Enter till date</h5>
+                        <p class="card-text"></p>
+                    </div>
+                    {#                    <div class="card-footer"></div>#}
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-white bg-success">
+                    <div class="card-header header_title">
+                        <span id="yes">100</span>
+                        <span id="p_yes" style="font-size: large">( 21% )</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center">Water Reports</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-white bg-warning">
+                    <div class="card-header header_title">
+                        <span id="up">156</span>
+                        <span id="p_up" style="font-size: large">( 21% )</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center">Air Reports</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-white bg-danger">
+                    <div class="card-header header_title">
+                        <span id="no">200</span>
+                        <span id="p_no" style="font-size: large">( 43% )</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center">Others</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px !important;"></div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="panel panel-default">
+                    {#                    <div class="panel-heading"></div>#}
+                    <div id="highMap" class="panel-body" style="height: 450px"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="panel panel-default">
+                    {#                    <div class="panel-heading panel-danger"></div>#}
+                    <div id="barchart" class="panel-body" style="height: 450px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row " style="background-color: #ffffff; padding-bottom: 10px;margin-top: 10px">
+            <form class="row">
+                <div class="col-4">
+                    <label for="startdate" class="col-sm-4 col-form-label col-form-label-sm">Start Date</label>
+                    <div class="col-sm-8">
+                        <input type="date" class="form-control form-control-sm" id="startdate"
+                               value="{{ start_date }}"
+                               placeholder="dd-mm-yyyy">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="enddate" class="col-sm-4 col-form-label col-form-label-sm">End Date</label>
+                    <div class="col-sm-8">
+                        <input type="date" class="form-control form-control-sm" id="enddate"
+                               value="{{ end_date }}"
+                               placeholder="dd-mm-yyyy">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <button type="button" id="btnSearch" class="btn btn-warning" style="margin-top: 20px">Search
+                    </button>
+                </div>
+                {#                <div class="col-2">#}
+                {#                    <button type="button" id="btnDownload" class="btn btn-primary">Download</button>#}
+                {#                </div>#}
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">District Wise Summary</div>
+                    <div id="grid_report_district" class="panel-body" style="height: 450px"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Laboratory Wise Summary</div>
+                    <div id="grid_labs_count" class="panel-body" style="height: 450px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-danger">Laboratory Reports Detail
+                        <button style="float: right;align-items: center;" type="button" id="btnGridDownlaodAir" class="btn btn-danger"> Download Air Data
+                        </button>
+                        <button style="float: right;margin-right: 10px" type="button" id="btnGridDownlaodWater" class="btn btn-primary"> Download Water Data
+                        </button>
+
+                    </div>
+                    <div class="panel-body">
+                        <div id='tabs'>
+                            <ul>
+                                <li style="margin-left: 30px;">WATER Reports</li>
+                                <li>Air Reports</li>
+                            </ul>
+                            <div id="water_reports_grid"></div>
+                            <div id="air_reports_grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px"></div>
+    </div>
+    <div id="jqxLoader"></div>
+{% endblock %}

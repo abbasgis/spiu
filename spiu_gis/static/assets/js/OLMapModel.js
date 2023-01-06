@@ -1960,11 +1960,6 @@ var OLMapModel = function (mapTarget, viewModel, token) {
         });
         drawShape.on('drawend', function (e) {
             // console.log("draw end...")
-            // var features = source.getFeatures();
-            // var geometry = e.feature.getGeometry();
-            callback(e.feature);
-            // me.removeAllInteraction();
-            // me.addBasicInteraction();
 
         })
         return drawShape

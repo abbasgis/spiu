@@ -107,12 +107,12 @@ class TblReportsWasteWater(models.Model):
 class TblReportsAir(models.Model):
     REPORT_TITLE = (
         ('Air', 'Air'),
-        ('Noise', 'Surface Water'),
+        ('Noise', 'Noise'),
         ('Air and Noise', 'Air and Noise')
     )
     # gid = models.AutoField()
     report_title = models.CharField(max_length=254, default="Air", verbose_name="Report Title",
-                                    choices=REPORT_TITLE)
+                                    choices=REPORT_TYPE)
     report_no = models.CharField(max_length=254, verbose_name="Sample/Report No")
     laboratory_name = models.ForeignKey(TblLaboratories, models.DO_NOTHING, verbose_name="Name of Laboratory")
     letter_no = models.CharField(max_length=254, verbose_name="Letter No")
@@ -181,7 +181,7 @@ class TblLabAnalysis(models.Model):
         ('Non Complies PEQS', 'Non Complies PEQS')
     )
     report_id = models.ForeignKey(TblReportsAir, models.DO_NOTHING, verbose_name="Report ID")
-    sample_id_no = models.CharField(max_length=254,blank=True, null=True)
+    sample_id_no = models.CharField(max_length=254, blank=True, null=True)
     parameter = models.CharField(max_length=254)
     peqs_limit = models.CharField(max_length=254, verbose_name="PEQS Limit")
     concentration = models.FloatField(blank=True, null=True, verbose_name="Concentration/Results")
@@ -216,3 +216,31 @@ class TblWasteWaterParameters(models.Model):
         db_table = 'tbl_waste_water_parameters'
         verbose_name = "Report Parameters"
         verbose_name_plural = "Report Parameters"
+
+
+class ViewLabsReports(models.Model):
+    # REPORT_TITLE = (
+    #     ('Air', 'Air'),
+    #     ('Noise', 'Noise'),
+    #     ('Air and Noise', 'Air and Noise'),
+    #     ('Waste Water', 'Waste Water'),
+    #     ('Surface Water', 'Surface Water')
+    # )
+    # gid = models.AutoField()
+    report_title = models.CharField(max_length=254, default="Air", verbose_name="Report Title",
+                                    choices=REPORT_TYPE)
+    district_id = models.ForeignKey(TblDistricts, models.DO_NOTHING, verbose_name="Name of District from Address")
+    laboratory_name = models.ForeignKey(TblLaboratories, models.DO_NOTHING, verbose_name="Name of Laboratory")
+    category = models.ForeignKey(TblIndustryCategory, models.DO_NOTHING, verbose_name="Name of Category")
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    tbl_name = models.CharField(max_length=254, blank=True, null=True)
+
+    def __str__(self):
+        return self.parameter
+
+    class Meta:
+        managed = False
+        db_table = 'view_labs_reports'
+        verbose_name = "Postgres View of Two Tables"
+        verbose_name_plural = "Postgres View of Two Tables"
