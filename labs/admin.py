@@ -102,6 +102,18 @@ class TblReportsWasteWaterAdmin(ExportActionMixin, admin.ModelAdmin):
         }
 
 
+@admin.register(TblLabAnalysis)
+class TblLabAnalysisAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in TblLabAnalysis._meta.fields if
+                    field.name not in ("id",)]
+
+
+@admin.register(TblLabAnalysisWasteWater)
+class TblLabAnalysisWasteWaterAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in TblLabAnalysisWasteWater._meta.fields if
+                    field.name not in ("id",)]
+
+
 @admin.register(TblReportsAir)
 class TblReportsAirAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblReportsAir._meta.fields if
