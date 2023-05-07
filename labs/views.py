@@ -1,6 +1,7 @@
 import datetime
 import json
 
+from django.contrib.auth.models import User
 from django.db.models import F, Count
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -73,6 +74,7 @@ def get_district_count_labs_report_json(request):
     data = qs.values(
         'district_id__district_name').annotate(
         name=F('district_id__district_name'),
+        report_title=F('report_title'),
         dcount=Count('*')).order_by('district_id__district_name')
     data = list(data)
     response = json.dumps(data, default=date_handler)
@@ -92,6 +94,7 @@ def get_laboratory_wise_report_count(request):
     data = qs.values(
         'laboratory_name__lab_name').annotate(
         name=F('laboratory_name__lab_name'),
+        report_title=F('report_title'),
         dcount=Count('*')).order_by('laboratory_name__lab_name')
     data = list(data)
     response = json.dumps(data, default=date_handler)
@@ -114,21 +117,24 @@ def get_labs_reports_json(request):
     qs = model_report.objects.all()
     if end_date != '':
         qs = model_report.objects.filter(created_at__gte=start_date, created_at__lte=end_date)
-    data = qs.values()
-    data = list(data)
     data_params = []
-    for r in data:
-        r['laboratory_name'] = TblLaboratories.objects.get(id=r['laboratory_name_id']).lab_name
-        r['district'] = TblDistricts.objects.get(district_id=r['district_id_id']).district_name
-        r['category'] = TblIndustryCategory.objects.get(id=r['category_id']).name
-        params = model_params.objects.filter(report_id=r['id']).values()
-        if params.count() > 0:
-            params = list(params)
-            for p in params:
-                r[p['parameter']] = p['concentration']
-                # r['peqs_limit'] = p['peqs_limit']
-                # r['method_used'] = p['method_used']
-                # r['remarks'] = p['remarks']
-            data_params.append(r)
+    if request.user.id:
+        qs = qs.filter(created_by=request.user)
+        data = qs.values()
+        data = list(data)
+        for r in data:
+            r['laboratory_name'] = TblLaboratories.objects.get(id=r['laboratory_name_id']).lab_name
+            r['district'] = TblDistricts.objects.get(district_id=r['district_id_id']).district_name
+            r['category'] = TblIndustryCategory.objects.get(id=r['category_id']).name
+            r['created_by'] = User.objects.get(id=r['created_by_id']).username
+            params = model_params.objects.filter(report_id=r['id']).values()
+            if params.count() > 0:
+                params = list(params)
+                for p in params:
+                    r[p['parameter']] = p['concentration']
+                    # r['peqs_limit'] = p['peqs_limit']
+                    # r['method_used'] = p['method_used']
+                    # r['remarks'] = p['remarks']
+                data_params.append(r)
     response = json.dumps(data_params, default=date_handler)
     return HttpResponse(response)

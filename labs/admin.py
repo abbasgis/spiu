@@ -45,7 +45,7 @@ class TblLabAnalysisInline(admin.TabularInline):
 @admin.register(TblReportsWasteWater)
 class TblReportsWasteWaterAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = [field.name for field in TblReportsWasteWater._meta.fields if
-                    field.name not in ("id",)]
+                    field.name not in ("",)]
     inlines = [TblLabAnalysisWasteWaterInline, ]
     save_on_bottom = True
     exclude = ('created_by', 'updated_by')
@@ -65,6 +65,13 @@ class TblReportsWasteWaterAdmin(ExportActionMixin, admin.ModelAdmin):
             ),
         }),
     )
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        else:
+            return qs.filter(created_by=request.user)
 
     def save_model(self, request, obj, form, change):
         is_in_add_view = False
@@ -105,7 +112,7 @@ class TblReportsWasteWaterAdmin(ExportActionMixin, admin.ModelAdmin):
 @admin.register(TblLabAnalysis)
 class TblLabAnalysisAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblLabAnalysis._meta.fields if
-                    field.name not in ("id",)]
+                    field.name not in ("",)]
 
 
 @admin.register(TblLabAnalysisWasteWater)
@@ -134,6 +141,13 @@ class TblReportsAirAdmin(admin.ModelAdmin):
             ),
         }),
     )
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        else:
+            return qs.filter(created_by=request.user)
 
     def save_model(self, request, obj, form, change):
         is_in_add_view = False

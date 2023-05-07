@@ -27,17 +27,18 @@ var DashboardGridsModel = function () {
     me.createDistrictReportGrid = function () {
         var cols = me.getReportGridColumns();
         var arrData = [];
-        me.districtsReportGrid = me.createJqxGrid(me.gridDistrictsReport, arrData, cols);
+        me.districtsReportGrid = me.createJqxGrid(me.gridDistrictsReport, arrData, cols, "district");
         me.updateReportGrid(me.gridDistrictsReport, "/labs/get_district_reports_count/");
     }
     me.createLaboratoryReportGrid = function () {
         var cols = me.getReportGridColumns();
         var arrData = [];
-        me.labReportGrid = me.createJqxGrid(me.gridLabsReport, arrData, cols);
+        me.labReportGrid = me.createJqxGrid(me.gridLabsReport, arrData, cols, "labs");
         me.updateReportGrid(me.gridLabsReport, "/labs/get_laboratory_reports_count/");
     }
     me.createWaterReportsDetailGrid = function () {
         var row = {
+            "id": null,
             "laboratory_name": 'Lahore',
             "district": "Lahore",
             "category": "category",
@@ -62,6 +63,7 @@ var DashboardGridsModel = function () {
             "letter_path": "letters/L_EUZn6yi.jpg",
             "latitude": null,
             "longitude": null,
+            "created_by": null,
             "updated_at": "2022-10-12T07:30:33.168915+00:00",
             "Sulfide (S2-)": null,
             "Temerature or Temperature Increase": null,
@@ -75,11 +77,12 @@ var DashboardGridsModel = function () {
         };
         var cols = me.getGridColumns(row);
         var arrData = [];
-        me.labReportGrid = me.createJqxGrid(me.water_reports_grid, arrData, cols);
+        me.labReportGrid = me.createJqxGrid(me.water_reports_grid, arrData, cols, "water_reports");
         me.updateReportGrid(me.water_reports_grid, "/labs/get_labs_reports/?report_type=water");
     }
     me.createAirReportsDetailGrid = function () {
         var row = {
+            "id": null,
             "laboratory_name": 'Lahore',
             "district": "Lahore",
             "category": "category",
@@ -99,12 +102,13 @@ var DashboardGridsModel = function () {
             "form_d_path": "form_d/1_Form_D_1S4iehu.jpeg",
             "form_b_path": "form_b/10.jpg",
             "letter_path": "letters/2_Letter_yWMBwXD.jpeg",
+            "created_by": null,
             "updated_at": "2022-11-25T05:04:21.932954+00:00",
             "Smoke": 60.0
         };
         var cols = me.getGridColumns(row);
         var arrData = [];
-        me.labReportGrid = me.createJqxGrid(me.air_reports_grid, arrData, cols);
+        me.labReportGrid = me.createJqxGrid(me.air_reports_grid, arrData, cols, "air_reports");
         me.updateReportGrid(me.air_reports_grid, "/labs/get_labs_reports/?report_type=air");
     }
     me.updateReportGrid = function (gridEl, url) {
@@ -151,6 +155,13 @@ var DashboardGridsModel = function () {
                 aggregates: ['count']
             },
             {
+                text: 'Report Type',
+                width: 200,
+                datafield: 'report_title',
+                filtertype: 'input',
+                aggregates: ['count']
+            },
+            {
                 text: "Count",
                 datafield: 'dcount',
                 // width: 100,
@@ -163,7 +174,11 @@ var DashboardGridsModel = function () {
         ];
         return columns;
     };
-    me.createJqxGrid = function (gridEl, data, columns) {
+    me.createJqxGrid = function (gridEl, data, columns, gridName) {
+        let groupable = true;
+        // if (gridName === 'district') {
+        //     groupable = false
+        // }
         var source =
             {
                 datatype: "json",
@@ -173,6 +188,7 @@ var DashboardGridsModel = function () {
         let grid = gridEl.jqxGrid(
             {
                 source: source,
+                groupable: groupable,
                 width: "100%",
                 height: "450",
                 theme: "arctic",
