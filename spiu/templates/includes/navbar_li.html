@@ -1,0 +1,12 @@
+<li class="nav-item"><a class="nav-link" href="{% url "spiu" %}">Home</a></li>
+{% if request.user.is_superuser or  request.user|has_group:"PF" %}
+    <li class="nav-item"><a class="nav-link" href="{% url "forms_page" %}">EDM</a></li>
+{% endif %}
+{% if request.user.is_superuser or  request.user|has_group:"Labs" %}
+    <li class="nav-item"><a class="nav-link" href="/admin/labs/tblreports/">Laboratory Reports</a></li>
+{% endif %}
+{% if request.user.is_superuser  %}
+    <li class="nav-item"><a class="nav-link" href="{% url "dashboard" %}">Poultry Farms Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="/labs/labs_dashboard/">Laboratory Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="/admin/spiu_gis/">Entry Forms</a></li>
+{% endif %}

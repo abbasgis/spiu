@@ -12,17 +12,7 @@
         {#        <h3><a class="navbar-brand" href="#">GIS Maps- Land Record Management Information System</a></h3>#}
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="nav-link active" aria-current="page" href="#">Home</a>-->
-                <!--                </li>-->
-                <li class="nav-item"><a class="nav-link" href="{% url "spiu" %}">Home</a></li>
-                <!--       <li class="nav-item"><a class="nav-link" href="{% url "home" %}">Map</a></li> -->
-                <li class="nav-item"><a class="nav-link" href="{% url "dashboard" %}">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url "forms_page" %}">EDM</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/spiu_gis/">Entry Forms</a></li>
-                {% if request.user.is_superuser or  request.user|has_group:"Labs" %}
-                    <li class="nav-item"><a class="nav-link" href="{% url "labs_page" %}">Labs</a></li>
-                {% endif %}
+                {% include "includes/navbar_li.html" %}
 
                 {% block extra_tabs %}
                 {% endblock %}
@@ -45,7 +35,10 @@
                             <li><a class="dropdown-item" href="{% url 'admin:index' %}">Manage</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url "disclaimer" %}">Disclaimer</a></li>
+                    {% if request.user.is_superuser or  request.user|has_group:"PF" %}
+                        <li class="nav-item"><a class="nav-link" href="{% url "disclaimer" %}">Disclaimer</a></li>
+                    {% endif %}
+
                 {% endif %}
                 <li>
                     <div class="logo">

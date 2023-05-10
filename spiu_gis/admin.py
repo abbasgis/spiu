@@ -33,6 +33,12 @@ class TblDistrictsAdmin(admin.ModelAdmin):
         # PoultryFarms.objects.values("district_id__name").annotate(Count("district_id"))
         return pf_count
 
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        else:
+            return False
+
 
 # @admin.register(TblIndustryMainCategory)
 class TblIndustryMainCategoryAdmin(admin.ModelAdmin):
@@ -64,6 +70,12 @@ class TblIndustryCategoryAdmin(admin.ModelAdmin):
             obj.updated_by = request.user.id
         super().save_model(request, obj, form, change)
         update_category_code(obj)
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        else:
+            return False
 
 
 @admin.register(TblDistrictsIncharge)

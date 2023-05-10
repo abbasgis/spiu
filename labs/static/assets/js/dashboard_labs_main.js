@@ -48,16 +48,17 @@ var LabReportsDashboard = function () {
     }
     me.setTilesValues = function (obj) {
         // var c = ((a < b) ? 'minor' : 'major');
-        obj["Waste Water"] = ((obj.hasOwnProperty("Waste Water")) ? obj["Waste Water"] : 0)
+        obj["Water"] = ((obj.hasOwnProperty("Water")) ? obj["Water"] : 0)
+        obj["WWTP"] = ((obj.hasOwnProperty("WWTP")) ? obj["WWTP"] : 0)
         obj["Air"] = ((obj.hasOwnProperty("Air")) ? obj["Air"] : 0)
-        obj["Others"] = ((obj.hasOwnProperty("Others")) ? obj["Others"] : 0)
+        obj["Noise"] = ((obj.hasOwnProperty("Noise")) ? obj["Noise"] : 0)
         document.getElementById("total").innerHTML = obj["total"]
-        document.getElementById("yes").innerHTML = obj["Waste Water"]
-        document.getElementById("p_yes").innerHTML = Math.round((obj["Waste Water"] / obj["total"] * 100)) + " %"
+        document.getElementById("yes").innerHTML = obj["Water"]
+        document.getElementById("p_yes").innerHTML = Math.round((obj["Water"] / obj["total"] * 100)) + " %"
         document.getElementById("up").innerHTML = obj["Air"]
         document.getElementById("p_up").innerHTML = Math.round((obj["Air"] / obj["total"] * 100)) + " %"
-        document.getElementById("no").innerHTML = obj["Others"]
-        document.getElementById("p_no").innerHTML = Math.round((obj["Others"] / obj["total"] * 100)) + " %"
+        document.getElementById("no").innerHTML = obj["Noise"]
+        document.getElementById("p_no").innerHTML = Math.round((obj["Noise"] / obj["total"] * 100)) + " %"
 
     }
     me.createHighMaps = function (input_data) {
@@ -249,7 +250,7 @@ var LabReportsDashboard = function () {
     me.create_barchart_series = function (categories, data) {
         var arr_water = [];
         var arr_air = [];
-        var arr_others = [];
+        var arr_Noise = [];
         var series_data = [];
         for (var j in categories) {
             var row = me.create_barchart_series_row(data, categories[j])
@@ -258,7 +259,7 @@ var LabReportsDashboard = function () {
         for (var m = 0; m < series_data.length; m++) {
             arr_water.push(series_data[m].water)
             arr_air.push(series_data[m].air)
-            arr_others.push(series_data[m].other)
+            arr_Noise.push(series_data[m].other)
         }
         var series = [
             {
@@ -267,7 +268,7 @@ var LabReportsDashboard = function () {
                 name: 'Air', data: arr_air, color: '#d53343'
             },
             {
-                name: 'Other', data: arr_others, color: '#198754'
+                name: 'Other', data: arr_Noise, color: '#198754'
             }
         ]
         return series;
