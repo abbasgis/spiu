@@ -9,7 +9,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.template import loader
 
-from labs.models import TblReports, TblReports, TblReportAnalysis,  \
+from labs.models import TblReports, TblReports, TblReportsAnalysis,  \
     TblLaboratories
 from spiu.utils import date_handler, getJSONFromDB
 from spiu_gis.models import TblDistricts, TblIndustryCategory
@@ -37,9 +37,9 @@ def get_labs_highmap_json(request):
         name=F('report_title'),
         dcount=Count('*'))
     if level == 'division':
-        sql = "with tbl_reports as (select tbl_districts.division_id,tbl_reports_waste_water.* from tbl_districts INNER JOIN tbl_reports_waste_water on tbl_districts.district_id=tbl_reports_waste_water.district_id_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.division_name as name  ,Count(*) total ,lg.division_id code FROM tbl_reports sr WHERE sr.division_id=lg.division_id GROUP BY lg.division_name,lg.division_id  ) As l ) ) As properties FROM public.tbl_divisions  As lg    ) As f )  As fc;"
+        sql = "with tbl_reports as (select tbl_districts.division_id,tbl_reports.* from tbl_districts INNER JOIN tbl_reports on tbl_districts.district_id=tbl_reports.district_id_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.division_name as name  ,Count(*) total ,lg.division_id code FROM tbl_reports sr WHERE sr.division_id=lg.division_id GROUP BY lg.division_name,lg.division_id  ) As l ) ) As properties FROM public.tbl_divisions  As lg    ) As f )  As fc;"
     elif level == 'district':
-        sql = "with tbl_reports as (select tbl_districts.division_id,tbl_reports_waste_water.* from tbl_districts INNER JOIN tbl_reports_waste_water on tbl_districts.district_id=tbl_reports_waste_water.district_id_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.district_name as name ,Count(*) total ,lg.district_id code FROM tbl_reports sr WHERE sr.district_id_id=lg.district_id GROUP BY lg.district_name,lg.district_id  ) As l ) ) As properties FROM public.tbl_districts  As lg where lg.division_id=" + division_id + "   ) As f )  As fc;"
+        sql = "with tbl_reports as (select tbl_districts.division_id,tbl_reports.* from tbl_districts INNER JOIN tbl_reports on tbl_districts.district_id=tbl_reports.district_id_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.district_name as name ,Count(*) total ,lg.district_id code FROM tbl_reports sr WHERE sr.district_id_id=lg.district_id GROUP BY lg.district_name,lg.district_id  ) As l ) ) As properties FROM public.tbl_districts  As lg where lg.division_id=" + division_id + "   ) As f )  As fc;"
         result = TblReports.objects.filter(district_id__division__division_id=division_id).values(
             'district_id__district_name',
             'report_title').annotate(
@@ -106,7 +106,7 @@ def get_labs_reports_json(request):
     end_date = request.POST.get('end_date', '')
     report_type = request.GET.get('report_type', 'air')
     model_report = TblReports
-    model_params = TblReportAnalysis
+    model_params = TblReportsAnalysis
     if start_date != '':
         start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
     if end_date != '':

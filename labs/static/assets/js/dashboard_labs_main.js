@@ -50,15 +50,16 @@ var LabReportsDashboard = function () {
         // var c = ((a < b) ? 'minor' : 'major');
         obj["Water"] = ((obj.hasOwnProperty("Water")) ? obj["Water"] : 0)
         obj["WWTP"] = ((obj.hasOwnProperty("WWTP")) ? obj["WWTP"] : 0)
+        obj["Water"] = obj["Water"] + obj["WWTP"]
         obj["Air"] = ((obj.hasOwnProperty("Air")) ? obj["Air"] : 0)
         obj["Noise"] = ((obj.hasOwnProperty("Noise")) ? obj["Noise"] : 0)
         document.getElementById("total").innerHTML = obj["total"]
-        document.getElementById("yes").innerHTML = obj["Water"]
-        document.getElementById("p_yes").innerHTML = Math.round((obj["Water"] / obj["total"] * 100)) + " %"
-        document.getElementById("up").innerHTML = obj["Air"]
-        document.getElementById("p_up").innerHTML = Math.round((obj["Air"] / obj["total"] * 100)) + " %"
-        document.getElementById("no").innerHTML = obj["Noise"]
-        document.getElementById("p_no").innerHTML = Math.round((obj["Noise"] / obj["total"] * 100)) + " %"
+        document.getElementById("water").innerHTML = obj["Water"]
+        document.getElementById("p_water").innerHTML = Math.round((obj["Water"] / obj["total"] * 100)) + " %"
+        document.getElementById("air").innerHTML = obj["Air"]
+        document.getElementById("p_air").innerHTML = Math.round((obj["Air"] / obj["total"] * 100)) + " %"
+        document.getElementById("noise").innerHTML = obj["Noise"]
+        document.getElementById("p_noise").innerHTML = Math.round((obj["Noise"] / obj["total"] * 100)) + " %"
 
     }
     me.createHighMaps = function (input_data) {
@@ -112,7 +113,7 @@ var LabReportsDashboard = function () {
                 me.updateTiles(res);
             }
         };
-// On drill up, reset to the top-level map view
+// On drill air, reset to the top-level map view
         const drillup = function (e) {
             if (e.seriesOptions.custom && e.seriesOptions.custom.mapView) {
                 e.target.mapView.update(e.seriesOptions.custom.mapView, false);
@@ -259,22 +260,22 @@ var LabReportsDashboard = function () {
         for (var m = 0; m < series_data.length; m++) {
             arr_water.push(series_data[m].water)
             arr_air.push(series_data[m].air)
-            arr_Noise.push(series_data[m].other)
+            arr_Noise.push(series_data[m].noise)
         }
         var series = [
             {
-                name: 'Water', data: arr_water, color: '#f7bb07'
+                name: 'Water', data: arr_water, color: '#198754'
             }, {
-                name: 'Air', data: arr_air, color: '#d53343'
+                name: 'Air', data: arr_air, color: '#f7bb07'
             },
             {
-                name: 'Other', data: arr_Noise, color: '#198754'
+                name: 'Noise', data: arr_Noise, color: '#d53343'
             }
         ]
         return series;
     }
     me.create_barchart_series_row = function (data, key) {
-        var row = {'name': key, 'water': 0, 'air': 0, 'other': 0}
+        var row = {'name': key, 'water': 0, 'air': 0, 'noise': 0}
         for (var i = 0; i < data.length; i++) {
             var obj = data[i];
             if (obj.name === key) {
@@ -282,12 +283,12 @@ var LabReportsDashboard = function () {
                 if (typeof (count) == "undefined" || count == null || count < 0) {
                     count = 0;
                 }
-                if (obj.report_title === 'Waste Water') {
+                if (obj.report_title === 'Water' || obj.report_title === 'WWTP') {
                     row['water'] = count
                 } else if (obj.report_title === 'Air') {
                     row['air'] = count
-                } else if (obj.report_title === 'Other') {
-                    row['other'] = count
+                } else if (obj.report_title === 'Noise') {
+                    row['noise'] = count
                 }
             }
 

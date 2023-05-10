@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from django.http import HttpResponseRedirect
 from labs.models import TblReportParameters, TblLaboratories, \
-    TblReports, TblReportAnalysis
+    TblReports, TblReportsAnalysis
 from spiu_gis.admin import TblIndustryMainCategoryAdmin, TblIndustryCategoryAdmin
 from spiu_gis.models import TblIndustryMainCategory, TblIndustryCategory
 
@@ -30,16 +30,16 @@ class TblReportParametersAdmin(admin.ModelAdmin):
 
 
 class TblLabAnalysisInline(admin.TabularInline):
-    model = TblReportAnalysis
+    model = TblReportsAnalysis
     fields = ('report_id', 'peqs_limit', 'concentration', 'method_used', 'remarks')
     # readonly_fields = ('peqs_limit',)
     extra = 2
     can_delete = False
 
 
-@admin.register(TblReportAnalysis)
-class TblReportAnalysisAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in TblReportAnalysis._meta.fields if
+@admin.register(TblReportsAnalysis)
+class TblReportsAnalysisAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in TblReportsAnalysis._meta.fields if
                     field.name not in ("",)]
 
 
@@ -48,7 +48,7 @@ class TblReportsAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TblReports._meta.fields if
                     field.name not in ("id",)]
     inlines = [TblLabAnalysisInline, ]
-    list_filter = ('report_title',)
+    # list_filter = ('report_title',)
     save_on_bottom = True
     exclude = ('created_by', 'updated_by')
     fieldsets = (
@@ -108,7 +108,7 @@ class TblReportsAdmin(admin.ModelAdmin):
             r['sample_id_no'] = obj.report_no  # No sample id so report no
             r['report_type'] = obj.report_title
             del r['id']
-            new_r = TblReportAnalysis(**r)
+            new_r = TblReportsAnalysis(**r)
             new_r.save(force_insert=True)
 
     def get_readonly_fields(self, request, obj=None):
@@ -120,14 +120,14 @@ class TblReportsAdmin(admin.ModelAdmin):
             return []
 
     def formfield_for_dbfield(self, db_field, **kwargs):
-        request = kwargs['request']
-        lab = TblLaboratories.objects.filter(lab_name=request.user.first_name)
-        if lab.count() > 0:
-            field = super(TblReportsAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-            if db_field.name == 'laboratory_name':
+        field = super(TblReportsAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'laboratory_name':
+            request = kwargs['request']
+            lab = TblLaboratories.objects.filter(lab_name=request.user.first_name)
+            if lab.count() > 0:
                 field.initial = lab.get().pk
                 field.disabled = True
-            return field
+        return field
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.add_update_report_parameters(object_id)
@@ -144,9 +144,9 @@ class TblReportsAdmin(admin.ModelAdmin):
             r['sample_id_no'] = obj.report_no  # No sample id so report no
             r['report_type'] = obj.report_title
             del r['id']
-            rs = TblReportAnalysis.objects.filter(report_id=obj.pk, parameter=r['parameter'])
+            rs = TblReportsAnalysis.objects.filter(report_id=obj.pk, parameter=r['parameter'])
             if rs.count() == 0:
-                new_r = TblReportAnalysis(**r)
+                new_r = TblReportsAnalysis(**r)
                 new_r.save(force_insert=True)
 
     def has_delete_permission(self, request, obj=None):
