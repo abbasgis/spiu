@@ -1,118 +1,96 @@
-var DashboardGridsModel = function () {
-    var me = this;
+let DashboardGridsModel = function () {
+    let me = this;
     me.gridDistrictsReport = $('#grid_report_district');
     me.gridLabsReport = $('#grid_labs_count');
-    me.water_reports_grid = $('#water_reports_grid');
-    me.air_reports_grid = $('#air_reports_grid');
+    me.reports_detail_grid = $('#reports_detail_grid');
     me.districtsReportGrid = null;
     me.labReportGrid = null;
+    me.labReportsDetailGrid = null;
     $("#btnSearch").click(function () {
         me.updateReportGrid(me.gridDistrictsReport, "/labs/get_district_reports_count/");
         me.updateReportGrid(me.gridLabsReport, "/labs/get_laboratory_reports_count/");
     });
+    $("#btnGetReportsDetail").click(function () {
+        me.createReportsDetailGrid();
+    });
+
     $("#btnDownload").click(function () {
         me.districtsReportGrid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
     });
-    $("#btnGridDownlaodWater").click(function () {
-        me.water_reports_grid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
-        // me.air_reports_grid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
-    });
-    $("#btnGridDownlaodAir").click(function () {
+
+    $("#btnReportsGridDownload").click(function () {
         // me.water_reports_grid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
-        me.air_reports_grid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
+        me.reports_detail_grid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
     });
     me.initialize = function () {
 
     }
     me.createDistrictReportGrid = function () {
-        var cols = me.getReportGridColumns();
-        var arrData = [];
+        let cols = me.getReportGridColumns();
+        let arrData = [];
         me.districtsReportGrid = me.createJqxGrid(me.gridDistrictsReport, arrData, cols, "district");
         me.updateReportGrid(me.gridDistrictsReport, "/labs/get_district_reports_count/");
     }
     me.createLaboratoryReportGrid = function () {
-        var cols = me.getReportGridColumns();
-        var arrData = [];
+        let cols = me.getReportGridColumns();
+        let arrData = [];
         me.labReportGrid = me.createJqxGrid(me.gridLabsReport, arrData, cols, "labs");
         me.updateReportGrid(me.gridLabsReport, "/labs/get_laboratory_reports_count/");
     }
-    me.createWaterReportsDetailGrid = function () {
-        var row = {
-            "id": null,
-            "laboratory_name": 'Lahore',
-            "district": "Lahore",
-            "category": "category",
-            "letter_no": "20 DD(LAB)/SKP/2022",
-            "letter_date": "2022-01-31",
-            "letter_issued_by": "DD(LAB)",
-            "name_industry": "HAJI MUHAMMAD BASHIR TANNERIES PVT LTD",
-            "address_industry": "23 KM GT ROAD MURIDKEY",
-            "sample_type": "Grab",
-            "sampling_point": "Not Provided",
-            "treatment_facility": "Nil",
-            "treatment_facility_type": "Primary",
-            "process_generating_wastewater": "Not Provided",
-            "discharge": "Not Provided",
-            "sampling_date": "2022-01-19",
-            "sample_receiving_date": "2022-01-19",
-            "sample_id_no": "06/RA/WW/EPA/SKP/2022",
-            "sample_received_from": "ZAHID MAHMOOD, RESEARCH ASSISTANT",
-            "sample_received_by": "RESEARCH OFFICER LAB",
-            "form_d_path": "form_d/D_beoRSGh.jpg",
-            "form_b_path": "form_b/B_QrvSFgx.jpg",
-            "letter_path": "letters/L_EUZn6yi.jpg",
-            "latitude": null,
-            "longitude": null,
-            "created_by": null,
-            "updated_at": "2022-10-12T07:30:33.168915+00:00",
-            "Sulfide (S2-)": null,
-            "Temerature or Temperature Increase": null,
-            "pH value (H)": 8.81,
-            "Biochenical Oxygen Demand (BOD:) at 20°C": 1318.0,
-            "Chemical Oxygen Demand 150 mg/L 100 SMWW 5220 B PEQS (COD)": 2230.0,
-            "Total Dissolved Solids (TDS)": 4888.0,
-            "Total Suspended Solids (TSS)": 1164.0,
-            "Chloride (as Cl)": 2040.0,
-            "Sulfate (SO4)2-": 751.0
+
+    me.createReportsDetailGrid = function () {
+        $("#jqxLoader").jqxLoader({isModal: true, width: 100, height: 60, imagePosition: 'top'});
+        $('#jqxLoader').jqxLoader('open');
+        let url = "/labs/get_labs_reports/";
+        let params = {
+            'lab_name': $("#lab_name").val(),
+            'report_type': $("#report_type").val(),
+            csrfmiddlewaretoken: token,
+            state: "inactive"
         };
-        var cols = me.getGridColumns(row);
-        var arrData = [];
-        me.labReportGrid = me.createJqxGrid(me.water_reports_grid, arrData, cols, "water_reports");
-        me.updateReportGrid(me.water_reports_grid, "/labs/get_labs_reports/?report_type=water");
-    }
-    me.createAirReportsDetailGrid = function () {
-        var row = {
-            "id": null,
-            "laboratory_name": 'Lahore',
-            "district": "Lahore",
-            "category": "category",
-            "report_no": "--",
-            "letter_no": "--",
-            "letter_date": "2022-05-17",
-            "letter_issued_by": "--",
-            "name_industry": "M/S Abdul Hadi Bricks Company",
-            "address_industry": "Ellahi Petrol Pump Near Ada Gulzarpur, Dunyapur ROad Multan",
-            "sampling_source": "Not Provided",
-            "monitoring_date": "2022-05-17",
-            "fuel_type": "Not Provided",
-            "emission_control_system": "Not Provided",
-            "sample_monitored_by": "--",
-            "latitude": null,
-            "longitude": null,
-            "form_d_path": "form_d/1_Form_D_1S4iehu.jpeg",
-            "form_b_path": "form_b/10.jpg",
-            "letter_path": "letters/2_Letter_yWMBwXD.jpeg",
-            "created_by": null,
-            "updated_at": "2022-11-25T05:04:21.932954+00:00",
-            "Smoke": 60.0
-        };
-        var cols = me.getGridColumns(row);
-        var arrData = [];
-        me.labReportGrid = me.createJqxGrid(me.air_reports_grid, arrData, cols, "air_reports");
-        me.updateReportGrid(me.air_reports_grid, "/labs/get_labs_reports/?report_type=air");
+        let request = $.ajax({
+            url: url,
+            method: "post",
+            //contentType: 'application/json',
+            dataType: "json",
+            data: params
+        });
+        request.done(function (response) {
+            let data = response;
+            $('#jqxLoader').jqxLoader('close');
+            if (data.length > 0) {
+                let cols = me.getGridColumns(data[0])
+                if (me.labReportsDetailGrid) {
+                    let fields = me.createFields(data[1])
+                    let source =
+                        {
+                            datatype: "json",
+                            datafields: fields,
+                            localdata: data
+                        };
+                    let dataAdapter = new $.jqx.dataAdapter(source);
+                    dataAdapter.dataBind();
+                    // me.labReportsDetailGrid.jqxGrid({_cachedcolumns: null});
+
+                    me.labReportsDetailGrid.jqxGrid({columns: cols});
+                    me.labReportsDetailGrid.jqxGrid({source: dataAdapter});
+                    me.labReportsDetailGrid.jqxGrid('updatebounddata');
+                    me.labReportsDetailGrid.refresh();
+                } else {
+                    me.labReportsDetailGrid = me.createJqxGrid(me.reports_detail_grid, data, cols, "reports_detail_grid");
+                }
+            }
+
+        });
+        request.fail(function (jqXHR, textStatus) {
+            $('#jqxLoader').jqxLoader('close');
+            alert("Request failed: " + textStatus);
+        });
+
+
     }
     me.updateReportGrid = function (gridEl, url) {
-        var params = {
+        let params = {
             'start_date': $("#startdate").val(),
             'end_date': $("#enddate").val(),
             csrfmiddlewaretoken: token,
@@ -136,7 +114,7 @@ var DashboardGridsModel = function () {
         return cols;
     }
     me.getReportGridColumns = function () {
-        var columns = [
+        let columns = [
             {
                 text: 'Id',
                 hidden: true,
@@ -179,7 +157,7 @@ var DashboardGridsModel = function () {
         // if (gridName === 'district') {
         //     groupable = false
         // }
-        var source =
+        let source =
             {
                 datatype: "json",
                 datafields: me.createFields(data[1]),
@@ -213,8 +191,8 @@ var DashboardGridsModel = function () {
         // });
     };
     me.createFields = function (obj) {
-        var arrFields = [];
-        for (var key in obj) {
+        let arrFields = [];
+        for (let key in obj) {
             if (key.indexOf("progres") != -1 || key.indexOf("cumulative") != -1 || key == 'target_total' || key == 'target_achieved' || key == 'achieved_percentage') {
                 arrFields.push({name: key, type: 'float'});
             } else {
@@ -227,7 +205,7 @@ var DashboardGridsModel = function () {
     me.updateGridData = function (gridEl, params, url) {
         $("#jqxLoader").jqxLoader({isModal: true, width: 100, height: 60, imagePosition: 'top'});
         $('#jqxLoader').jqxLoader('open');
-        var request = $.ajax({
+        let request = $.ajax({
             url: url,
             method: "post",
             //contentType: 'application/json',
@@ -235,16 +213,16 @@ var DashboardGridsModel = function () {
             data: params
         });
         request.done(function (response) {
-            var data = response;
+            let data = response;
             $('#jqxLoader').jqxLoader('close');
-            var adapter = gridEl.jqxGrid('source');
-            var source =
+            let adapter = gridEl.jqxGrid('source');
+            let source =
                 {
                     datatype: "json",
                     datafields: adapter._source.datafields,
                     localdata: data
                 };
-            var dataAdapter = new $.jqx.dataAdapter(source);
+            let dataAdapter = new $.jqx.dataAdapter(source);
             dataAdapter.dataBind();
             gridEl.jqxGrid({source: dataAdapter});
             gridEl.jqxGrid('updatebounddata');
@@ -254,4 +232,5 @@ var DashboardGridsModel = function () {
             alert("Request failed: " + textStatus);
         });
     }
+
 };

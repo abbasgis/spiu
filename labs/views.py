@@ -9,7 +9,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.template import loader
 
-from labs.models import TblReports, TblReports, TblReportsAnalysis,  \
+from labs.models import TblReports, TblReports, TblReportsAnalysis, \
     TblLaboratories
 from spiu.utils import date_handler, getJSONFromDB
 from spiu_gis.models import TblDistricts, TblIndustryCategory
@@ -30,7 +30,7 @@ def get_labs_highmap_json(request):
     division_id = request.GET.get('division_id', -1)
     level = request.GET.get('level', 'division')
     result = TblReports.objects.values('district_id__division__division_name',
-                                            'report_title').annotate(
+                                       'report_title').annotate(
         name=F('district_id__division__division_name'),
         dcount=Count('*')).order_by()
     tiles = TblReports.objects.values('report_title').annotate(
@@ -102,36 +102,31 @@ def get_laboratory_wise_report_count(request):
 
 
 def get_labs_reports_json(request):
-    start_date = request.POST.get('start_date', '')
-    end_date = request.POST.get('end_date', '')
-    report_type = request.GET.get('report_type', 'air')
+    lab_id = request.POST.get('lab_name', '')
+    report_type = request.POST.get('report_type', '')
     model_report = TblReports
     model_params = TblReportsAnalysis
-    if start_date != '':
-        start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
-    if end_date != '':
-        end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
-    qs = model_report.objects.all()
-    if end_date != '':
-        qs = model_report.objects.filter(created_at__gte=start_date, created_at__lte=end_date)
+    qs = model_report.objects.filter(report_title=report_type)
+    if lab_id != '-1':
+        qs = model_report.objects.filter(laboratory_name__id=lab_id)
     data_params = []
-    if request.user.id:
+    if request.user.id and not request.user.is_superuser:
         qs = qs.filter(created_by=request.user)
-        data = qs.values()
-        data = list(data)
-        for r in data:
-            r['laboratory_name'] = TblLaboratories.objects.get(id=r['laboratory_name_id']).lab_name
-            r['district'] = TblDistricts.objects.get(district_id=r['district_id_id']).district_name
-            r['category'] = TblIndustryCategory.objects.get(id=r['category_id']).name
-            r['created_by'] = User.objects.get(id=r['created_by_id']).username
-            params = model_params.objects.filter(report_id=r['id']).values()
-            if params.count() > 0:
-                params = list(params)
-                for p in params:
-                    r[p['parameter']] = p['concentration']
-                    # r['peqs_limit'] = p['peqs_limit']
-                    # r['method_used'] = p['method_used']
-                    # r['remarks'] = p['remarks']
-                data_params.append(r)
+    data = qs.values()
+    data = list(data)
+    for r in data:
+        r['laboratory_name'] = TblLaboratories.objects.get(id=r['laboratory_name_id']).lab_name
+        r['district'] = TblDistricts.objects.get(district_id=r['district_id_id']).district_name
+        r['category'] = TblIndustryCategory.objects.get(id=r['category_id']).name
+        r['created_by'] = User.objects.get(id=r['created_by_id']).username
+        params = model_params.objects.filter(report_id=r['id']).values()
+        if params.count() > 0:
+            params = list(params)
+            for p in params:
+                r[p['parameter']] = p['concentration']
+                # r['peqs_limit'] = p['peqs_limit']
+                # r['method_used'] = p['method_used']
+                # r['remarks'] = p['remarks']
+            data_params.append(r)
     response = json.dumps(data_params, default=date_handler)
     return HttpResponse(response)

@@ -7,13 +7,12 @@ var LabReportsDashboard = function () {
     me.barchart = null;
     me.gridVM = null;
     me.initialize = function () {
-        $('#tabs').jqxTabs({height: 550, width: '100%', position: 'top'});
         me.getDivisionLevelStats();
         me.gridVM = new DashboardGridsModel();
         me.gridVM.createDistrictReportGrid();
         me.gridVM.createLaboratoryReportGrid();
-        me.gridVM.createWaterReportsDetailGrid();
-        me.gridVM.createAirReportsDetailGrid();
+        // me.gridVM.createReportsDetailGrid();
+        // me.gridVM.createAirReportsDetailGrid();
     }
     me.getDivisionLevelStats = function () {
         $.ajax({

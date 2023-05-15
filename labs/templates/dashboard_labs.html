@@ -148,28 +148,54 @@
                 </div>
             </div>
         </div>
+        <div class="row " style="background-color: #ffffff; padding-bottom: 10px;margin-top: 10px">
+            <form class="row">
+                <div class="col-4">
+                    <label for="lab_name" class="col-sm-4 col-form-label col-form-label-sm">Laboratory</label>
+                    <div class="col-sm-8">
+                        <select id="lab_name" class="form-select" aria-label="Default select example">
+                            <option value="-1" selected>Select Laboratory</option>
+                            <option value="1">EPA Lab, Faisalabad</option>
+                            <option value="2">EPA Lab, Gujranwala</option>
+                            <option value="3">EPA Lab, Lahore</option>
+                            <option value="4">EPA Lab, Multan</option>
+                            <option value="5">EPA Lab, Rawalpindi</option>
+                            <option value="6">EPA Lab, Rahim Yar Khan</option>
+                            <option value="7">EPA Lab, Sialkot</option>
+                            <option value="8">EPA Lab, Sheikhupura</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="report_type" class="col-sm-4 col-form-label col-form-label-sm">Report Type</label>
+                    <div class="col-sm-8">
+                        <select id="report_type" class="form-select" aria-label="Default select example">
+                            <option value="Air" selected>Stack Emission/ Air</option>
+                            <option value="Noise">Noise</option>
+                            <option value="Water">Liquid Effluent/ Water</option>
+                            <option value="WWTP">Waste Water Treatment Plants</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <button type="button" id="btnGetReportsDetail" class="btn btn-warning" style="margin-top: 20px">
+                        Search
+                    </button>
+                </div>
+            </form>
+        </div>
         <div class="row" style="margin-top: 10px">
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading panel-danger">Laboratory Reports Detail
                         {% if user.is_authenticated %}
-                            <button style="float: right;align-items: center;" type="button" id="btnGridDownlaodAir"
-                                    class="btn btn-danger"> Download Air Data
-                            </button>
-                            <button style="float: right;margin-right: 10px" type="button" id="btnGridDownlaodWater"
-                                    class="btn btn-primary"> Download Water Data
+                            <button style="float: right;margin-right: 10px" type="button" id="btnReportsGridDownload"
+                                    class="btn btn-primary"> Download Reports Excel
                             </button>
                         {% endif %}
                     </div>
                     <div class="panel-body">
-                        <div id='tabs'>
-                            <ul>
-                                <li style="margin-left: 30px;">WATER Reports</li>
-                                <li>Air Reports</li>
-                            </ul>
-                            <div id="water_reports_grid"></div>
-                            <div id="air_reports_grid"></div>
-                        </div>
+                        <div id="reports_detail_grid"></div>
                     </div>
                 </div>
             </div>
