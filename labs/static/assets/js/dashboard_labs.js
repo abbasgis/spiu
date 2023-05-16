@@ -19,8 +19,10 @@ let DashboardGridsModel = function () {
     });
 
     $("#btnReportsGridDownload").click(function () {
-        // me.water_reports_grid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
-        me.reports_detail_grid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
+        let report_type = $("#report_type").val();
+        let today = new Date()
+        let file_name = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + "-" + report_type + "-" + today.getMilliseconds()
+        me.reports_detail_grid.jqxGrid('exportdata', 'xlsx', file_name);
     });
     me.initialize = function () {
 
@@ -71,7 +73,6 @@ let DashboardGridsModel = function () {
                     let dataAdapter = new $.jqx.dataAdapter(source);
                     dataAdapter.dataBind();
                     // me.labReportsDetailGrid.jqxGrid({_cachedcolumns: null});
-
                     me.labReportsDetailGrid.jqxGrid({columns: cols});
                     me.labReportsDetailGrid.jqxGrid({source: dataAdapter});
                     me.labReportsDetailGrid.jqxGrid('updatebounddata');
