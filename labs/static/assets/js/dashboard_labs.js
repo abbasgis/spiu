@@ -19,10 +19,14 @@ let DashboardGridsModel = function () {
     });
 
     $("#btnReportsGridDownload").click(function () {
-        let report_type = $("#report_type").val();
-        let today = new Date()
-        let file_name = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + "-" + report_type + "-" + today.getMilliseconds()
-        me.reports_detail_grid.jqxGrid('exportdata', 'xlsx', file_name);
+        if (me.labReportsDetailGrid) {
+            let report_type = $("#report_type").val();
+            let today = new Date()
+            let file_name = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + "-" + report_type + "-" + today.getMilliseconds()
+            me.reports_detail_grid.jqxGrid('exportdata', 'xlsx', file_name);
+        } else {
+            alert("No data to download")
+        }
     });
     me.initialize = function () {
 

@@ -2,6 +2,8 @@ from django.contrib import admin
 
 # Register your models here.
 from django.http import HttpResponseRedirect
+from django.utils.safestring import mark_safe
+
 from labs.models import TblReportParameters, TblLaboratories, \
     TblReports, TblReportsAnalysis
 from spiu_gis.admin import TblIndustryMainCategoryAdmin, TblIndustryCategoryAdmin
@@ -45,12 +47,23 @@ class TblReportsAnalysisAdmin(admin.ModelAdmin):
 
 @admin.register(TblReports)
 class TblReportsAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in TblReports._meta.fields if
-                    field.name not in ("id",)]
+    arr_list_display = [field.name for field in TblReports._meta.fields if
+                        field.name not in ("id_",)]
+    arr_list_display.insert(7, 'sample_location')
+    list_display = arr_list_display
     inlines = [TblLabAnalysisInline, ]
     # list_filter = ('report_title',)
     save_on_bottom = True
     exclude = ('created_by', 'updated_by')
+
+    def sample_location(self, obj):
+        if obj.longitude:
+            return mark_safe(
+                f'<a target="_blank" href="https://www.google.com/maps/search/{obj.latitude},{obj.longitude}">Google Map Link</a>')
+        return None
+
+    sample_location.allow_tags = True
+    sample_location.short_description = "Sample Location"
     fieldsets = (
         (None, {
             'fields': (

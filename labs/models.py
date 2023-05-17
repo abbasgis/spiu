@@ -57,20 +57,21 @@ class TblReports(models.Model):
         ('Tertiary', 'Tertiary'),
     )
     # gid = models.AutoField()
-    report_title = models.CharField(max_length=254, default="Air", verbose_name="Report Title",
+    report_title = models.CharField(max_length=254, default="Air", verbose_name="Report Type",
                                     choices=REPORT_TYPE)
-    report_no = models.CharField(max_length=254, verbose_name="Sample/Report No")
+    report_no = models.CharField(max_length=254, verbose_name="Report No")
     laboratory_name = models.ForeignKey(TblLaboratories, models.DO_NOTHING, verbose_name="Name of Laboratory")
     letter_no = models.CharField(max_length=254, verbose_name="Letter No")
     letter_date = models.DateField(verbose_name="Letter Date")
-    letter_issued_by = models.CharField(max_length=254, verbose_name="Letter Issued By (Name & Designation)")
+    letter_issued_by = models.CharField(blank=True, null=True, max_length=254,
+                                        verbose_name="Letter Issued By (Name & Designation)")
     name_industry = models.CharField(max_length=254, verbose_name="Name of Industry")
     address_industry = models.CharField(max_length=354, verbose_name="Address of Industry")
     district_id = models.ForeignKey(TblDistricts, models.DO_NOTHING, verbose_name="Name of District from Address")
-    category = models.ForeignKey(TblIndustryCategory, models.DO_NOTHING, verbose_name="Name of Category")
+    category = models.ForeignKey(TblIndustryCategory, models.DO_NOTHING, verbose_name="Industrial Category")
     sampling_source = models.CharField(max_length=254, default="Not Available", verbose_name="Sampling/Emission Source")
     monitoring_date = models.DateField(verbose_name="Monitoring Date")
-    fuel_type = models.CharField(max_length=254, default="Not Available", verbose_name="Type of Fuel")
+    fuel_type = models.CharField(max_length=254, default="Not Available", verbose_name="Fuel Type")
     emission_control_system = models.CharField(max_length=254, default="Not Available",
                                                verbose_name="Emission Control System")
     sample_monitored_by = models.CharField(max_length=254, verbose_name="Monitored By")
@@ -152,4 +153,3 @@ class TblReportParameters(models.Model):
         db_table = 'tbl_reports_parameters'
         verbose_name = "Report Parameters"
         verbose_name_plural = "Report Parameters"
-
