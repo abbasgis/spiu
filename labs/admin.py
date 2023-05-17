@@ -63,13 +63,12 @@ class TblReportsAdmin(admin.ModelAdmin):
         return None
 
     sample_location.allow_tags = True
-    sample_location.short_description = "Sample Location"
     fieldsets = (
         (None, {
             'fields': (
                 ('report_title', 'report_no', 'laboratory_name'),
-                ('letter_no', 'letter_date', 'letter_issued_by'),
-                ('name_industry', 'address_industry', 'district_id'),
+                ('letter_no', 'letter_date', 'name_industry'),
+                ('address_industry', 'district_id'),
                 ('sampling_source', 'fuel_type', 'emission_control_system'),
                 ('category', 'monitoring_date', 'sample_monitored_by'),
                 # water st

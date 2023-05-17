@@ -61,7 +61,7 @@ class TblReports(models.Model):
                                     choices=REPORT_TYPE)
     report_no = models.CharField(max_length=254, verbose_name="Report No")
     laboratory_name = models.ForeignKey(TblLaboratories, models.DO_NOTHING, verbose_name="Name of Laboratory")
-    letter_no = models.CharField(max_length=254, verbose_name="Letter No")
+    letter_no = models.CharField(max_length=254, verbose_name="Reports Letter No")
     letter_date = models.DateField(verbose_name="Letter Date")
     letter_issued_by = models.CharField(blank=True, null=True, max_length=254,
                                         verbose_name="Letter Issued By (Name & Designation)")
@@ -74,7 +74,7 @@ class TblReports(models.Model):
     fuel_type = models.CharField(max_length=254, default="Not Available", verbose_name="Fuel Type")
     emission_control_system = models.CharField(max_length=254, default="Not Available",
                                                verbose_name="Emission Control System")
-    sample_monitored_by = models.CharField(max_length=254, verbose_name="Monitored By")
+    sample_monitored_by = models.CharField(blank=True, null=True, max_length=254, verbose_name="Monitored By")
     # for water start
     sample_type = models.CharField(max_length=254, choices=SAMPLE_TYPE, default="Grab", verbose_name="Sample Type")
     sampling_point = models.CharField(max_length=254, default="Not Available", verbose_name="Sampling Point")
