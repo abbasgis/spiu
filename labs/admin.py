@@ -48,7 +48,7 @@ class TblReportsAnalysisAdmin(admin.ModelAdmin):
 @admin.register(TblReports)
 class TblReportsAdmin(admin.ModelAdmin):
     arr_list_display = [field.name for field in TblReports._meta.fields if
-                        field.name not in ("id_",)]
+                        field.name not in ("id_", "letter_issued_by")]
     arr_list_display.insert(7, 'sample_location')
     list_display = arr_list_display
     inlines = [TblLabAnalysisInline, ]
