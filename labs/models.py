@@ -51,6 +51,10 @@ class TblReports(models.Model):
         ('Grab', 'Grab'),
         ('Composite', 'Composite')
     )
+    SAMPLE_STAGE = (
+        ('before', 'Before Treatment'),
+        ('after', 'After Treatment')
+    )
     TF_TYPES = (
         ('Primary', 'Primary'),
         ('Secondary', 'Secondary'),
@@ -87,6 +91,8 @@ class TblReports(models.Model):
     sampling_date = models.DateField(verbose_name="Sample Date", blank=True, null=True)
     sample_receiving_date = models.DateField(verbose_name="Date of Sample Receiving in Lab", blank=True, null=True)
     sample_id_no = models.CharField(max_length=254, verbose_name="Sample ID No", blank=True, null=True)
+    sample_taken_stage = models.CharField(max_length=254, choices=SAMPLE_STAGE, default="before",
+                                          verbose_name="Sample Taken Stage", blank=True, null=True)
     sample_received_from = models.CharField(max_length=254, verbose_name="Sample Received From", blank=True, null=True)
     sample_received_by = models.CharField(max_length=254, verbose_name="Sample Received By", blank=True, null=True)
     # for water end
@@ -97,7 +103,8 @@ class TblReports(models.Model):
     form_d_path = models.FileField(upload_to='form_d', verbose_name="Form-D")
     form_b_path = models.FileField(upload_to='form_b', verbose_name="Form-B")
     letter_path = models.FileField(upload_to='letters', verbose_name="Letter")
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', blank=True, null=True)
+    report_path = models.FileField(upload_to='reports', verbose_name="Analysis Report", blank=True, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', )
     updated_by = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)

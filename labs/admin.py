@@ -75,10 +75,10 @@ class TblReportsAdmin(admin.ModelAdmin):
                 ('sample_type', 'sampling_point', 'treatment_facility'),
                 ('treatment_facility_type', 'process_generating_wastewater', 'discharge'),
                 ('sampling_date', 'sample_receiving_date', 'sample_id_no'),
-                ('sample_received_from', 'sample_received_by'),
+                ('sample_taken_stage', 'sample_received_from', 'sample_received_by'),
                 # water end
                 ('latitude', 'longitude'),
-                ('form_d_path', 'form_b_path', 'letter_path'),
+                ('form_d_path', 'form_b_path', 'letter_path', 'report_path'),
             ),
         }),
     )
