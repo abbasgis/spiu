@@ -140,7 +140,7 @@ var LabReportsDashboard = function () {
             },
 
             title: {
-                text: 'Reports Count Map'
+                text: 'Laboratory Wise Reports Count Map'
             },
 
             colorAxis: {
@@ -169,7 +169,7 @@ var LabReportsDashboard = function () {
 
             series: [{
                 data,
-                name: 'Punjab Divisions',
+                name: 'EPA Labs',
                 dataLabels: {
                     enabled: true,
                     format: '{point.properties.name}'
@@ -201,7 +201,7 @@ var LabReportsDashboard = function () {
                 chart: {
                     type: 'bar'
                 }, title: {
-                    text: 'Report Count Chart'
+                    text: 'Laboratory Wise Reports Count Chart'
                 }, xAxis: {
                     categories: categories
                 }, yAxis: {

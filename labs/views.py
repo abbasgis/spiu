@@ -29,23 +29,25 @@ def get_labs_highmap_json(request):
     global sql
     division_id = request.GET.get('division_id', -1)
     level = request.GET.get('level', 'division')
-    result = TblReports.objects.values('district_id__division__division_name',
+    result = TblReports.objects.values('laboratory_name__lab_name',
                                        'report_title').annotate(
-        name=F('district_id__division__division_name'),
+        name=F('laboratory_name__lab_name'),
         dcount=Count('*')).order_by()
     tiles = TblReports.objects.values('report_title').annotate(
         name=F('report_title'),
         dcount=Count('*'))
     if level == 'division':
-        sql = "with tbl_reports as (select tbl_districts.division_id,tbl_reports.* from tbl_districts INNER JOIN tbl_reports on tbl_districts.district_id=tbl_reports.district_id_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.division_name as name  ,Count(*) total ,lg.division_id code FROM tbl_reports sr WHERE sr.division_id=lg.division_id GROUP BY lg.division_name,lg.division_id  ) As l ) ) As properties FROM public.tbl_divisions  As lg    ) As f )  As fc;"
+        # sql = "with tbl_reports as (select tbl_districts.division_id,tbl_reports.* from tbl_districts INNER JOIN tbl_reports on tbl_districts.district_id=tbl_reports.district_id_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.division_name as name  ,Count(*) total ,lg.division_id code FROM tbl_reports sr WHERE sr.division_id=lg.division_id GROUP BY lg.division_name,lg.division_id  ) As l ) ) As properties FROM public.tbl_divisions  As lg    ) As f )  As fc;"
+        sql = "with tbl_reports as (select tbl_laboratories.id,tbl_reports.* from tbl_laboratories INNER JOIN tbl_reports on tbl_laboratories.id=tbl_reports.laboratory_name_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.lab_name as name  ,Count(*) total ,lg.id code FROM tbl_reports sr WHERE sr.laboratory_name_id=lg.id GROUP BY lg.lab_name,lg.id  ) As l ) ) As properties FROM public.tbl_laboratories  As lg    ) As f )  As fc;"
     elif level == 'district':
-        sql = "with tbl_reports as (select tbl_districts.division_id,tbl_reports.* from tbl_districts INNER JOIN tbl_reports on tbl_districts.district_id=tbl_reports.district_id_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.district_name as name ,Count(*) total ,lg.district_id code FROM tbl_reports sr WHERE sr.district_id_id=lg.district_id GROUP BY lg.district_name,lg.district_id  ) As l ) ) As properties FROM public.tbl_districts  As lg where lg.division_id=" + division_id + "   ) As f )  As fc;"
-        result = TblReports.objects.filter(district_id__division__division_id=division_id).values(
+        # sql = "with tbl_reports as (select tbl_districts.division_id,tbl_reports.* from tbl_districts INNER JOIN tbl_reports on tbl_districts.district_id=tbl_reports.district_id_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.district_name as name ,Count(*) total ,lg.district_id code FROM tbl_reports sr WHERE sr.district_id_id=lg.district_id GROUP BY lg.district_name,lg.district_id  ) As l ) ) As properties FROM public.tbl_districts  As lg where lg.division_id=" + division_id + "   ) As f )  As fc;"
+        sql = "with tbl_reports as (select tbl_laboratories.id,tbl_reports.* from tbl_laboratories INNER JOIN tbl_reports on tbl_laboratories.id=tbl_reports.laboratory_name_id) SELECT row_to_json(fc) as geojson FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features  FROM (SELECT 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json ( (SELECT l FROM ( SELECT lg.lab_name as name  ,Count(*) total ,lg.id code FROM tbl_reports sr WHERE sr.laboratory_name_id=lg.id GROUP BY lg.lab_name,lg.id  ) As l ) ) As properties FROM public.tbl_laboratories  As lg  where lg.id=" + division_id + "    ) As f )  As fc;"
+        result = TblReports.objects.filter(laboratory_name__id=division_id).values(
             'district_id__district_name',
             'report_title').annotate(
             name=F('district_id__district_name'),
             dcount=Count('*')).order_by()
-        tiles = TblReports.objects.filter(district_id__division__division_id=division_id).values(
+        tiles = TblReports.objects.filter(laboratory_name__id=division_id).values(
             'report_title').annotate(
             name=F('report_title'),
             dcount=Count('*'))

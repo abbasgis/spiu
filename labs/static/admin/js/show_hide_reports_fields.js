@@ -5,9 +5,9 @@
             let selectField = $('#id_report_title');
             let water_fields = ['sample_type', 'sampling_point', 'treatment_facility', 'treatment_facility_type',
                 'process_generating_wastewater', 'discharge', 'sampling_date', 'sample_receiving_date', 'sample_id_no',
-                 'sample_taken_stage','sample_received_from', 'sample_received_by'];
+                'sample_received_from', 'sample_received_by'];
             let noise_fields = ['sampling_source', 'fuel_type', 'emission_control_system'];
-
+            let wwtp_fields = ['sample_taken_stage']
             function toggleFieldsVisibility(value) {
                 for (let i in water_fields) {
                     let f_name = '.field-' + water_fields[i];
@@ -28,6 +28,16 @@
                         field.show();
                     }
                 }
+                for (let i in wwtp_fields) {
+                    let f_name = '.field-' + wwtp_fields[i];
+                    let field = $(f_name)
+                    if (value === 'WWTP') {
+                        field.show();
+                    } else {
+                        field.hide();
+                    }
+                }
+
                 // if (value === 'Noise') {
                 //      for (let i in noise_fields) {
                 //          let f_name = '.field-' + noise_fields[i];
