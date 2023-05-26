@@ -14,10 +14,12 @@ let DashboardGridsModel = function () {
         me.createReportsDetailGrid();
     });
 
-    $("#btnDownload").click(function () {
-        me.districtsReportGrid.jqxGrid('exportdata', 'xlsx', 'Download_' + new Date().getMilliseconds());
+    $("#btn_grid_labs_count").click(function () {
+        me.labReportGrid.jqxGrid('exportdata', 'xlsx', 'Lab Wise Detail' + new Date().getMilliseconds());
     });
-
+    $("#btn_grid_report_district").click(function () {
+        me.districtsReportGrid.jqxGrid('exportdata', 'xlsx', 'District Wise Detail' + new Date().getMilliseconds());
+    });
     $("#btnReportsGridDownload").click(function () {
         if (me.labReportsDetailGrid) {
             let report_type = $("#report_type").val();

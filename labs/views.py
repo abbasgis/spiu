@@ -101,6 +101,25 @@ def get_laboratory_wise_report_count(request):
     return HttpResponse(response)
 
 
+def get_reports_no_param(request):
+    data_params = []
+    data = TblReports.objects.all().values()
+    data = list(data)
+    for r in data:
+        r['laboratory_name'] = TblLaboratories.objects.get(id=r['laboratory_name_id']).lab_name
+        r['district'] = TblDistricts.objects.get(district_id=r['district_id_id']).district_name
+        r['category'] = TblIndustryCategory.objects.get(id=r['category_id']).name
+        r['created_by'] = User.objects.get(id=r['created_by_id']).username
+        params = TblReportsAnalysis.objects.filter(report_id=r['id']).values()
+        is_param_entered = False
+        if params.count() > 0:
+            is_param_entered = True
+        r['is_param_entered'] = is_param_entered
+        data_params.append(r)
+    response = json.dumps(data_params, default=date_handler)
+    return HttpResponse(response)
+
+
 def get_labs_reports_json(request):
     lab_id = request.POST.get('lab_name', '')
     report_type = request.POST.get('report_type', '')
