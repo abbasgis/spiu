@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db import models
+from django_admin_geomap import GeoItem
 
 from spiu_gis.models import TblDistricts, TblIndustryMainCategory, TblIndustryCategory
 
@@ -10,6 +11,25 @@ REPORT_TYPE = (
     ('Water', 'Liquid Effluent/ Water'),
     ('WWTP', 'Waste Water Treatment Plants'),
 )
+
+
+class LabsUnit(models.Model):
+    unit_category_choices = (
+        ('discharge', 'Discharge'),
+        ('capacity', 'Capacity'),
+        ('other', 'Others'),
+    )
+    unit = models.CharField(max_length=254)
+    unit_category = models.CharField(max_length=254, choices=unit_category_choices, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.unit)
+
+    class Meta:
+        managed = False
+        db_table = 'labs_units'
+        ordering = ['unit', ]
+        verbose_name_plural = "Laboratories Units"
 
 
 class TblLaboratories(models.Model):
@@ -46,7 +66,7 @@ class TblLaboratories(models.Model):
         verbose_name_plural = "Laboratories Detail"
 
 
-class TblReports(models.Model):
+class TblReports(models.Model, GeoItem):
     SAMPLE_TYPE = (
         ('Grab', 'Grab'),
         ('Composite', 'Composite')
@@ -59,6 +79,7 @@ class TblReports(models.Model):
         ('Primary', 'Primary'),
         ('Secondary', 'Secondary'),
         ('Tertiary', 'Tertiary'),
+        ('NA', 'Not Available'),
     )
     # gid = models.AutoField()
     report_title = models.CharField(max_length=254, default="Air", verbose_name="Report Type",
@@ -95,6 +116,12 @@ class TblReports(models.Model):
                                           verbose_name="Sample Taken Stage", blank=True, null=True)
     sample_received_from = models.CharField(max_length=254, verbose_name="Sample Received From", blank=True, null=True)
     sample_received_by = models.CharField(max_length=254, verbose_name="Sample Received By", blank=True, null=True)
+    discharge_value = models.FloatField(verbose_name='Waste Water Discharge', blank=True, null=True)
+    discharge_unit = models.ForeignKey(LabsUnit, models.DO_NOTHING, related_name="water_discharge_unit",
+                                       verbose_name="Unit of Waste Water Discharge", blank=True, null=True)
+    capacity_of_wwtp = models.FloatField(verbose_name='Capacity of WWTP', blank=True, null=True)
+    capacity_unit = models.ForeignKey(LabsUnit, models.DO_NOTHING, related_name="wwtp_capacity_unit",
+                                      verbose_name="Unit for Capacity of WWTP", blank=True, null=True)
     # for water end
     latitude = models.FloatField(verbose_name='latitude of sample location',
                                  help_text="up to 6 decimals between 25 to 40")
@@ -111,6 +138,14 @@ class TblReports(models.Model):
 
     def __str__(self):
         return str(self.report_no)
+
+    @property
+    def geomap_longitude(self):
+        return '' if self.longitude is None else str(self.longitude)
+
+    @property
+    def geomap_latitude(self):
+        return '' if self.latitude is None else str(self.latitude)
 
     class Meta:
         managed = True

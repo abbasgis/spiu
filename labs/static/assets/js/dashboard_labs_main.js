@@ -93,6 +93,7 @@ var LabReportsDashboard = function () {
                 data.forEach((d, i) => {
                     if (d.properties) {
                         d.value = d.properties.total;
+                        d.drilldown = d.properties.name
                         d.name = d.properties.name
                     }
 
@@ -121,7 +122,7 @@ var LabReportsDashboard = function () {
         };
         const data = Highcharts.geojson(input_data);
         data.forEach((d, i) => {
-            var name = null;
+            var name = d.name;
             if (d.properties != null) {
                 name = d.properties.name
                 d.value = d.properties.total;
@@ -144,7 +145,9 @@ var LabReportsDashboard = function () {
             },
 
             colorAxis: {
-                min: 0, minColor: '#E6E7E8', maxColor: '#005645'
+                min: 0,
+                minColor: '#E6E7E8',
+                maxColor: '#005645'
             },
 
             // mapView,
@@ -164,7 +167,15 @@ var LabReportsDashboard = function () {
                             color: '#EEDD66'
                         }
                     }
-                }
+                },
+                dataLabels: {
+                    enabled: true,
+                    color: '#FFFFFF',
+                    style: {
+                        fontWeight: 'bold'
+                    },
+
+                },
             },
 
             series: [{
@@ -172,7 +183,7 @@ var LabReportsDashboard = function () {
                 name: 'EPA Labs',
                 dataLabels: {
                     enabled: true,
-                    format: '{point.properties.name}'
+                    format: '{point.name}'
                 },
                 // custom: {
                 //     mapView
@@ -186,7 +197,7 @@ var LabReportsDashboard = function () {
                     relativeTo: 'spacingBox', position: {
                         x: 0, y: 60
                     }
-                }
+                },
             }
         });
 

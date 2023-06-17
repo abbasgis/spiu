@@ -3,9 +3,10 @@ from django.contrib import admin
 # Register your models here.
 from django.http import HttpResponseRedirect
 from django.utils.safestring import mark_safe
+from django_admin_geomap import ModelAdmin
 
 from labs.models import TblReportParameters, TblLaboratories, \
-    TblReports, TblReportsAnalysis
+    TblReports, TblReportsAnalysis, LabsUnit
 from spiu_gis.admin import TblIndustryMainCategoryAdmin, TblIndustryCategoryAdmin
 from spiu_gis.models import TblIndustryMainCategory, TblIndustryCategory
 
@@ -45,8 +46,21 @@ class TblReportsAnalysisAdmin(admin.ModelAdmin):
                     field.name not in ("",)]
 
 
+@admin.register(LabsUnit)
+class LabsUnitAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in LabsUnit._meta.fields if
+                    field.name not in ("",)]
+
+
 @admin.register(TblReports)
-class TblReportsAdmin(admin.ModelAdmin):
+class TblReportsAdmin(ModelAdmin):
+    geomap_field_longitude = "id_longitude"
+    geomap_field_latitude = "id_latitude"
+    geomap_default_longitude = "74.1849"
+    geomap_default_latitude = "32.2637"
+    geomap_default_zoom = "7"
+    geomap_height = "300px"
+    geomap_show_map_on_list = False
     arr_list_display = [field.name for field in TblReports._meta.fields if
                         field.name not in ("id_", "letter_issued_by")]
     arr_list_display.insert(7, 'sample_location')
@@ -73,12 +87,13 @@ class TblReportsAdmin(admin.ModelAdmin):
                 ('category', 'monitoring_date', 'sample_monitored_by'),
                 # water st
                 ('sample_type', 'sampling_point', 'treatment_facility'),
-                ('treatment_facility_type', 'process_generating_wastewater', 'discharge'),
+                ('treatment_facility_type', 'process_generating_wastewater', 'discharge_value'),
+                ('discharge_unit', 'capacity_of_wwtp', 'capacity_unit'),
                 ('sampling_date', 'sample_receiving_date', 'sample_id_no'),
                 ('sample_taken_stage', 'sample_received_from', 'sample_received_by'),
                 # water end
-                ('latitude', 'longitude'),
                 ('form_d_path', 'form_b_path', 'letter_path', 'report_path'),
+                ('latitude', 'longitude'),
             ),
         }),
     )

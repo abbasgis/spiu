@@ -33,6 +33,7 @@ urlpatterns = [
                   path('', spiu_page, name='spiu'),
                   path('spiu/', spiu_page, name='spiu'),
                   path('labs/', include('labs.urls')),
+                  path('ioed/', include('giz.urls')),
                   path('fire_points/', get_fire_points, name='fire_points'),
                   path('fp/', get_fp_page, name='fp'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

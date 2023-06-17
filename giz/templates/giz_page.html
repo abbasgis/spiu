@@ -1,0 +1,179 @@
+{% extends 'base_giz.html' %}
+{% load static %}
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static "external/jqwidgets/styles/jqx.base.css" %}" type="text/css"/>
+    <link href="{% static "assets/css/giz.css" %}" rel="stylesheet">
+{% endblock %}
+{% block title %}Env. Data{% endblock %}
+{% block extra_scripts %}
+    <script src="{% static "external/jqwidgets/jqx-all.js" %}"></script>
+    <script src="{% static "external/jqwidgets/jqxdata.js" %}"></script>
+
+    <script src="{% static "external/jqwidgets/jqxdata.export.js" %}"></script>
+    <script src="{% static "external/jqwidgets/jqxgrid.export.js" %}"></script>
+    <script src="{% static "external/jqwidgets/jqxexport.js" %}"></script>
+    <script src="{% static "external/jszip/jszip.min.js" %}"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/sunburst.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script type="text/javascript" src="{% static "assets/js/giz_dashboard.js" %}">
+    </script>
+    <script>
+        var token = '{{ csrf_token }}';
+    </script>
+{% endblock extra_scripts %}
+{% block main_content %}
+    <div class="container-fluid">
+        <section id="about" class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 split-padding3">
+                    <h2 class="headerline">INTRODUCTION AND BACKGROUND</h2>
+                    <p style="text-align: justify">EPD’s SPIU (Strategic Planning & Implementing Unit) is mandated to
+                        execute and achieve different targets i.e. installation of Ambient Air Quality Monitoring
+                        Stations, Water Quality Monitoring Stations, Policy formulation on Sound Management of Plastics,
+                        Public disclosure of environmental information and citizen engagement and preparation of State
+                        of the Environment of Punjab Province. In this context, preparation of an inventory of those
+                        organizations which are collecting and analysing environmental data for informed decision making
+                        and to strategies the policy goals/ priority areas of intervention for environment protection in
+                        the Province has been initiated.</p>
+                </div>
+            </div>
+        </section>
+        <!-- objectives Section -->
+        <section id="objectives" class="container-fluid">
+            <div class="row" style="float: end !important;">
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6 split-padding3">
+                    <h2 class="headerline">OBJECTIVE</h2>
+                    <p style="text-align: justify">Because environment is a cross cutting subject. Multiple organization
+                        including academia, research institutions and government departments etc. are playing their
+                        vital role for the betterment of the environment. The role of every organization is very
+                        important but limited to a certain aspect of the environment. The information – who is doing
+                        what – pertaining to the environmental governance, is not available in one Inventory. SPIU
+                        intends to draw a holistic picture of Who is Doing What and What Type of Environmental Data is
+                        available with other organizations/ government departments. This will further lead to devise
+                        corrective actions, projects and plans for better environmental monitoring. </p>
+                </div>
+            </div>
+        </section>
+        <section id="charts" class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="card text-white bg-primary">
+                        <div class="card-header header_title">
+                            <h5 class="card-title">Total Organizations</h5>
+                        </div>
+                        <div class="card-body" style="text-align: center;">
+                            <h1 id="total">000</h1>
+                        </div>
+                        <div class="card-footer">
+                            <span id="total_parent" style="float: left;">Parent: 00</span>
+                            <span id="total_attach" style="float: right;">Attach: 00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-success">
+                        <div class="card-header header_title">
+                            <h5 class="card-title">Government</h5>
+                        </div>
+                        <div class="card-body" style="text-align: center;">
+                            <h1 id="govt_total">000</h1>
+                        </div>
+                        <div class="card-footer">
+                            <span id="govt" style="float: left;">Parent: 00</span>
+                            <span id="govt_attached" style="float: right;">Attach: 00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-warning">
+                        <div class="card-header header_title">
+                            <h5 class="card-title">Academia</h5>
+                        </div>
+                        <div class="card-body" style="text-align: center;">
+                            <h1 id="academia_total">000</h1>
+                        </div>
+                        <div class="card-footer">
+                            <span id="academia" style="float: left;">Parent: 00</span>
+                            <span id="academia_attached" style="float: right;">Attach: 00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-danger">
+                        <div class="card-header header_title">
+                            <h5 class="card-title">International</h5>
+                        </div>
+                        <div class="card-body" style="text-align: center;">
+                            <h1 id="intl_total">000</h1>
+                        </div>
+                        <div class="card-footer">
+                            <span id="intl" style="float: left;">Parent: 00</span>
+                            <span id="intl_attached" style="float: right;">Attach: 00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"
+                 style="margin: 10px !important; text-align: center !important; background-color: #000505;color: white">
+                &nbsp;&nbsp;For detail, please click on the any attach department
+                in below left panel and chart will be updated in right panel than by clicking on any circle of Sunburst
+                chart you can view detail
+            </div>
+            <div class="row">
+                {#                <div class="col-lg-1 col-md-6 col-xs-12">#}
+                {#                    <div class="panel panel-default">#}
+                {#                    <div class="panel-heading"></div>#}
+                {#                        <div id="sectors_charts" class="panel-body"></div>#}
+                {#                    </div>#}
+                {#                </div>#}
+                <div class="col-lg-4 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        {#                    <div class="panel-heading panel-danger"></div>#}
+                        <div id="tgrid_org" class="panel-body"></div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        {#                    <div class="panel-heading panel-danger"></div>#}
+                        <div id="chart_dept" class="panel-body"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px"></div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        {#                    <div class="panel-heading"></div>#}
+                        <div id="tgrid_env" class="panel-body"></div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        {#                    <div class="panel-heading panel-danger"></div>#}
+                        <div id="chart_env_data" class="panel-body"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px"></div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        {#                    <div class="panel-heading"></div>#}
+                        <div id="chart_constarints" class="panel-body"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        {#                    <div class="panel-heading panel-danger"></div>#}
+                        <div id="chart4" class="panel-body"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -37,14 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_admin_geomap',
     'import_export',
     'spiu',
     'spiu_gis',
     'labs',
-    'fire_points'
+    'fire_points',
+    'giz',
+    'wwtp'
 ]
-# GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
-# GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
+GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
 BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,12 +92,12 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'USER': 'postgres',  # Not used with sqlite3.
         'NAME': 'spiu',
-        # 'PASSWORD': '123',
+        'PASSWORD': '123',
         # For server below
         # 'NAME': 'spiu',
-        'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
+        # 'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432'
+        'PORT': '5433'
         # , 'OPTIONS': {
         #     'options': '-c search_path=public,wasa_gis'
         # }
