@@ -22,7 +22,7 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = 'django-insecure-#o2o0o8kbejrp@*d0jo!f2yle=x7ge))%pj6v)^)7foh63(e#6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'labs',
     'fire_points',
     'giz',
-    'wwtp'
+    'wwtp',
 ]
 # GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
 # GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
@@ -92,12 +92,13 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'USER': 'postgres',  # Not used with sqlite3.
         'NAME': 'spiu',
-        # 'PASSWORD': '123',
         # For server below
         # 'NAME': 'spiu',
         'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
+        'PORT': '5432',
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432'
+        # 'PASSWORD': '123',
+        # 'PORT': '5433'
         # , 'OPTIONS': {
         #     'options': '-c search_path=public,wasa_gis'
         # }
