@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'spiu_gis',
     'labs',
     'fire_points',
-    'giz',
     'wwtp',
+    'giz',
+    'spiu.wwtp',
 ]
 # GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
 # GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
