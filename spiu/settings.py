@@ -22,14 +22,15 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = 'django-insecure-#o2o0o8kbejrp@*d0jo!f2yle=x7ge))%pj6v)^)7foh63(e#6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
-    'bootstrap_admin',
+    # 'bootstrap_admin',
+    'django_admin_kubi',
     'django.contrib.admin',
     'django.contrib.gis',
     'django.contrib.auth',
@@ -46,8 +47,8 @@ INSTALLED_APPS = [
     'wwtp',
     'giz',
 ]
-# GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
-# GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
+GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
 BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -94,11 +95,11 @@ DATABASES = {
         'NAME': 'spiu',
         # For server below
         # 'NAME': 'spiu',
-        'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
-        'PORT': '5432',
+        # 'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
+        # 'PORT': '5432',
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
-        # 'PASSWORD': '123',
-        # 'PORT': '5433'
+        'PASSWORD': '123',
+        'PORT': '5433'
         # , 'OPTIONS': {
         #     'options': '-c search_path=public,wasa_gis'
         # }
@@ -161,3 +162,7 @@ LOGOUT_REDIRECT_URL = '/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DJANGO_ADMIN_KUBI = {
+    'ADMIN_HISTORY': False,  # enables the history action panel
+    'ADMIN_SEARCH': False,  # enables a full modal search
+}

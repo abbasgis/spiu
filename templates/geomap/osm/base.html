@@ -156,11 +156,7 @@
     var lat_center = lat_min + (lat_max - lat_min) / 2.0;
     var map_zoom;
 
-    if ({{ geomap_autozoom }} >
-    0
-    )
-    {
-
+    {% if geomap_autozoom > 0 %}
         {% if geomap_items %}
 
             {% if geomap_items|length == 1 %}
@@ -174,15 +170,13 @@
             lat_center = {{ geomap_latitude }};
             map_zoom = {{ geomap_zoom }};
         {% endif %}
+    {% else %}
 
-    }
-    else
-    {
         lon_center = {{ geomap_longitude }};
         lat_center = {{ geomap_latitude }};
         map_zoom = {{ geomap_zoom }};
-    }
 
+    {% endif %}
     var view = new ol.View({
         center: ol.proj.fromLonLat([lon_center, lat_center]),
         maxZoom: 19,

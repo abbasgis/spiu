@@ -127,10 +127,17 @@ class TblReports(models.Model, GeoItem):
                                  help_text="up to 6 decimals between 25 to 40")
     longitude = models.FloatField(verbose_name='longitude of sample location',
                                   help_text="up to 6 decimals between 60 to 80")
-    form_d_path = models.FileField(upload_to='form_d', verbose_name="Form-D")
-    form_b_path = models.FileField(upload_to='form_b', verbose_name="Form-B")
-    letter_path = models.FileField(upload_to='letters', verbose_name="Letter")
+    form_d_path = models.FileField(upload_to='form_d', verbose_name="Form-D", blank=True, null=True)
+    form_b_path = models.FileField(upload_to='form_b', verbose_name="Form-B", blank=True, null=True)
+    letter_path = models.FileField(upload_to='letters', verbose_name="Letter", blank=True, null=True)
     report_path = models.FileField(upload_to='reports', verbose_name="Analysis Report", blank=True, null=True)
+    complete_case_path = models.FileField(upload_to='lab_reports_case', verbose_name="Upload Complete Case", blank=True,
+                                          null=True,
+                                          help_text="(Letter, Form-D, Form-B and Analysis Report) مکمل کیس اپ لوڈ کریں بشمول")
+    photo1_path = models.FileField(upload_to='lab_reports_photos', verbose_name="Photo-1", blank=True, null=True,
+                                   help_text="Attach sampling point location photo with surrounding")
+    photo2_path = models.FileField(upload_to='lab_reports_photos', verbose_name="Photo-2", blank=True, null=True,
+                                   help_text="Attach plant photo covering its surrounding")
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', )
     updated_by = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)

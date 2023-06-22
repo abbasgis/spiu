@@ -43,11 +43,9 @@ class WwtpDetailAdmin(ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                ('name', 'address'),
-                ('category_id', 'wwtp_type'),
+                ('name', 'address', 'category_id', 'wwtp_type'),
+                ('photo1_path', 'photo2_path', 'latitude', 'longitude'),
                 ('is_valid', 'remarks'),
-                ('photo1_path', 'photo2_path'),
-                ('latitude', 'longitude'),
             ),
         }),
     )

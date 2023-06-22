@@ -1,7 +1,7 @@
 (function ($) {
     $(document).ready(function () {
         $(function () {
-            document.getElementsByName('_addanother')[0].style.display = 'none'
+            // document.getElementsByName('_addanother')[0].style.display = 'none'
             let selectField = $('#id_report_title');
             let water_fields = ['sample_type', 'sampling_point', 'treatment_facility', 'treatment_facility_type',
                 'process_generating_wastewater', 'discharge', 'sampling_date', 'sample_receiving_date', 'sample_id_no',

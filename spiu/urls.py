@@ -23,6 +23,7 @@ from spiu.views import homepage, signup, disclaimer_page, spiu_page, dashboard_p
 
 urlpatterns = [
                   # path('grappelli/', include('grappelli.urls')),  # grappelli URLS
+                  path('admin/', include("django_admin_kubi.urls")),
                   path('admin/', admin.site.urls),
                   path('^', include('django.contrib.auth.urls')),
                   path('disclaimer/', disclaimer_page, name='disclaimer'),

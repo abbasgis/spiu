@@ -69,6 +69,7 @@ class TblReportsAdmin(ModelAdmin):
     # list_filter = ('report_title',)
     save_on_bottom = True
     exclude = ('created_by', 'updated_by')
+    list_filter = ('district_id__district_name', 'report_title', 'created_at')
 
     def sample_location(self, obj):
         if obj.longitude:
@@ -80,9 +81,8 @@ class TblReportsAdmin(ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                ('report_title', 'report_no', 'laboratory_name'),
-                ('letter_no', 'letter_date', 'name_industry'),
-                ('address_industry', 'district_id'),
+                ('report_title', 'report_no', 'letter_no', 'letter_date'),
+                ('laboratory_name', 'name_industry', 'address_industry', 'district_id'),
                 ('sampling_source', 'fuel_type', 'emission_control_system'),
                 ('category', 'monitoring_date', 'sample_monitored_by'),
                 # water st
@@ -92,8 +92,8 @@ class TblReportsAdmin(ModelAdmin):
                 ('sampling_date', 'sample_receiving_date', 'sample_id_no'),
                 ('sample_taken_stage', 'sample_received_from', 'sample_received_by'),
                 # water end
-                ('form_d_path', 'form_b_path', 'letter_path', 'report_path'),
-                ('latitude', 'longitude'),
+                ('report_path', 'latitude', 'longitude')
+
             ),
         }),
     )
@@ -185,5 +185,5 @@ class TblReportsAdmin(ModelAdmin):
     class Media:
         js = ('/static/admin/js/show_hide_reports_fields.js',)
         css = {
-            'all': ('/static/assets/css/dropdown.css',)
+            # 'all': ('/static/assets/css/dropdown.css',)
         }

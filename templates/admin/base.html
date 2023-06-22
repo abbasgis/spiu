@@ -1,35 +1,58 @@
-{% load i18n static bootstrap_admin_template_tags %}<!DOCTYPE html>
+{% load i18n static admin_urls admin_kubi_tags %}<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}" data-bs-theme="auto">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    {% block extrastyle %}
+        <style>
+            .breadcrumb {
+                margin-top: 25px !important;
+                display: none !important;
+            }
 
-    {% block bootstrap_admin_css %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static "external/bootstrap-select/css/bootstrap-select.min.css" %}"/>
-    {% endblock bootstrap_admin_css %}
+            .module-left-section {
+                display: none !important;
 
-    <link rel="stylesheet" type="text/css"
-          href="{% block stylesheet %}{% static 'admin/css/base.css' %}{% endblock %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/datetime_widget.css' %}"/>
-    <style>
-        .breadcrumb {
-            margin-top: 25px !important;
-        }
-    </style>
-    {% block extrastyle %}{% endblock %}
+            }
 
+            .sidebar {
+                display: none !important;
+            }
+
+            .main-layout {
+                padding-left: 0px !important;
+            }
+
+            .btn-toolbar {
+                position: fixed;
+                top: 60px !important;
+                right: 15px;
+                z-index: 999;
+                background-color: var(--bs-breadcrumb-bg);
+                padding: 10px 0;
+            }
+
+            .results {
+                max-height: 60vh !important; /* Set the desired height */
+                overflow-y: auto !important; /* Enable vertical scrolling */
+            }
+
+            #result_list thead {
+                position: sticky;
+                top: 0;
+                z-index: 999;
+                background-color: #fff;
+            }
+
+        </style>
+    {% endblock %}
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300"/>
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/app.min.css" %}"/>
     {% if LANGUAGE_BIDI %}
-        {# PUT HERE YOUR CUSTOM RTL STYLESHEET #}
-        {% comment %}
-  <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />
-  {% endcomment %}
-    {% endif %}
-
+        <link rel="stylesheet"
+              href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
     {% block jquery %}
         <script type="text/javascript" src="{% static "admin/js/vendor/jquery/jquery.js" %}"></script>
         <script type="text/javascript" src="{% static "admin/js/jquery.init.js" %}"></script>
@@ -41,89 +64,56 @@
             });
         })(django.jQuery);
     </script>
-    <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
-    <script type="text/javascript">window.__admin_utc_offset__ = "{% filter escapejs %}{% now "Z" %}{% endfilter %}";</script>
-
     {% block extrahead %}{% endblock %}
+    {% block responsive %}
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        {% if LANGUAGE_BIDI %}
+            <link rel="stylesheet" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
+    {% endblock %}
     {% block blockbots %}
         <meta name="robots" content="NONE,NOARCHIVE"/>{% endblock %}
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    {#    <script type="text/javascript" src="{% static "js/color-mode.js" %}"></script>#}
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
 </head>
 {% load i18n %}
-{% display_sidebar_menu cl.has_filters as is_displaying_menu %}
-<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}{% if not is_displaying_menu %} no-sidebar{% endif %}"
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
       data-admin-utc-offset="{% now "Z" %}">
 
-<div id="overlay">
-    <div class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-    </div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3 pt-5">
+    {% block messages %}
+        {% if messages %}
+            {% for message in messages %}
+                {% include 'admin/message.html' with message=message|capfirst title=message.tags only %}
+            {% endfor %}
+        {% endif %}
+    {% endblock messages %}
+    {% block messages-extra %}{% endblock messages-extra %}
 </div>
-
-<div class="container-fluid">
-    <div class="row">
-        <!-- <div class="col-sm-3 col-md-2 sidebar"> -->
-
-
-        {% block content_container %}
-            <div id="content"
-                 class="{% if is_displaying_menu %}col-xs-12  col-sm-12  col-md-12 {% else %}col-sm-12{% endif %} main {% block coltype %}colM{% endblock %}">
-                {% block main_header %}
-                    <div class="main-header">
-                        {% include "includes/navbar.html" %}
-                    </div>
-                {% endblock main_header %}
-                {% block breadcrumbs %}
-                    <ol class="breadcrumb">
-                        <li class="home">
-                            <a href="{% url 'admin:index' %}" title="{% trans 'Home' %}"><span
-                                    class="glyphicon glyphicon-home"></span></a>
-                        </li>
-                        <li class="active">{% if title %}{{ title }}{% endif %}</li>
-                    </ol>
-                {% endblock %}
-
-                {% block messages %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div role="alert"
-                                 class="messagelist alert alert-{% if message.tags == 'info' %}success{% else %}{{ message.tags }}{% endif %} fade in">
-                                <button data-dismiss="alert" class="close" type="button"><span
-                                        aria-hidden="true">×</span><span class="sr-only">{% trans "Close" %}</span>
-                                </button>
-                                {{ message|capfirst }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endblock messages %}
-
-                {% block content %}
-                    {% block object-tools %}{% endblock %}
-                    {{ content }}
-                {% endblock %}
-            </div>
-        {% endblock content_container %}
+<!-- Layout -->
+<div class="{% block layout %}main-layout{% endblock %}">
+    {% include "includes/navbar.html" %}
+    <!-- Content -->
+    <div id="content" class="{% block coltype %}colM{% endblock %} content">
+        {% block object-tools %}{% endblock %}
+        {% block content %}{% endblock %}
     </div>
+
+    <!-- END Content -->
 </div>
+{% block footer %}{% endblock %}
 
-{% block bootstrap_admin_js %}
-    <script>if (typeof jQuery === 'undefined' && django && django.jQuery) {
-        jQuery = django.jQuery;
-    }</script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <script src="{% static 'bootstrap_admin/js/base.js' %}"></script>
-    <script src="{% static "external/bootstrap-select/js/bootstrap-select.js" %}"></script>
-{% endblock bootstrap_admin_js %}
+<!-- END Layout -->
+{% block js_footer_commons %}
+    <script type="text/javascript" src="{% static "admin/js/vendor/bootstrap.bundle.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "admin/js/vendor/popper.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/force_jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "admin/js/app.min.js" %}"></script>
+{% endblock js_footer_commons %}
 
-{% block js %}{% endblock js %}
+{% block js_footer %}{% endblock js_footer %}
+
 </body>
 </html>
