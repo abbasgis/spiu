@@ -155,7 +155,7 @@ class TblReports(models.Model, GeoItem):
         return '' if self.latitude is None else str(self.latitude)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'tbl_reports'
         verbose_name = "Report"
         verbose_name_plural = "Reports"
@@ -180,7 +180,7 @@ class TblReportsAnalysis(models.Model):
         return self.parameter
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'tbl_reports_analysis'
         verbose_name = "Report Analysis"
         verbose_name_plural = "Reports Analysis"
