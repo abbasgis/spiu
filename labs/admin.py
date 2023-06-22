@@ -62,14 +62,14 @@ class TblReportsAdmin(ModelAdmin):
     geomap_height = "300px"
     geomap_show_map_on_list = False
     arr_list_display = [field.name for field in TblReports._meta.fields if
-                        field.name not in ("id_", "letter_issued_by")]
+                        field.name not in ("created_at", "created_by","updated_at", "updated_by")]
     arr_list_display.insert(7, 'sample_location')
     list_display = arr_list_display
     inlines = [TblLabAnalysisInline, ]
     # list_filter = ('report_title',)
     save_on_bottom = True
     exclude = ('created_by', 'updated_by')
-    list_filter = ('district_id__district_name', 'report_title', 'created_at')
+    list_filter = ('laboratory_name', 'district_id__district_name', 'report_title', 'created_at')
 
     def sample_location(self, obj):
         if obj.longitude:
@@ -86,13 +86,13 @@ class TblReportsAdmin(ModelAdmin):
                 ('sampling_source', 'fuel_type', 'emission_control_system'),
                 ('category', 'monitoring_date', 'sample_monitored_by'),
                 # water st
-                ('sample_type', 'sampling_point', 'treatment_facility'),
-                ('treatment_facility_type', 'process_generating_wastewater', 'discharge_value'),
-                ('discharge_unit', 'capacity_of_wwtp', 'capacity_unit'),
-                ('sampling_date', 'sample_receiving_date', 'sample_id_no'),
-                ('sample_taken_stage', 'sample_received_from', 'sample_received_by'),
+                ('sample_type', 'sampling_point', 'treatment_facility', 'treatment_facility_type'),
+                ('discharge_value', 'discharge_unit', 'capacity_of_wwtp', 'capacity_unit'),
+                ('sampling_date', 'sample_receiving_date', 'sample_id_no', 'sample_taken_stage'),
+                ('process_generating_wastewater', 'sample_received_from', 'sample_received_by'),
                 # water end
-                ('report_path', 'latitude', 'longitude')
+                ('complete_case_path', 'photo1_path', 'photo2_path'),
+                ('latitude', 'longitude')
 
             ),
         }),

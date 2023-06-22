@@ -20,6 +20,7 @@ class WwtpDetailAdmin(ModelAdmin):
     save_on_bottom = True
     exclude = ('created_by', 'updated_by', 'created_at', 'updated_at')
     search_fields = ['name']
+    list_filter = ('wwtp_type', 'district_id__district_name',  'created_at')
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -50,10 +51,5 @@ class WwtpDetailAdmin(ModelAdmin):
         }),
     )
 
-    class Media:
-        # js = ('/static/admin/js/show_hide_reports_fields.js',)
-        css = {
-            'all': ('/static/assets/css/dropdown.css',)
-        }
 
 # admin.site.register(WwtpDetail, WwtpDetailAdmin)

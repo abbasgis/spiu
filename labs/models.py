@@ -137,7 +137,7 @@ class TblReports(models.Model, GeoItem):
     photo1_path = models.FileField(upload_to='lab_reports_photos', verbose_name="Photo-1", blank=True, null=True,
                                    help_text="Attach sampling point location photo with surrounding")
     photo2_path = models.FileField(upload_to='lab_reports_photos', verbose_name="Photo-2", blank=True, null=True,
-                                   help_text="Attach plant photo covering its surrounding")
+                                   help_text="Attach plant photo covering its surrounding & gate")
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column='created_by', )
     updated_by = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
