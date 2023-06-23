@@ -3,12 +3,14 @@
         $(function () {
             // document.getElementsByName('_addanother')[0].style.display = 'none'
             let selectField = $('#id_report_title');
-            let url = window.location.href
-            if (url.includes('/add/')) {
-                selectField.prop('disabled', false);
-            } else {
-                selectField.prop('disabled', true);
-            }
+            // let url = window.location.href
+            // if (url.includes('/add/')) {
+            //     selectField.prop('disabled', false);
+            //     selectField.attr('required', 'required');
+            // } else {
+            //     selectField.prop('disabled', true);
+            //     selectField.prop('required', false);
+            // }
 
             let water_fields = ['sample_type', 'sampling_point', 'treatment_facility', 'treatment_facility_type',
                 'process_generating_wastewater', 'discharge', 'sampling_date', 'sample_receiving_date', 'sample_id_no',
