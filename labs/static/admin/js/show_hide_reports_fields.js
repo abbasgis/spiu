@@ -3,6 +3,13 @@
         $(function () {
             // document.getElementsByName('_addanother')[0].style.display = 'none'
             let selectField = $('#id_report_title');
+            let url = window.location.href
+            if (url.includes('/add/')) {
+                selectField.prop('disabled', false);
+            } else {
+                selectField.prop('disabled', true);
+            }
+
             let water_fields = ['sample_type', 'sampling_point', 'treatment_facility', 'treatment_facility_type',
                 'process_generating_wastewater', 'discharge', 'sampling_date', 'sample_receiving_date', 'sample_id_no',
                 'sample_received_from', 'sample_received_by', 'discharge_value', 'discharge_unit', 'capacity_of_wwtp',

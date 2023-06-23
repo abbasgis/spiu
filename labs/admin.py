@@ -138,13 +138,13 @@ class TblReportsAdmin(ModelAdmin):
             new_r = TblReportsAnalysis(**r)
             new_r.save(force_insert=True)
 
-    def get_readonly_fields(self, request, obj=None):
-        # Disable the 'my_field' field when editing an existing object
-        if obj:
-            return ['report_title', ]
-        # Enable the 'my_field' field when adding a new object
-        else:
-            return []
+    # def get_readonly_fields(self, request, obj=None):
+    #     # Disable the 'my_field' field when editing an existing object
+    #     if obj:
+    #         return ['report_title', ]
+    #     # Enable the 'my_field' field when adding a new object
+    #     else:
+    #         return []
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(TblReportsAdmin, self).formfield_for_dbfield(db_field, **kwargs)
