@@ -59,7 +59,7 @@ class TblReportsAdmin(ModelAdmin):
     geomap_default_longitude = "74.1849"
     geomap_default_latitude = "32.2637"
     geomap_default_zoom = "7"
-    geomap_height = "300px"
+    # geomap_height = "400px"
     geomap_show_map_on_list = False
     arr_list_display = [field.name for field in TblReports._meta.fields if
                         field.name not in ("created_at", "created_by","updated_at", "updated_by")]
