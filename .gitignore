@@ -1,2 +1,3 @@
 venv
 spiu/settings.py
+spiu/static_root

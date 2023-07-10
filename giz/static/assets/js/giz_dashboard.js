@@ -102,9 +102,10 @@ let GIZDashboard = function () {
 
     }
     me.createSunBurstChart = function (chart_div, data, chart_title) {
-        // let cleanedData = data.filter(function (item) {
-        //     return item.parent !== "";
-        // });
+        let chart_type = 'sunburst';
+        if (chart_div === 'chart_env_data') {
+            chart_type = 'sunburst'
+        }
         data.forEach(function (item) {
             item.value = 1;
         });
@@ -122,7 +123,7 @@ let GIZDashboard = function () {
                 text: chart_title
             },
             series: [{
-                type: 'sunburst',
+                type: chart_type,
                 data: data,
                 name: 'Root',
                 allowDrillToNode: true,

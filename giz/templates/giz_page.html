@@ -16,6 +16,8 @@
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/sunburst.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <script src="https://code.highcharts.com/modules/treegraph.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -120,31 +122,10 @@
             </div>
             <div class="row"
                  style="margin: 10px !important; text-align: center !important; background-color: #000505;color: white">
-                &nbsp;&nbsp;For detail, please click on the any attach department
+                &nbsp;&nbsp;For detail, please click on the any leaf of tree
                 in below left panel and chart will be updated in right panel than by clicking on any circle of Sunburst
                 chart you can view detail
             </div>
-            <div class="row">
-                {#                <div class="col-lg-1 col-md-6 col-xs-12">#}
-                {#                    <div class="panel panel-default">#}
-                {#                    <div class="panel-heading"></div>#}
-                {#                        <div id="sectors_charts" class="panel-body"></div>#}
-                {#                    </div>#}
-                {#                </div>#}
-                <div class="col-lg-4 col-md-6 col-xs-12">
-                    <div class="panel panel-default">
-                        {#                    <div class="panel-heading panel-danger"></div>#}
-                        <div id="tgrid_org" class="panel-body"></div>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-6 col-xs-12">
-                    <div class="panel panel-default">
-                        {#                    <div class="panel-heading panel-danger"></div>#}
-                        <div id="chart_dept" class="panel-body"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 10px"></div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-xs-12">
                     <div class="panel panel-default">
@@ -156,6 +137,21 @@
                     <div class="panel panel-default">
                         {#                    <div class="panel-heading panel-danger"></div>#}
                         <div id="chart_env_data" class="panel-body"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px"></div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        {#                    <div class="panel-heading panel-danger"></div>#}
+                        <div id="tgrid_org" class="panel-body"></div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        {#                    <div class="panel-heading panel-danger"></div>#}
+                        <div id="chart_dept" class="panel-body"></div>
                     </div>
                 </div>
             </div>
@@ -173,6 +169,11 @@
                         <div id="chart4" class="panel-body"></div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <iframe src="https://www.google.com/maps/d/u/3/embed?mid=1EdhvHvG7__ymzeXuAHpALyqbChnYpi0&ehbc=2E312F"
+                        height="500"></iframe>
+
             </div>
         </section>
     </div>

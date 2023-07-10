@@ -1,9 +1,8 @@
 import json
 
-from django.db.models import F, Value, CharField, Q, Count
-from django.db.models.functions import Coalesce
+from django.db.models import Count
+
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.template import loader
 
 from giz.models import TblGizData, TblOrganizations
@@ -25,7 +24,9 @@ def get_sunburst_data(request):
         if qs.count() > 0:
             qs = qs.values_list('id', flat=True)
             child_ids = list(qs)
-            data = get_parent_records(child_ids)
+            data = TblGizData.get_parent_rows_recursively(child_ids)
+            # data = TblGizData.exclude_last_child(data, child_ids)
+            # data = get_parent_records(child_ids)
     else:
         qs = get_all_child_records(id)
         data = qs.values()
@@ -72,6 +73,12 @@ def get_parent_obj(qs):
 
 
 def get_organization_data(request):
+    leaf_id = 51  # ID of the leaf node
+    leaf_node = TblGizData.objects.filter(org_id=69).values_list('id', flat=True)
+    # parents_up_to_root = leaf_node.get_parents_up_to_root(leaf_id)
+    # leaf_ids = [78, 67, 98]
+    records_with_hierarchy = parent_rows = TblGizData.get_parent_rows_recursively(leaf_node)
+
     qs = TblOrganizations.objects.all().order_by('category', 'name')
     data = list(qs.values())
     summary_qs = TblOrganizations.objects.exclude(category_level__isnull=True).values('category', 'category_level')
