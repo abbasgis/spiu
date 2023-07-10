@@ -245,17 +245,21 @@ a:hover .fa-circle {
 }
 
 .tree-connector {
-  position: absolute;
-  border-left: 1px solid #ff0000;
-  height: 16px;
-  left: -8px;
-  top: 16px;
+    position: absolute;
+    border-left: 1px solid #ff0000;
+    height: 16px;
+    left: -8px;
+    top: 16px;
 }
 
 .jqx-tree-item-expanded > .tree-connector {
-  border-top: 1px solid #ff0000;
+    border-top: 1px solid #ff0000;
 }
 
 .jqx-tree-item-expanded > .jqx-tree-item {
-  margin-top: 16px;
+    margin-top: 16px;
+}
+
+.highcharts-credits {
+    display: none !important;
 }

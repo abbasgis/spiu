@@ -31,7 +31,7 @@ let GIZDashboard = function () {
                 // me.createJqxGrid(response.data)
                 me.updateTiles(response.summary)
                 me.createOrganizationTreeGrid(response.data);
-                me.createSunBurstChart('chart_dept', response.data, 'Organization Inventory');
+                // me.createSunBurstChart('chart_dept', response.data, 'Organization Inventory');
 
             }
         });
@@ -345,7 +345,7 @@ let GIZDashboard = function () {
                 let row = args.row;
                 if (row.child_count === 0 || row.category_level === 'attached') {
                     // alert("alert")
-                    me.getSunBurstChartData(row.id, 'chart_dept', 'Organizations');
+                    // me.getSunBurstChartData(row.id, 'chart_dept', 'Organizations');
                 }
             });
 

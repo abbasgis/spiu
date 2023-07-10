@@ -31,10 +31,11 @@ def get_sunburst_data(request):
         qs = get_all_child_records(id)
         data = qs.values()
     data = list(data)
-    for item in data:
+    data1 = [obj for obj in data if obj['level'] < 5]
+    for item in data1:
         item['id'] = str(item['id'])
         item['parent'] = str(item['parent']) if item['parent'] is not None else None
-    response = json.dumps(data, default=date_handler)
+    response = json.dumps(data1, default=date_handler)
     return HttpResponse(response)
 
 
@@ -117,3 +118,11 @@ def get_environment_data(request):
         item['parent'] = str(item['parent']) if item['parent'] is not None else None
     response = json.dumps(data, default=date_handler)
     return HttpResponse(response)
+
+
+def is_last_two_children(obj, data):
+    excluded = False
+    for item in data:
+        if item['level'] == 6:
+            excluded = True
+    return excluded
