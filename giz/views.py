@@ -31,11 +31,11 @@ def get_sunburst_data(request):
         qs = get_all_child_records(id)
         data = qs.values()
     data = list(data)
-    data1 = [obj for obj in data if obj['level'] < 5]
-    for item in data1:
+    # data1 = [obj for obj in data if obj['level'] < 5]
+    for item in data:
         item['id'] = str(item['id'])
         item['parent'] = str(item['parent']) if item['parent'] is not None else None
-    response = json.dumps(data1, default=date_handler)
+    response = json.dumps(data, default=date_handler)
     return HttpResponse(response)
 
 
