@@ -75,10 +75,10 @@ def get_parent_obj(qs):
 
 def get_organization_data(request):
     leaf_id = 51  # ID of the leaf node
-    leaf_node = TblGizData.objects.filter(org_id=69).values_list('id', flat=True)
+    #leaf_node = TblGizData.objects.filter(org_id=69).values_list('id', flat=True)
     # parents_up_to_root = leaf_node.get_parents_up_to_root(leaf_id)
     # leaf_ids = [78, 67, 98]
-    records_with_hierarchy = parent_rows = TblGizData.get_parent_rows_recursively(leaf_node)
+    #records_with_hierarchy = parent_rows = TblGizData.get_parent_rows_recursively(leaf_node)
 
     qs = TblOrganizations.objects.all().order_by('category', 'name')
     data = list(qs.values())

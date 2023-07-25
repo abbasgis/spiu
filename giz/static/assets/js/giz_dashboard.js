@@ -306,7 +306,9 @@ let GIZDashboard = function () {
                     {name: 'parent'},
                     {name: 'label'},
                     {name: 'category_level'},
-                    {name: 'child_count'}
+                    {name: 'child_count'},
+                    {name: 'latitude'},
+                    {name: 'longitude'}
                 ],
                 id: 'id',
                 localdata: data,
@@ -346,6 +348,8 @@ let GIZDashboard = function () {
                 if (row.child_count === 0 || row.category_level === 'attached') {
                     // alert("alert")
                     // me.getSunBurstChartData(row.id, 'chart_dept', 'Organizations');
+                    let url = "https://maps.google.com/maps?q=" + row.latitude + "," + row.longitude + "&ie=UTF8&iwloc=&output=embed"
+                    $("#gmap").attr('src', url)
                 }
             });
 

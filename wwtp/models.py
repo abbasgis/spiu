@@ -24,7 +24,7 @@ class WwtpDetail(models.Model, GeoItem):
     wwtp_type = models.CharField(max_length=255, blank=True, null=True, choices=TF_TYPES, verbose_name="WWTP Type")
     remarks = models.CharField(max_length=255, blank=True, null=True, help_text="Write extra info, if any")
     # geom = models.GeometryField(srid=4326, blank=True, null=True)
-    is_valid = models.BooleanField(default=False,verbose_name="Yes, i confirmed", help_text="Please confirm that all the information above in this form is correct")
+    is_valid = models.BooleanField(default=False,verbose_name="Yes, confirmed", help_text="Please confirm that all the information above in this form is correct")
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     created_by = models.IntegerField(blank=True, null=True)

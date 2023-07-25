@@ -3,6 +3,7 @@ from django.contrib import admin
 from django_admin_geomap import ModelAdmin
 
 from spiu.models import Profile
+from spiu_gis.models import TblDistricts
 from .models import WwtpDetail
 
 
@@ -20,7 +21,17 @@ class WwtpDetailAdmin(ModelAdmin):
     save_on_bottom = True
     exclude = ('created_by', 'updated_by', 'created_at', 'updated_at')
     search_fields = ['name']
-    list_filter = ('wwtp_type', 'district_id__district_name',  'created_at')
+    list_filter = ('wwtp_type', 'district_id__district_name', 'created_at')
+
+    def save_model(self, request, obj, form, change):
+        if obj.id is None:
+            obj.created_by = request.user.id
+            obj_user = Profile.objects.filter(user=request.user.id).get()
+            obj.district_id = obj_user.district_id.district_id
+            obj.district_name = obj_user.district_id.district_name
+        else:
+            obj.updated_by = request.user.id
+        super().save_model(request, obj, form, change)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -50,6 +61,5 @@ class WwtpDetailAdmin(ModelAdmin):
             ),
         }),
     )
-
 
 # admin.site.register(WwtpDetail, WwtpDetailAdmin)
