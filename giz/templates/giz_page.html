@@ -46,7 +46,7 @@
         </section>
         <!-- objectives Section -->
         <section id="objectives" class="container-fluid">
-            <div class="row" style="float: end !important;">
+            <div class="row" style="float: right !important;">
                 <div class="col-sm-6"></div>
                 <div class="col-sm-6 split-padding3">
                     <h2 class="headerline">OBJECTIVE</h2>
@@ -180,5 +180,32 @@
             </div>
             <div class="row" style="margin-top: 10px"></div>
         </section>
+
+        <footer class="container-fluid p-4 rounded" style="background-color: #cee7f3">
+            <div class="row">
+                <div class="d-lg-flex justify-content-between">
+                    <div>
+                        <a href="#"><img src="{% static "assets/img/logo/giz.png" %}" height="150px"></a>
+                    </div>
+                    <div>
+                        <a href="#"><img src="{% static "assets/img/logo/pgdp.png" %}" height="150px"></a>
+                    </div>
+                    {#                <div>#}
+                    {#                    <a href="#"><img src="{% static "assets/img/logo/epd_t.png" %}" height="180px"></a>#}
+                    {#                </div>#}
+                    <div>
+                        <a href="#"><img src="{% static "spiu_assets/img/logo/gop.png" %}" height="150px"></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" style="margin-top: 15px">
+                <marquee behavior="scroll" direction="left">
+                    <b>Copyright © 2023 Strategic Planning & Implementation Unit, Punjab Green Development Program,
+                        Environment Protection Department, Government of the Punjab</b>
+                </marquee>
+            </div>
+        </footer>
+
     </div>
 {% endblock %}
