@@ -412,7 +412,7 @@ let GIZDashboard = function () {
                 let args = event.args;
                 let row = args.row;
                 if (row.level === 2) {
-                    me.getSunBurstChartData(row.id, 'chart_env_data', 'Constraints');
+                    me.getSunBurstChartData(row.id, 'chart_env_data', row.name);
                 }
             });
 
