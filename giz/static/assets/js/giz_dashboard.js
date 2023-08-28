@@ -1,15 +1,17 @@
 $(document).ready(function () {
+    let olMapModel = new OL6MapModel('map');
     let dashboard = new GIZDashboard();
-    dashboard.initialize();
+    dashboard.initialize(olMapModel);
+
+
 });
 let GIZDashboard = function () {
     let me = this;
     me.sunBurstchart = null;
     me.gridVM = null;
-    me.initialize = function () {
-        // me.getSunBurstChartData(2, 'chart_scope_of_work', 'Scope of Work');
-        // me.getSunBurstChartData(-1, 'chart_env_data', 'Environmental Data');
-        // me.getSunBurstChartData(4, 'chart_constarints', 'Constraints');
+    me.olMapModel = null;
+    me.initialize = function (olMapModel) {
+        me.olMapModel = olMapModel;
         me.getOrganizationData()
         me.getEnvironmentData()
 
@@ -27,11 +29,9 @@ let GIZDashboard = function () {
         $.ajax({
             url: "/ioed/get_org_data/", success: function (response) {
                 response = JSON.parse(response);
-                // me.createOrganizationBarChart(response.chart_data)
-                // me.createJqxGrid(response.data)
                 me.updateTiles(response.summary)
                 me.createOrganizationTreeGrid(response.data);
-                // me.createSunBurstChart('chart_dept', response.data, 'Organization Inventory');
+                me.olMapModel.initialize(response.data);
 
             }
         });
@@ -41,7 +41,6 @@ let GIZDashboard = function () {
             url: "/ioed/get_env_data/", success: function (response) {
                 response = JSON.parse(response);
                 me.createEnvironmentTreeGrid(response)
-                // me.getSunBurstChartData(row.id,);
                 me.createSunBurstChart('chart_env_data', response, 'Environment Data Inventory');
             }
         });
@@ -109,7 +108,9 @@ let GIZDashboard = function () {
         data.forEach(function (item) {
             item.value = 1;
         });
-
+        let colors = Highcharts.getOptions().colors.filter(function (color) {
+            return color !== '#ffffff';
+        })
         // Build the chart
         Highcharts.chart(chart_div, {
 
@@ -125,6 +126,7 @@ let GIZDashboard = function () {
             series: [{
                 type: chart_type,
                 data: data,
+                colors: colors,
                 name: 'Root',
                 allowDrillToNode: true,
                 allowTraversingTree: true,
@@ -138,20 +140,21 @@ let GIZDashboard = function () {
                         value: 16
                     }
                 },
-                levels: [{
-                    level: 1,
-                    levelIsConstant: false,
-                    dataLabels: {
-                        filter: {
-                            property: 'outerArcLength',
-                            operator: '>',
-                            value: 64
+                levels: [
+                    {
+                        level: 1,
+                        levelIsConstant: false,
+                        dataLabels: {
+                            filter: {
+                                property: 'outerArcLength',
+                                operator: '>',
+                                value: 64
+                            }
                         }
-                    }
-                }, {
-                    level: 2,
-                    colorByPoint: true
-                },
+                    }, {
+                        level: 2,
+                        colorByPoint: true
+                    },
                     {
                         level: 3,
                         colorletiation: {
@@ -166,7 +169,21 @@ let GIZDashboard = function () {
                             to: 0.5
                         }
                     }
-                ]
+                ],
+                point: {
+                    events: {
+                        click: function () {
+                            if (this.node.isLeaf) {
+                                // Handle leaf node click here
+                                // alert('Leaf node clicked:' + this.name);
+                                let org_id = this.org_id
+                                if (org_id) {
+                                    me.getOrganizationDetail(org_id)
+                                }
+                            }
+                        }
+                    }
+                }
 
             }],
 
@@ -177,146 +194,29 @@ let GIZDashboard = function () {
             }
         });
     }
-    me.createOrganizationBarChart = function (chart_data) {
-
-        Highcharts.chart('sectors_charts', {
-            chart: {
-                type: 'bar',
-                height: 500
-            },
-            title: {
-                text: 'SECTORS SUMMARY'
-            },
-            xAxis: {
-                // categories: categories
-                categories: ['Academia', 'Government Department', 'International Organizations.']
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Count'
-                }
-            },
-            legend: {
-                reversed: true
-            },
-            plotOptions: {
-                series: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true
-                    },
-                    point: {
-                        events: {
-                            click: function () {
-                                // Handle the click event here
-                                alert('Bar clicked:' + this.series.name);
-                            }
-                        }
-                    }
-                }
-            },
-            series: [
-                {
-                    name: 'Attached',
-                    data: chart_data.arr_attached
-                },
-                {
-                    name: 'Parent',
-                    data: chart_data.arr_parents
-                }
-            ]
-        });
-    }
-    me.createJqxGrid = function (data) {
-        let source =
-            {
-                localdata: data,
-                datafields:
-                    [
-                        {name: 'name', type: 'string'},
-                        {name: 'category', type: 'string'},
-                        {name: 'category_level', type: 'string'},
-                        {name: 'parent_name', type: 'string'}
-                    ],
-                datatype: "array"
-            };
-        let dataAdapter = new $.jqx.dataAdapter(source);
-        $("#tgrid_org").jqxGrid(
-            {
-                width: '100%',
-                source: dataAdapter,
-                showfilterrow: true,
-                filterable: true,
-                selectionmode: 'multiplecellsextended',
-                columns: [
-                    {
-                        text: '#', columntype: 'number', cellsrenderer: function (row, column, value) {
-                            return "<div style='text-align: center;'>" + (value + 1) + "</div>";
-                        }
-                    },
-                    {text: 'Name', columntype: 'textbox', filtertype: 'input', datafield: 'name', width: 300},
-                    {
-                        text: 'Category', filtertype: 'checkedlist', datafield: 'category'
-                    },
-                    {
-                        text: 'Admin Level', filtertype: 'checkedlist', datafield: 'category_level'
-                    },
-                    {
-                        text: 'Parent Name',
-                        columntype: 'textbox',
-                        filtertype: 'input',
-                        datafield: 'parent_name',
-                        width: 200
-                    },
-                ]
-            });
-        // $('#clearfilteringbutton').jqxButton({height: 25});
-        // $('#clearfilteringbutton').click(function () {
-        //     $("#tgrid_org").jqxGrid('clearfilters');
-        // });
-
-    }
-    me.createBarChartData = function (summaryData) {
-        let categories = [];
-        let attachedData = [];
-        let parentData = [];
-        for (let i = 0; i < summaryData.length; i++) {
-            let category = summaryData[i].category;
-            let categoryLevel = summaryData[i].category_level;
-            let count = summaryData[i].count;
-            categories.push(category);
-
-            if (categoryLevel === "attached") {
-                attachedData.push(count);
-                parentData.push(0);
-            } else {
-                attachedData.push(0);
-                parentData.push(count);
-            }
-        }
-    }
     me.createOrganizationTreeGrid = function (data) {
         // prepare the data
         let source =
             {
-                datatype: "json",
-                datafields: [
-                    {name: 'id'},
-                    {name: 'parent'},
-                    {name: 'label'},
-                    {name: 'category_level'},
+                dataType: "json",
+                dataFields: [
+                    {name: 'org_id', type: 'number'},
+                    {name: 'parent_org_id', type: 'number'},
+                    {name: 'org_name', type: 'string'},
                     {name: 'child_count'},
+                    {name: 'category_level'},
                     {name: 'latitude'},
-                    {name: 'longitude'}
+                    {name: 'longitude'},
+                    {name: 'url', type: 'string'},
+                    {name: 'address', type: 'string'},
                 ],
-                id: 'id',
-                localdata: data,
                 hierarchy:
                     {
-                        keyDataField: {name: 'id'},
-                        parentDataField: {name: 'parent'}
+                        keyDataField: {name: 'org_id'},
+                        parentDataField: {name: 'parent_org_id'}
                     },
+                id: 'org_id',
+                localData: data
             };
         // create data adapter.
         let dataAdapter = new $.jqx.dataAdapter(source);
@@ -326,8 +226,8 @@ let GIZDashboard = function () {
                 width: '100%',
                 height: '500px',
                 source: dataAdapter,
-                // filterable: true,
-                // filterMode: 'simple',
+                filterable: true,
+                filterMode: 'simple',
                 sortable: true,
                 columnsResize: true,
                 icons: true,
@@ -336,20 +236,17 @@ let GIZDashboard = function () {
                     $("#tgrid_org").jqxTreeGrid('expandRow', '4');
                 },
                 columns: [
-                    {text: 'Name', dataField: 'label', width: 600},
-                    {text: 'Count', dataField: 'child_count', width: 50, cellsalign: 'center'},
-                    {text: 'Admin Level', dataField: 'category_level'},
+                    {text: 'Name', dataField: 'org_name', width: 400},
+                    // {text: 'Count', dataField: 'child_count', width: 50, cellsalign: 'center'},
+                    // {text: 'Admin Level', dataField: 'category_level'},
                 ]
             });
         $('#tgrid_org').on('rowClick',
             function (event) {
                 let args = event.args;
                 let row = args.row;
-                if (row.child_count === 0 || row.category_level === 'attached') {
-                    // alert("alert")
-                    // me.getSunBurstChartData(row.id, 'chart_dept', 'Organizations');
-                    let url = "https://maps.google.com/maps?q=" + row.latitude + "," + row.longitude + "&ie=UTF8&iwloc=&output=embed"
-                    $("#gmap").attr('src', url)
+                if (row.latitude) {
+                    me.olMapModel.zoomToLatLong(row)
                 }
             });
 
@@ -417,4 +314,15 @@ let GIZDashboard = function () {
             });
 
     }
+    me.getOrganizationDetail = function (org_id) {
+        $.ajax({
+            url: "/ioed/get_org_detail?id=" + org_id, success: function (response) {
+                response = JSON.parse(response);
+                let url = response.url
+                myWindow = window.open(url, "", "width=600,height=800");
+                // alert(url)
+            }
+        });
+    }
+
 }

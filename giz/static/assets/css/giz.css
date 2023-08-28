@@ -263,3 +263,29 @@ a:hover .fa-circle {
 .highcharts-credits {
     display: none !important;
 }
+
+/*popup style*/
+.ol-popup {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content {
+    max-width: 300px;
+    width: 300px;
+    color: #0c0c0c;
+}
+
+.popup-title {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.popup-form {
+    margin-bottom: 0;
+}
+

@@ -88,8 +88,9 @@ def get_organization_data(request):
     chart_data = create_chart_series_data(summary_qs)
     # summary = list(summary)
     for item in data:
-        item['id'] = str(item['id'])
-        item['parent'] = str(item['parent']) if item['parent'] is not None else None
+        item['org_id'] = item['id']
+        item['org_name'] = item['label']
+        item['parent_org_id'] = item['parent'] if item['parent'] is not None else None
     res = {'data': data, 'chart_data': chart_data, 'summary': summary}
     response = json.dumps(res, default=date_handler)
     return HttpResponse(response)
@@ -117,6 +118,14 @@ def get_environment_data(request):
         item['id'] = str(item['id'])
         item['parent'] = str(item['parent']) if item['parent'] is not None else None
     response = json.dumps(data, default=date_handler)
+    return HttpResponse(response)
+
+
+def get_org_detail(request):
+    org_id = request.GET.get('id', -1)
+    url = TblOrganizations.objects.get(id=org_id).url
+    org = {'url': url}
+    response = json.dumps(org, default=date_handler)
     return HttpResponse(response)
 
 

@@ -47,8 +47,8 @@ INSTALLED_APPS = [
     'wwtp',
     'giz',
 ]
-# GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
-# GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
+GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
 BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -92,17 +92,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'USER': 'postgres',  # Not used with sqlite3.
-        'NAME': 'spiu',
+        'NAME': 'spiu_local',
         # For server below
-        # 'NAME': 'spiu',
-        'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
-        'PORT': '5432',
+        # 'HOST': '103.119.125.200',
+        # 'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
+        # 'PORT': '5432',
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
-        # 'PASSWORD': '123',
-        # 'PORT': '5433'
-        # , 'OPTIONS': {
-        #     'options': '-c search_path=public,wasa_gis'
-        # }
+        'PASSWORD': '123',
+        'PORT': '5433'
+
     }
 }
 

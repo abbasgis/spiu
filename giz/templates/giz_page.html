@@ -1,19 +1,14 @@
 {% extends 'base_giz.html' %}
 {% load static %}
 {% block extra_styles %}
-    <link rel="stylesheet" href="{% static "external/jqwidgets/styles/jqx.base.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "external/jqwidgets-ver17.0.0/styles/jqx.base.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "assets/libs/ol-v7.5.1/ol.css" %}"/>
     <link href="{% static "assets/css/giz.css" %}" rel="stylesheet">
 {% endblock %}
 {% block title %}Env. Data{% endblock %}
 {% block extra_scripts %}
-    <script src="{% static "external/jqwidgets/jqx-all.js" %}"></script>
-    <script src="{% static "external/jqwidgets/jqxdata.js" %}"></script>
-
-    <script src="{% static "external/jqwidgets/jqxdata.export.js" %}"></script>
-    <script src="{% static "external/jqwidgets/jqxgrid.export.js" %}"></script>
-    <script src="{% static "external/jqwidgets/jqxexport.js" %}"></script>
+    <script src="{% static "external/jqwidgets-ver17.0.0/jqx-all.js" %}"></script>
     <script src="{% static "external/jszip/jszip.min.js" %}"></script>
-
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/sunburst.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
@@ -21,10 +16,11 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script type="text/javascript" src="{% static "assets/js/giz_dashboard.js" %}">
-    </script>
+    <script src="{% static "assets/libs/ol-v7.5.1/dist/ol.js" %}"></script>
+    <script type="text/javascript" src="{% static "assets/js/giz_dashboard.js" %}"></script>
+    <script type="text/javascript" src="{% static "assets/js/giz_map.js" %}"></script>
     <script>
-        var token = '{{ csrf_token }}';
+        let token = '{{ csrf_token }}';
     </script>
 {% endblock extra_scripts %}
 {% block main_content %}
@@ -38,7 +34,7 @@
                         Stations, Water Quality Monitoring Stations, Policy formulation on Sound Management of Plastics,
                         Public disclosure of environmental information and citizen engagement and preparation of State
                         of the Environment of Punjab Province. In this context, preparation of an inventory of those
-                        organizations which are collecting and analysing environmental data for informed decision making
+                        organizations which are collecting and analysing environmental data for informed decision-making
                         and to strategies the policy goals/ priority areas of intervention for environment protection in
                         the Province has been initiated.</p>
                 </div>
@@ -46,11 +42,11 @@
         </section>
         <!-- objectives Section -->
         <section id="objectives" class="container-fluid">
-            <div class="row" style="float: right !important;">
+            <div class="row" >
                 <div class="col-sm-6"></div>
                 <div class="col-sm-6 split-padding3">
                     <h2 class="headerline">OBJECTIVE</h2>
-                    <p style="text-align: justify">Because environment is a cross cutting subject. Multiple organization
+                    <p style="text-align: justify">Because environment is a cross-cutting subject. Multiple organization
                         including academia, research institutions and government departments etc. are playing their
                         vital role for the betterment of the environment. The role of every organization is very
                         important but limited to a certain aspect of the environment. The information – who is doing
@@ -122,7 +118,7 @@
             </div>
             <div class="row"
                  style="margin: 10px !important; text-align: center !important; background-color: #000505;color: white">
-                &nbsp;&nbsp;For detail, please click on the any leaf of tree
+                &nbsp;&nbsp;For detail, please click on any leaf of tree
                 in below left panel and chart will be updated in right panel than by clicking on any circle of Sunburst
                 chart you can view detail
             </div>
@@ -149,52 +145,39 @@
                 </div>
                 <div class="col-lg-8 col-md-6 col-xs-12">
                     <div class="panel panel-default">
-                        <div id="chart_dept" class="panel-body"></div>
-                        <div class="mapouter">
-                            <div class="gmap_canvas">
-                                <iframe id="gmap" width="770" height="510" id="gmap_canvas"
-                                        src="https://maps.google.com/maps?q=32.726671,72.8182242&ie=UTF8&iwloc=&output=embed"
-                                        frameborder="0"
-                                        scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                                <a href="https://2yu.co">2yu</a><br>
-                                <style>.mapouter {
-                                    position: relative;
-                                    text-align: right;
-                                    height: 510px;
-                                    width: 770px;
-                                }
-                                </style>
-                                <a href="https://embedgooglemap.2yu.co">html embed google map</a>
-                                <style>.gmap_canvas {
-                                    overflow: hidden;
-                                    background: none !important;
-                                    height: 510px;
-                                    width: 770px;
-                                }</style>
-                            </div>
-                        </div>
-                        {#                        <iframe id="googleMap" src="https://www.google.com/maps/d/u/3/embed?mid=1EdhvHvG7__ymzeXuAHpALyqbChnYpi0&ehbc=2E312F"#}
-                        {#                                height="500" width="100%"></iframe>#}
+                        <div id="map" class="panel-body" style="height: 500px"></div>
                     </div>
                 </div>
             </div>
             <div class="row" style="margin-top: 10px"></div>
         </section>
+        <div id="popup" class="ol-popup">
+            <div class="popup-content">
+                <table class="table table-condensed">
+                    <tbody>
+                    <tr>
+                        <td id="name">Defaultson</td>
+                    </tr>
+                    <tr class="danger">
+                        <td style="text-align: center"><a id="url" href="https://www.gmail.com/" target="_blank">Visit
+                            Website</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <footer class="container-fluid p-4 rounded" style="background-color: #cee7f3">
             <div class="row">
                 <div class="d-lg-flex justify-content-between">
                     <div>
-                        <a href="#"><img src="{% static "assets/img/logo/giz.png" %}" height="150px"></a>
+                        <a href="https://www.giz.de/en/worldwide/362.html"><img src="{% static "assets/img/logo/giz.png" %}" height="150px" alt=""></a>
                     </div>
                     <div>
-                        <a href="#"><img src="{% static "assets/img/logo/pgdp.png" %}" height="150px"></a>
+                        <a href="https://pgdp.pk/"><img src="{% static "assets/img/logo/pgdp.png" %}" height="150px" alt=""></a>
                     </div>
-                    {#                <div>#}
-                    {#                    <a href="#"><img src="{% static "assets/img/logo/epd_t.png" %}" height="180px"></a>#}
-                    {#                </div>#}
                     <div>
-                        <a href="#"><img src="{% static "spiu_assets/img/logo/gop.png" %}" height="150px"></a>
+                        <a href="https://epd.punjab.gov.pk/"><img src="{% static "spiu_assets/img/logo/gop.png" %}" height="150px" alt=""></a>
                     </div>
 
                 </div>

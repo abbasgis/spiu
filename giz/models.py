@@ -50,6 +50,8 @@ class TblOrganizations(models.Model):
     child_count = models.IntegerField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
+    url = models.CharField(max_length=255, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
