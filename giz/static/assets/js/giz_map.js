@@ -103,13 +103,18 @@ let OL6MapModel = function (mapTarget) {
             title: "Organization Layer",
             source: vectorSource,
             style: new ol.style.Style({
-                image: new ol.style.Circle({
-                    radius: 4,
-                    fill: new ol.style.Fill({color: 'red'}),
-                    stroke: new ol.style.Stroke({
-                        color: [0, 0, 0],
-                        width: 1.5
-                    })
+                // image: new ol.style.Circle({
+                //     radius: 4,
+                //     fill: new ol.style.Fill({color: 'red'}),
+                //     stroke: new ol.style.Stroke({
+                //         color: [0, 0, 0],
+                //         width: 1.5
+                //     })
+                // })
+                image: new ol.style.Icon({
+                    // anchor: [0.5, 0.5],
+                    // opacity: 1,
+                    src: '/static/assets/img/red-circle.png'
                 })
             })
         });
@@ -462,7 +467,8 @@ let OL6MapModel = function (mapTarget) {
             attributes: {
                 label: row.org_name,
                 name: row.org_name,
-                parent_name: row.parent.org_name
+                parent_name: row.parent.org_name,
+                url: row.url
             }
         });
         let vectorSource = me.specialLayers["selectedFeatureLayer"].getSource();

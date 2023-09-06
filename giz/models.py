@@ -56,3 +56,18 @@ class TblOrganizations(models.Model):
     class Meta:
         managed = False
         db_table = 'giz_organizations'
+
+
+class GIZContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        managed = True
+        db_table = 'giz_messages'

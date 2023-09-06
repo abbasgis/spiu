@@ -22,27 +22,78 @@
     <script>
         let token = '{{ csrf_token }}';
     </script>
+    <script src="{% static "spiu_assets/js/jquery.easing.min.js" %}"></script>
+    <script src="{% static "spiu_assets/js/jquery.countdown.min.js" %}"></script>
+    <script src="{% static "spiu_assets/js/smoothscroll.js" %}"></script>
+
+    {#<!-- Header Background Slider -->#}
+    <script src="{% static "spiu_assets/js/jquery.backstretch.min.js" %}"></script>
+    <script type="text/javascript">
+        $(".intro").backstretch([
+            "{% static "spiu_assets/img/bg/1.jpg" %}"
+            , "{% static "spiu_assets/img/bg/2.jpg" %}"
+            , "{% static "spiu_assets/img/bg/3.jpg" %}"
+            , "{% static "spiu_assets/img/bg/4.jpg" %}"
+            , "{% static "spiu_assets/img/bg/5.jpg" %}"
+            , "{% static "spiu_assets/img/bg/6.jpg" %}"
+            , "{% static "spiu_assets/img/bg/7.jpg" %}"
+            , "{% static "spiu_assets/img/bg/8.jpg" %}"
+            , "{% static "spiu_assets/img/bg/9.jpg" %}"
+            , "{% static "spiu_assets/img/bg/10.jpg" %}"
+            , "{% static "spiu_assets/img/bg/11.jpg" %}"
+
+        ], {duration: 4000, fade: 1000, centeredX: true, centeredY: true});
+    </script>
 {% endblock extra_scripts %}
 {% block main_content %}
+
     <div class="container-fluid">
-        <section id="about" class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6 split-padding3">
-                    <h2 class="headerline">INTRODUCTION AND BACKGROUND</h2>
-                    <p style="text-align: justify">EPD’s SPIU (Strategic Planning & Implementing Unit) is mandated to
-                        execute and achieve different targets i.e. installation of Ambient Air Quality Monitoring
-                        Stations, Water Quality Monitoring Stations, Policy formulation on Sound Management of Plastics,
-                        Public disclosure of environmental information and citizen engagement and preparation of State
-                        of the Environment of Punjab Province. In this context, preparation of an inventory of those
-                        organizations which are collecting and analysing environmental data for informed decision-making
-                        and to strategies the policy goals/ priority areas of intervention for environment protection in
-                        the Province has been initiated.</p>
+        <header class="intro">
+            <div class="intro-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="intro-text" font-family="Metrophobic" , Arial, serif; style="text-align: justify">
+                                EPD’s Strategic Planning & Implementing Unit (SPIU) is mandated to execute the Punjab
+                                Green
+                                Development Program and other initiatives of the department. The directorate of
+                                Environmental Policy and Planning at SPIU has a function to “Compile and organize
+                                environmental data collected by others and work with those who collect the data and
+                                interpret it for informed decision making in environmental protection sector in the
+                                province”.
+                            </p>
+                            <p class="intro-text" font-family="Metrophobic" , Arial, serif; style="text-align: justify">
+                                Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH is executing the
+                                "Improvement of labour and environmental standards in Pakistan's textile industry
+                                (TextILES)" project. GIZ’s TextILES project is approached by SPIU for assistance in the
+                                context of preparation of inventory of those organizations which are collecting and
+                                analyzing environmental data.
+                            </p>
+                            <p class="intro-text" font-family="Metrophobic" , Arial, serif; style="text-align: justify">
+                                The goal is to strengthen the avenue of informed decision
+                                making and to strategies the policy goals/ priority areas of intervention for
+                                environment
+                                protection in the province, as environment is a cross cutting subject. Project, in the
+                                long
+                                run, aims at bringing stakeholders together for integrated and cohesive actions to
+                                address
+                                the current needs pertaining to the strengthening of Environmental Standards in all
+                                sectors,
+                                especially the Textiles.
+                                Hence, this project was conceived.
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="{% static "assets/img/giz/3.jpeg" %}" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </header>
+
         <!-- objectives Section -->
         <section id="objectives" class="container-fluid">
-            <div class="row" >
+            <div class="row">
                 <div class="col-sm-6"></div>
                 <div class="col-sm-6 split-padding3">
                     <h2 class="headerline">OBJECTIVE</h2>
@@ -125,6 +176,20 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-xs-12">
                     <div class="panel panel-default">
+                        <div id="tgrid_org" class="panel-body"></div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
+                        <div id="map" class="panel-body" style="height: 500px"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 10px"></div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-xs-12">
+                    <div class="panel panel-default">
                         {#                    <div class="panel-heading"></div>#}
                         <div id="tgrid_env" class="panel-body"></div>
                     </div>
@@ -137,20 +202,8 @@
                 </div>
             </div>
             <div class="row" style="margin-top: 10px"></div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-xs-12">
-                    <div class="panel panel-default">
-                        <div id="tgrid_org" class="panel-body"></div>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-6 col-xs-12">
-                    <div class="panel panel-default">
-                        <div id="map" class="panel-body" style="height: 500px"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 10px"></div>
         </section>
+
         <div id="popup" class="ol-popup">
             <div class="popup-content">
                 <table class="table table-condensed">
@@ -159,30 +212,35 @@
                         <td id="name">Defaultson</td>
                     </tr>
                     <tr class="danger">
-                        <td style="text-align: center"><a id="url" href="https://www.gmail.com/" target="_blank">Visit
+                        <td style="text-align: center"><a id="url" href="http://idm.pgdp.pk/" target="_blank">Visit
                             Website</a></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
         <footer class="container-fluid p-4 rounded" style="background-color: #cee7f3">
             <div class="row">
                 <div class="d-lg-flex justify-content-between">
                     <div>
-                        <a href="https://www.giz.de/en/worldwide/362.html"><img src="{% static "assets/img/logo/giz.png" %}" height="150px" alt=""></a>
+                        <a href="https://www.giz.de/en/worldwide/362.html"><img
+                                src="{% static "assets/img/logo/giz.png" %}" height="100px" alt=""></a>
                     </div>
                     <div>
-                        <a href="https://pgdp.pk/"><img src="{% static "assets/img/logo/pgdp.png" %}" height="150px" alt=""></a>
+                        <a href="https://pgdp.pk/"><img src="{% static "assets/img/logo/pgdp.png" %}" height="100px"
+                                                        alt=""></a>
                     </div>
                     <div>
-                        <a href="https://epd.punjab.gov.pk/"><img src="{% static "spiu_assets/img/logo/gop.png" %}" height="150px" alt=""></a>
+                        <a href="https://epd.punjab.gov.pk/"><img src="{% static "assets/img/epd_tp.png" %}"
+                                                                  height="100px" alt=""></a>
                     </div>
-
+                    <div>
+                        <a href="https://punjab.gov.pk/"><img src="{% static "spiu_assets/img/logo/gop.png" %}"
+                                                              height="100px" alt=""></a>
+                    </div>
                 </div>
             </div>
-            <div class="row" style="margin-top: 15px">
+            <div class="row" style="margin-top: 15px; background-color: white">
                 <marquee behavior="scroll" direction="left">
                     <b>Copyright © 2023 Strategic Planning & Implementation Unit, Punjab Green Development Program,
                         Environment Protection Department, Government of the Punjab</b>

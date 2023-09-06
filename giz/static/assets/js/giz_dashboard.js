@@ -54,49 +54,61 @@ let GIZDashboard = function () {
         let total_attach = 0;
         for (let r in summary) {
             let obj = summary[r]
-            if (obj['category'] === "academia" && obj['category_level'] === "parent") {
-                document.getElementById("academia").innerHTML = 'Parent: ' + obj["count"];
-                total = total + obj["count"]
-                academia = academia + obj["count"]
-                total_parent = total_parent + obj["count"]
-            }
+            // if (obj['category'] === "academia" && obj['category_level'] === "parent") {
+            //     // document.getElementById("academia").innerHTML = 'Parent: ' + obj["count"];
+            //     total = total + obj["count"]
+            //     academia = academia + obj["count"]
+            //     total_parent = total_parent + obj["count"]
+            // }
             if (obj['category'] === "academia" && obj['category_level'] === "attached") {
-                document.getElementById("academia_attached").innerHTML = 'Attach: ' + obj["count"]
+                // document.getElementById("academia_attached").innerHTML = 'Attach: ' + obj["count"]
                 total = total + obj["count"]
                 academia = academia + obj["count"]
                 total_attach = total_attach + obj["count"]
             }
-            if (obj['category'] === "govt" && obj['category_level'] === "parent") {
-                document.getElementById("govt").innerHTML = 'Parent: ' + obj["count"]
-                total = total + obj["count"];
-                govt = govt + obj["count"]
-                total_parent = total_parent + obj["count"]
-            }
+            // if (obj['category'] === "govt" && obj['category_level'] === "parent") {
+            //     // document.getElementById("govt").innerHTML = 'Parent: ' + obj["count"]
+            //     total = total + obj["count"];
+            //     govt = govt + obj["count"]
+            //     total_parent = total_parent + obj["count"]
+            // }
             if (obj['category'] === "govt" && obj['category_level'] === "attached") {
-                document.getElementById("govt_attached").innerHTML = 'Attach: ' + obj["count"]
+                // document.getElementById("govt_attached").innerHTML = 'Attach: ' + obj["count"]
                 total = total + obj["count"]
                 govt = govt + obj["count"]
                 total_attach = total_attach + obj["count"]
             }
             if (obj['category'] === "intl" && obj['category_level'] === "parent") {
-                document.getElementById("intl").innerHTML = 'Parent: ' + obj["count"]
+                // document.getElementById("intl").innerHTML = 'Parent: ' + obj["count"]
                 total = total + obj["count"];
                 intl = intl + obj["count"]
                 total_parent = total_parent + obj["count"]
             }
             if (obj['category'] === "intl" && obj['category_level'] === "attached") {
-                document.getElementById("intl_attached").innerHTML = 'Attach: ' + obj["count"]
+                // document.getElementById("intl_attached").innerHTML = 'Attach: ' + obj["count"]
                 total = total + obj["count"]
                 intl = intl + obj["count"]
                 total_attach = total_attach + obj["count"]
             }
         }
-        document.getElementById("total").innerHTML = total
-        document.getElementById("total_parent").innerHTML = 'Parent: ' + total_parent
-        document.getElementById("total_attach").innerHTML = 'Attach: ' + total_attach
-        document.getElementById("govt_total").innerHTML = govt
-        document.getElementById("academia_total").innerHTML = academia
-        document.getElementById("intl_total").innerHTML = intl
+
+        let span_total = document.getElementById("total")
+        span_total.setAttribute('data-purecounter-end', total + 1);
+        span_total.textContent = total + 1;
+        let govt_total = document.getElementById("govt_total")
+        govt_total.setAttribute('data-purecounter-end', govt + 1);
+        govt_total.textContent = govt + 1;
+        let academia_total = document.getElementById("academia_total")
+        academia_total.setAttribute('data-purecounter-end', academia);
+        academia_total.textContent = academia;
+        let intl_total = document.getElementById("intl_total")
+        intl_total.setAttribute('data-purecounter-end', intl);
+        intl_total.textContent = intl;
+        // document.getElementById("total_parent").innerHTML = 'Parent: ' + total_parent
+        // document.getElementById("total_attach").innerHTML = 'Attach: ' + total_attach
+        // document.getElementById("govt_total").innerHTML = govt
+        // document.getElementById("academia_total").innerHTML = academia
+        // document.getElementById("intl_total").innerHTML = intl
 
 
     }
@@ -113,7 +125,9 @@ let GIZDashboard = function () {
         })
         // Build the chart
         Highcharts.chart(chart_div, {
-
+            credits: {
+                enabled: false
+            },
             chart: {
                 height: '500'
             },
@@ -134,11 +148,19 @@ let GIZDashboard = function () {
                 cursor: 'pointer',
                 dataLabels: {
                     format: '{point.name}',
-                    filter: {
-                        property: 'innerArcLength',
-                        operator: '>',
-                        value: 16
-                    }
+                    // filter: {
+                    //     property: 'innerArcLength',
+                    //     operator: '>',
+                    //     value: 16
+                    // },
+                    // rotation: -45,
+                    // padding: -5,
+                    // textOverflow: 'ellipsis',
+                    style: {
+                        // fontWeight: '10px',
+                        // textOverflow: 'ellipsis'
+                    },
+
                 },
                 levels: [
                     {
@@ -149,6 +171,10 @@ let GIZDashboard = function () {
                                 property: 'outerArcLength',
                                 operator: '>',
                                 value: 64
+                            },
+                            textOverflow: 'ellipsis',
+                            style: {
+                                textOverflow: 'ellipsis'
                             }
                         }
                     }, {
@@ -236,7 +262,7 @@ let GIZDashboard = function () {
                     $("#tgrid_org").jqxTreeGrid('expandRow', '4');
                 },
                 columns: [
-                    {text: 'Name', dataField: 'org_name', width: 400},
+                    {text: 'Name', dataField: 'org_name', width: 600},
                     // {text: 'Count', dataField: 'child_count', width: 50, cellsalign: 'center'},
                     // {text: 'Admin Level', dataField: 'category_level'},
                 ]
@@ -260,6 +286,7 @@ let GIZDashboard = function () {
                     {name: 'id'},
                     {name: 'parent'},
                     {name: 'name'},
+                    {name: 'label'},
                     {name: 'level'},
                 ],
                 id: 'id',
@@ -289,7 +316,7 @@ let GIZDashboard = function () {
                     $("#tgrid_env").jqxTreeGrid('expandRow', '4');
                 },
                 columns: [
-                    {text: 'Name', dataField: 'name'},
+                    {text: 'Name', dataField: 'label'},
                     // {text: 'Count', dataField: 'level', width: 50, cellsalign: 'center'},
                     // {
                     //     text: 'Chart', dataField: 'level', width: 63,
@@ -309,7 +336,7 @@ let GIZDashboard = function () {
                 let args = event.args;
                 let row = args.row;
                 if (row.level === 2) {
-                    me.getSunBurstChartData(row.id, 'chart_env_data', row.name);
+                    me.getSunBurstChartData(row.id, 'chart_env_data', row.label);
                 }
             });
 

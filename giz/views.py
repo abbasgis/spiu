@@ -2,16 +2,18 @@ import json
 
 from django.db.models import Count
 
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
+from django.shortcuts import redirect
 from django.template import loader
 
-from giz.models import TblGizData, TblOrganizations
+from giz.models import TblGizData, TblOrganizations, GIZContactMessage
+from spiu.settings import MEDIA_ROOT
 from spiu.utils import date_handler
 
 
 # Create your views here.
 def get_giz_page(request):
-    template = loader.get_template('giz_page.html')
+    template = loader.get_template('index_giz.html')
     return HttpResponse(template.render({}, request))
 
 
@@ -129,9 +131,30 @@ def get_org_detail(request):
     return HttpResponse(response)
 
 
+def submit_message_form(request):
+    if request.method == 'POST':
+        try:
+            data = request.POST
+            obj = {'name': data['name'], 'email': data['email'], 'subject': data['subject'], 'message': data['message']}
+            # Get the object if it exists or create a new one if not
+            obj, created = GIZContactMessage.objects.get_or_create(**obj)
+            if created:
+                return HttpResponse('OK')
+        except Exception as e:
+            return HttpResponse('Fail to send' + str(e.args))
+
+
 def is_last_two_children(obj, data):
     excluded = False
     for item in data:
         if item['level'] == 6:
             excluded = True
     return excluded
+
+
+def ioed_report_content(request):
+    file_name = 'ioed.pdf'
+    url = MEDIA_ROOT + '/giz/' + file_name
+    response = FileResponse(open(url, 'rb'), content_type="application/pdf")
+    response["Content-Disposition"] = "filename={}".format(file_name)
+    return response

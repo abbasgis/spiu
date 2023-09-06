@@ -64,53 +64,56 @@ var LabReportsDashboard = function () {
     me.createHighMaps = function (input_data) {
         const drilldown = async function (e) {
             if (!e.seriesOptions) {
-                const chart = this;
-                const mapKey = `countries/us/${e.point.drilldown}-all`;
-                const division_id = e.point.properties.code;
-                // Handle error, the timeout is cleared on success
-                let fail = setTimeout(() => {
-                    if (!Highcharts.maps[mapKey]) {
-                        chart.showLoading(`
+                const name = e.point.drilldown
+                if (name.startsWith('EPA Lab')) {
+                    const chart = this;
+                    const mapKey = `countries/us/${e.point.drilldown}-all`;
+                    const division_id = e.point.properties.code;
+                    // Handle error, the timeout is cleared on success
+                    let fail = setTimeout(() => {
+                        if (!Highcharts.maps[mapKey]) {
+                            chart.showLoading(`
                     <i class="icon-frown"></i>
                     Failed loading ${e.point.name}
                 `);
-                        fail = setTimeout(() => {
-                            chart.hideLoading();
-                        }, 1000);
-                    }
-                }, 3000);
+                            fail = setTimeout(() => {
+                                chart.hideLoading();
+                            }, 1000);
+                        }
+                    }, 3000);
 
-                // Show the Font Awesome spinner
-                chart.showLoading('<i class="icon-spinner icon-spin icon-3x"></i>');
-                // Load the drilldown map
-                var url = "/labs/get_labs_highmap_json?level=district&division_id=" + division_id
-                var res = await fetch(url).then(response => response.json());
-                rs = res.high_maps
-                rs = JSON.parse(rs)
-                const input_data = rs[0].geojson;
-                const data = Highcharts.geojson(input_data);
-                // Set a non-random bogus value
-                data.forEach((d, i) => {
-                    if (d.properties) {
-                        d.value = d.properties.total;
-                        d.drilldown = d.properties.name
-                        d.name = d.properties.name
-                    }
+                    // Show the Font Awesome spinner
+                    chart.showLoading('<i class="icon-spinner icon-spin icon-3x"></i>');
+                    // Load the drilldown map
+                    var url = "/labs/get_labs_highmap_json?level=district&division_id=" + division_id
+                    var res = await fetch(url).then(response => response.json());
+                    rs = res.high_maps
+                    rs = JSON.parse(rs)
+                    const input_data = rs[0].geojson;
+                    const data = Highcharts.geojson(input_data);
+                    // Set a non-random bogus value
+                    data.forEach((d, i) => {
+                        if (d.properties) {
+                            d.value = d.properties.total;
+                            d.drilldown = d.properties.name
+                            d.name = d.properties.name
+                        }
 
-                });
-                // Apply the recommended map view if any
-                chart.mapView.update(Highcharts.merge({insets: undefined}, "map"), false);
+                    });
+                    // Apply the recommended map view if any
+                    chart.mapView.update(Highcharts.merge({insets: undefined}, "map"), false);
 
-                // Hide loading and add series
-                chart.hideLoading();
-                clearTimeout(fail);
-                chart.addSeriesAsDrilldown(e.point, {
-                    name: e.point.drilldown, data, dataLabels: {
-                        enabled: true, format: '{point.drilldown}'
-                    }
-                });
-                me.createBarChart(res);
-                me.updateTiles(res);
+                    // Hide loading and add series
+                    chart.hideLoading();
+                    clearTimeout(fail);
+                    chart.addSeriesAsDrilldown(e.point, {
+                        name: e.point.drilldown, data, dataLabels: {
+                            enabled: true, format: '{point.drilldown}'
+                        }
+                    });
+                    me.createBarChart(res);
+                    me.updateTiles(res);
+                }
             }
         };
 // On drill air, reset to the top-level map view
