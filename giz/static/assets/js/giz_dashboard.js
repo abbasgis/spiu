@@ -41,7 +41,7 @@ let GIZDashboard = function () {
             url: "/ioed/get_env_data/", success: function (response) {
                 response = JSON.parse(response);
                 me.createEnvironmentTreeGrid(response)
-                me.createSunBurstChart('chart_env_data', response, 'Environment Data Inventory');
+                me.createSunBurstChart('chart_env_data', response, 'Organizations Inventory Chart');
             }
         });
     }
