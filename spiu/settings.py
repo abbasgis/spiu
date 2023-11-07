@@ -38,14 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_admin_geomap',
     'import_export',
+    'django_admin_geomap',
     'spiu',
     'spiu_gis',
     'labs',
     'fire_points',
     'wwtp',
     'giz',
+    'crs',
+    'pac' #palstic awareness campaign
 ]
 GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
 GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'

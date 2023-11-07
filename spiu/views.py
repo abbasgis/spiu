@@ -22,7 +22,7 @@ def has_group(user, group_name):
 
 
 def spiu_page(request):
-    template = loader.get_template('index_spiu.html')
+    template = loader.get_template('index.html')
     return HttpResponse(template.render({}, request))
 
 

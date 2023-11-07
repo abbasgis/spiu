@@ -34,6 +34,7 @@ urlpatterns = [
                   path('', spiu_page, name='spiu'),
                   path('spiu/', spiu_page, name='spiu'),
                   path('labs/', include('labs.urls')),
+                  path('pac/', include('pac.urls')),
                   path('ioed/', include('giz.urls')),
                   path('wwtp/', include('wwtp.urls')),
                   path('fire_points/', get_fire_points, name='fire_points'),

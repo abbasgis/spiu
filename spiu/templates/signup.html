@@ -1,40 +1,108 @@
 {% extends "base.html" %}
-{% load bootstrap_admin_template_tags static %}
+{% load admin_kubi_tags static %}
 {% block main_content %}
     <style>
-        form {
+        .login_form {
+            margin-top: 15vh;
             padding: 20px 22px;
-            background: #fff9fc !important
+            background: #c3e8c3 !important
         }
 
-        p {
-            color: red
+        .helptext {
+            color: #000505;
+            font-size: small;
         }
 
-        .container {
-            background: none !important;
+        .errorlist {
+            color: red;
         }
     </style>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-4"></div>
-            <div class="col-md-4" >
-                  <form method="post" action="" style="height:500px;overflow-y: scroll !important;">
-                {% csrf_token %}
-                {% for field in form %}
-                    <p>
-                        {{ field.label_tag }}<br>
-                        {{ field|add_class:"form-control" }}
-                        {% if field.help_text %}
-                            <small style="color: grey">{{ field.help_text }}</small>
-                        {% endif %}
-                        {% for error in field.errors %}
-                            <p style="color: red">{{ error }}</p>
-                        {% endfor %}
-                    </p>
-                {% endfor %}
-                <button class="col-md-12 btn btn-primary" type="submit">Sign up</button>
-            </form>
+            <div class="col-md-4">
+                <form class="login_form" method="post" action="">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="first_name" class="form-label">Name:</label>
+                                <input type="text" class="form-control" id="first_name" placeholder="Enter your Name"
+                                       name="first_name" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="username" class="form-label">User Name:</label>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter username"
+                                           name="username">
+                                    <span class="helptext help-block">Username required Letters, digits and @/./+/-/_ only.</span>
+                                </div>
+                            </div>
+                        </div>
+                      -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter Email"
+                                       name="email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="password1" class="form-label">Password:</label>
+                                <input type="password" class="form-control" id="password1" placeholder="Enter password"
+                                       name="password1">
+                                <span class="helptext">
+                                    <ul>
+                                    <li>Your password must contain at least 8 characters.</li>
+                                    <li>Your password can’t be entirely numeric.</li>
+                                </ul>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="password2" class="form-label">Password Confirmation:</label>
+                                    <input type="password" class="form-control" id="password2" placeholder="Enter password"
+                                           name="password2">
+                                    <span class="helptext">Enter the same password as before, for verification.</span>
+                                </div>
+                            </div>
+                        </div>
+                    -->
+                    {% if form.errors %}
+                        <p style="color: red">{{ form.errors }}</p>
+                    {% endif %}
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary col-md-12">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-md-12">
+                                    <a style="color: #0a53be" href="{% url 'login' %}">if already registered, please
+                                        login?</a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="col-md-4"></div>
         </div>

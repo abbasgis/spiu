@@ -1,0 +1,415 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>SPIU-EPD Punjab</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static "assets/img/favicon.png" %}" rel="icon">
+    <link href="{% static "assets/img/apple-touch-icon.png" %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static "assets/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/aos/aos.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/glightbox/css/glightbox.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/swiper/swiper-bundle.min.css" %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static "assets/css/main.css" %}" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- ======= Header ======= -->
+<header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <p class="logo d-flex align-items-center">
+            <a href="#"><img src="{% static "spiu_assets/img/logo/gop.png" %}" height="50px"></a>
+            <a href="https://epd.punjab.gov.pk/" target="_blank"><img style="border-radius: 10%"
+                                                                      src="{% static "assets/img/epd.png" %}"
+                                                                      height="50px"></a>
+            <a href="https://pgdp.pk/" target="_blank"><img style="border-radius: 50%"
+                                                            src="{% static "assets/img/pgdp.jpg" %}"
+                                                            height="50px"></a>
+        </p>
+
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li class="dropdown"><a href="#"><span>Our Work</span> <i
+                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li>
+                            <a href="http://idm.pgdp.pk/pac/" target="_blank">
+                                Public Awareness Campaign (PAC) on Single-Use Plastic</a>
+                        </li>
+                        <li>
+                            <a href="http://idm.pgdp.pk:8082/" target="_blank">
+                                Interactive Platform for Public Inputs (IPPI)</a>
+                        </li>
+                        <!--
+                        <li><a href="/admin/crs/crscomplaintsdetail/"
+                               target="_blank">Complaint Record System(CRS), SOE 2023</a></li>
+                               -->
+                        <li><a href="http://idm.pgdp.pk:8081/"
+                               target="_blank">Grievance Redressal Mechanism (GRM)</a></li>
+                        <li><a href="{% url "forms_page" %}"
+                               target="_blank">Environmental Decision Making (EDM)</a></li>
+                        <li><a href="/admin/labs/tblreports/"
+                               target="_blank">Chemical Analysis Reports (CAR)</a></li>
+                        <li><a href="/ioed/main/"
+                               target="_blank">Inventory of Organizations (IOED)</a></li>
+                        <li><a href="/admin/wwtp/wwtpdetail/"
+                               target="_blank">Waste Water Treatment Plants</a></li>
+                        <li><a href="{% url "fp" %}"
+                               target="_blank">Fire Points</a></li>
+                    </ul>
+                </li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <!-- Authentication Links -->
+                {% if not user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link"
+                                            href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Login</a>
+                    </li>
+                {% else %}
+                    <li class="dropdown"><a href="#"><span>{{ request.user.first_name }}</span> <i
+                            class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li><a href="{% url "logout" %}">Logout</a></li>
+                        </ul>
+                    </li>
+
+                {% endif %}
+            </ul>
+
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero">
+
+    <div class="info d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12 text-center">
+                    <h2 data-aos="fade-down">Welcome
+                        To<br/><span>Strategic Planning and Implementation Unit (SPIU)</span></h2>
+                    <p data-aos="fade-up">Punjab Green Development Program, Environment Protection Department,
+                        Government of the Punjab
+                    </p>
+                    <a data-aos="fade-up" data-aos-delay="200" href="#about" class="btn-get-started">Lab Reports SOE,
+                        2023</a>
+                    <a data-aos="fade-up" data-aos-delay="200" href="#about"
+                       class="btn-outline-secondary btn-get-started">
+                        EDM For Poultry Farms</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+
+        <div class="carousel-item active" style="background-image: url({% static "assets/img/bg/1.jpg" %})">
+        </div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/2.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/3.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/4.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/5.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/6.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/7.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/8.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/9.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/10.jpg" %})"></div>
+        <div class="carousel-item" style="background-image: url({% static "assets/img/bg/11.jpg" %})"></div>
+        <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+    </div>
+
+</section><!-- End Hero Section -->
+
+<main id="main">
+    <!-- ======= Get Started Section ======= -->
+    <section id="about" class="get-started section-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>WHO WE ARE</h2>
+                <p>SPIU & PGDP</p>
+            </div>
+            <div class="row justify-content-between gy-1">
+                <div class="col-lg-12 d-flex align-items-center" data-aos="fade-up">
+                    <div class="content" style="text-align: justify">
+                        <p>PGDP is a World Bank funded program of worth US$ 273 Million. The share of World Bank and
+                            Government of the Punjab is US$ 200 Million and US$ 73 Million
+                            respectively. The key objectives of PGDP are: <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(a)
+                            Strengthening
+                            Environmental Governance & <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(b) Promoting Green
+                            Investments.
+                        <p>The SPIU at the EPD will have overall responsibility for monitoring and
+                            reporting on the Program’s results. It will conduct regular M&E reporting on progress in
+                            each of the
+                            results areas, including the collection of output milestones for intermediate indicators and
+                            Disbursement Link Indicators.</p>
+                        <p>SPIU is being established for the World Bank funded “Punjab Green Development Program”, Asian
+                            Development Bank aided “Revitalization of River Ravi”, for planning and implementation of
+                            future interventions of Environment Protection Department to empower and support Environment
+                            Protection Department</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section><!-- End Get Started Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+            <div class="section-header">
+                <h2>Services</h2>
+                <p>Click on any card for further detail</p>
+            </div>
+
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-item  position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-mountain-city"></i>
+                        </div>
+                        <h3>PAC on Single-Use Plastic</h3>
+                        <p>Activity Detail regarding Public awareness campaign on Single-Use of Plastic</p>
+                        <a href="/pac" class="readmore stretched-link">Visit Site <i
+                                class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-arrow-up-from-ground-water"></i>
+                        </div>
+                        <h3>IPPI</h3>
+                        <p>INTERACTIVE PLATFORM FOR PUBLIC INPUTS (IPPI)
+                            IN ENVIRONMENTAL MANAGEMENT</p>
+                        <a href="http://idm.pgdp.pk:8082/" class="readmore stretched-link">Visit Site <i
+                                class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-compass-drafting"></i>
+                        </div>
+                        <h3>GRM</h3>
+                        <p>Grievance Redressal Mechanism (GRM)</p>
+                        <a href="http://idm.pgdp.pk:8081/" class="readmore stretched-link">Visit Site <i
+                                class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-trowel-bricks"></i>
+                        </div>
+                        <h3>EDM</h3>
+                        <p>Environmental Decision Making (EDM)</p>
+                        <a href="http://idm.pgdp.pk/home/" class="readmore stretched-link">Visit Site <i
+                                class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-helmet-safety"></i>
+                        </div>
+                        <h3>CAR</h3>
+                        <p>Chemical Analysis Reports (CAR)</p>
+                        <a href="http://idm.pgdp.pk/labs/labs_dashboard/" class="readmore stretched-link">Visit Site <i
+                                class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-arrow-up-from-ground-water"></i>
+                        </div>
+                        <h3>IOED</h3>
+                        <p>Inventory of Organizations having Environmental Data in Punjab</p>
+                        <a href="/ioed/main/" class="readmore stretched-link">Visit Site <i
+                                class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div><!-- End Service Item -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-arrow-up-from-ground-water"></i>
+                        </div>
+                        <h3>WWTP</h3>
+                        <p>Waste Water Treatments Plants</p>
+                        <a href="http://idm.pgdp.pk/admin/wwtp/wwtpdetail/" class="readmore stretched-link">Visit Site
+                            <i
+                                    class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div><!-- End Service Item -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-arrow-up-from-ground-water"></i>
+                        </div>
+                        <h3>Fire Points</h3>
+                        <p>
+                            Satellite Based Fire Locations List in Punjab</p>
+                        <a href="/fp/" class="readmore stretched-link">Visit Site
+                            <i
+                                    class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div><!-- End Service Item -->
+            </div>
+
+        </div>
+    </section><!-- End Services Section -->
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row gy-4">
+                <div class="col-lg-6">
+                    <div class="info-item  d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-map"></i>
+                        <h3>Our Address</h3>
+                        <p>Strategic Planning & Implementation Unit, Environment Protection Department,5th Floor
+                            Building # 2, Aiwan-e-Iqbal Complex, Egerton Road, Garhi Shahu, Lahore.</p>
+                    </div>
+                </div><!-- End Info Item -->
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="info-item d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-envelope"></i>
+                        <h3>Email Us</h3>
+                        <p>ddep@epd.punjab.gov.pk</p>
+                    </div>
+                </div><!-- End Info Item -->
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="info-item  d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-telephone"></i>
+                        <h3>Call Us</h3>
+                        <p>+92 (042)-36310996</p>
+                    </div>
+                </div><!-- End Info Item -->
+
+            </div>
+
+            <div class="row gy-4 mt-1">
+
+                <div class="col-lg-6 ">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3399.6661510940244!2d74.32819431448402!3d31.560775552304904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391905fcd50a284d%3A0xcc6c595968dbf307!2sStrategic%20Planning%20and%20Implementation%20Unit%20(SPIU)%2C%20Punjab%20Green%20Development%20Program%20(PGDP)%2C%20Environment%20Protection%20Department%20(EPD)%2C%20Punjab!5e0!3m2!1sen!2s!4v1655116806847!5m2!1sen!2s"
+                            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div><!-- End Google Maps -->
+
+                <div class="col-lg-6">
+                    <form action="/ioed/submit_message/" method="post" role="form" class="php-email-form">
+                        {% csrf_token %}
+                        <div class="row gy-4">
+                            <div class="col-lg-6 form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
+                                       required>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="message" rows="5" placeholder="Message"
+                                      required></textarea>
+                        </div>
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit">Send Message</button>
+                        </div>
+                    </form>
+                </div><!-- End Contact Form -->
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+    <div class="footer-legal text-center position-relative">
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Strategic Planning & Implementation Unit, Punjab Green Development Program, Environment Protection Department, Government of the Punjab
+                Developed by SPIU-PGDP</span></strong>. All Rights Reserved
+            </div>
+        </div>
+    </div>
+
+</footer>
+<!-- End Footer -->
+
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div>
+
+<!-- Vendor JS Files -->
+<script src="{% static "assets/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<script src="{% static "assets/vendor/aos/aos.js" %}"></script>
+<script src="{% static "assets/vendor/glightbox/js/glightbox.min.js" %}"></script>
+<script src="{% static "assets/vendor/isotope-layout/isotope.pkgd.min.js" %}"></script>
+<script src="{% static "assets/vendor/swiper/swiper-bundle.min.js" %}"></script>
+<script src="{% static "assets/vendor/purecounter/purecounter_vanilla.js" %}"></script>
+<script src="{% static "assets/vendor/php-email-form/validate.js" %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static "assets/js/main.js" %}"></script>
+
+</body>
+
+</html>

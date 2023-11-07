@@ -17,11 +17,11 @@ class WwtpDetailAdmin(ModelAdmin):
     geomap_height = "300px"
     geomap_show_map_on_list = False
     list_display = ['id', 'district', 'category_id', 'name', 'is_valid', 'address', 'wwtp_type', 'remarks', 'latitude',
-                    'longitude']
+                    'longitude', 'updated_at']
     save_on_bottom = True
     exclude = ('created_by', 'updated_by', 'created_at', 'updated_at')
     search_fields = ['name']
-    list_filter = ('wwtp_type', 'district_id__district_name', 'created_at')
+    list_filter = ('wwtp_type', 'district_id__district_name', 'is_valid', 'updated_at')
 
     def save_model(self, request, obj, form, change):
         if obj.id is None:
