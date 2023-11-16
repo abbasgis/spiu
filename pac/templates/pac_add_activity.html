@@ -3,6 +3,7 @@
 {% block extra_scripts %}
     <script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
     <script src="{% static "assets/js/geo_location.js" %}"></script>
+
 {% endblock %}
 {% block extra_styles %}
     <style>
@@ -14,6 +15,18 @@
         form {
             background-color: #cfe2f1;
         }
+
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .preview-item {
+            max-width: 100px;
+            max-height: 100px;
+            margin: 10px;
+        }
+
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
 {% endblock %}
@@ -70,7 +83,14 @@
                         <label for="id_images" class="form-label">Attach Photos</label>
                         <input class="form-control" type="file" id="id_images"
                                accept="image/*" name="images" multiple required>
+                        <span class="help-block">Choose file from directory and than click on upload button</span>
                     </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="preview-container" id="image-preview-container"></div>
+                        </div>
+                    </div>
+
                     {% if messages %}
                         <ul class="messages">
                             {% for message in messages %}

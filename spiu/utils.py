@@ -49,6 +49,12 @@ def date_handler(obj):
     return obj.isoformat() if hasattr(obj, 'isoformat') else str(obj)
 
 
+def date_format_handler(obj):
+    if isinstance(obj, datetime.datetime):
+        # Format created_at field as "14 Oct 2023, 12:24 PM"
+        return obj.strftime("%d %b %Y, %I:%M %p")
+
+
 def method_name(obj):
     data = {'__class__': obj.__class__.__name__,
             '__module__': obj.__module__

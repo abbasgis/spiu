@@ -2,6 +2,8 @@
 {% load static %}
 {% block extra_scripts %}
     <script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css"/>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script src="{% static "assets/js/view_activities.js" %}"></script>
     <script>
         $(document).ready(function () {
@@ -14,51 +16,62 @@
     </script>
 {% endblock %}
 {% block extra_styles %}
-    <style>
-        #map {
-            width: 100%;
-            height: 80vh;
-        }
-
-        form {
-            background-color: #cfe2f1;
-        }
-
-        .photos-container {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .photo-image {
-            margin: 5px; /* Add margin to create gaps */
-            padding: 10px; /* Add padding for spacing within each image */
-            border-bottom: solid black;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static "assets/css/pac_view_page.css" %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
 {% endblock %}
 {% block title %}Home{% endblock %}
 {% block main_content %}
     <div class="container-fluid" style="margin-top: 10vh">
         <div class="row ">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                     </div>
-                    <div id="map" class="card-body">
-                    </div>
+                    <div id="map" class="card-body"></div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">
-                    </div>
-                    <div id="attributes" class="card-body">
-                        <p>Please click on any marker on map to view its detail</p>
+                    <div class="card-header"></div>
+                    <div id="tbl_attr" class="card-body">
+                        <table id="attr_table" class="display">
+                            <thead>
+                            <tr>
+                                <th>District</th>
+                                <th>Location Name</th>
+                                <th>Address</th>
+                                <th>Date</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row photos-container" id="photos"></div>
+    </div>
+    <div class="row ">
+        <span style="text-align: center;color: blue">Please click on any marker on map or row of the table to view its detail</span>
+    </div>
+    <div class="row ">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div id="attributes" class="card-body">
+                    <p>Please click on any marker on map to view its detail in below area</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div id="photo_panel" class="card-body">
+                    <div class="row photos-container" id="photos"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </div>
 {% endblock %}

@@ -1,5 +1,28 @@
 $(document).ready(function () {
     const geolocationMap = new GeolocationMap();
+
+    // Image preview function
+    function readURL(input) {
+        $('#image-preview-container').empty(); // Clear previous previews
+
+        if (input.files && input.files.length > 0) {
+            for (var i = 0; i < input.files.length; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var previewItem = $('<img>').attr('src', e.target.result).addClass('preview-item');
+                    $('#image-preview-container').append(previewItem);
+                };
+
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+    }
+
+    // File input change event
+    $('#id_images').change(function () {
+        readURL(this);
+    });
 });
 
 class GeolocationMap {
