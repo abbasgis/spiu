@@ -6,26 +6,8 @@
 
 {% endblock %}
 {% block extra_styles %}
+    <link href="{% static "assets/css/pac_main.css" %}" rel="stylesheet">
     <style>
-        #map {
-            width: 100%;
-            height: 400px;
-        }
-
-        form {
-            background-color: #cfe2f1;
-        }
-
-        .preview-container {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .preview-item {
-            max-width: 100px;
-            max-height: 100px;
-            margin: 10px;
-        }
 
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
@@ -38,8 +20,7 @@
                 <div class="card">
                     <div class="card-header">
                         <label for="track">
-                            Locate Me
-                            <input id="track" type="checkbox"/>
+                            If not at current location,than please click on your exact location on map
                         </label>
                     </div>
                     <div id="map" class="card-body"></div>
@@ -83,12 +64,13 @@
                         <label for="id_images" class="form-label">Attach Photos</label>
                         <input class="form-control" type="file" id="id_images"
                                accept="image/*" name="images" multiple required>
-                        <span class="help-block">Choose file from directory and than click on upload button</span>
+                        <span class="help-block">Choose one or more images from directory and than click on upload button</span>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
                             <div class="preview-container" id="image-preview-container"></div>
                         </div>
+                        <!-- <button type="button" id="add-more-images" class="btn btn-primary">Add Image</button> -->
                     </div>
 
                     {% if messages %}

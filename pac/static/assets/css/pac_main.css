@@ -365,4 +365,45 @@ section {
     opacity: 0.9;
 }
 
+.start_checked {
+    color: orange !important;
+    font-size: 48px;
+    margin-right: 20px;
+}
 
+.rating_certificate {
+    color: #000505 !important;
+}
+
+/*style for add new activity*/
+.preview-container-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+}
+
+form {
+    background-color: #cfe2f1;
+}
+
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.preview-item {
+    max-width: 100px;
+    max-height: 100px;
+    margin: 10px;
+}
+
+.preview-image {
+    max-width: 100px;
+    max-height: 100px;
+    margin: 10px;
+}

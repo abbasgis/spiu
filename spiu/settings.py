@@ -94,7 +94,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'USER': 'postgres',  # Not used with sqlite3.
-        'NAME': 'spiu_local',
+        'NAME': 'spiu_231115',
         # For server below
         # 'HOST': '103.119.125.200',
         # 'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.

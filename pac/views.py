@@ -43,6 +43,9 @@ def pac_signup_page(request):
         form = SignupForm(post_data_copy)
         if form.is_valid():
             user = form.save()
+            user.profile.mobile_no = form.cleaned_data.get('mobile_no')
+            user.profile.email = form.cleaned_data.get('email')
+            user.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('/pac')  # Redirect to the home page after signup
     else:

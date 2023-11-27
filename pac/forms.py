@@ -7,11 +7,13 @@ from .models import Activity, Photo
 
 
 class SignupForm(UserCreationForm):
+    mobile_no = forms.IntegerField(required=False, label="Mobile No")
     email = forms.EmailField(max_length=200, help_text='Required')
 
     class Meta:
         model = User
-        fields = ('first_name', 'username', 'email', 'password1', 'password2')
+        fields = ('first_name', 'username', 'mobile_no', 'email', 'password1', 'password2')
+        labels = {'mobile_no': 'Mobile Number', }
 
 
 class ActivityPhotoForm(forms.ModelForm):
