@@ -94,6 +94,9 @@ class ViewActivitiesMap {
             if (k === "district__district_name") {
                 formattedKey = "District Name"
             }
+            if (k === "created_by__username") {
+                formattedKey = "Uploaded By"
+            }
 
             table += " <tr>\n" +
                 "      <th scope=\"row\">" + formattedKey + "</th>\n" +
@@ -169,6 +172,7 @@ class ViewActivitiesMap {
         let table = $('#attr_table').DataTable({
             data: data,
             columns: [
+                {data: 'id'},
                 {data: 'district__district_name'},
                 {data: 'activity_name'},
                 {data: 'activity_address'},

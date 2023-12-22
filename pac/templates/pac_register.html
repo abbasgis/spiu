@@ -24,8 +24,8 @@
     </style>
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
                 <form class="login_form" method="post" action="">
                     {% csrf_token %}
                     <div class="row">
@@ -34,6 +34,114 @@
                                 <label for="first_name" class="form-label">Name:</label>
                                 <input type="text" class="form-control" id="first_name" placeholder="Enter your Name"
                                        name="first_name" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_gender" class="form-label">Gender:</label>
+                                <select class="form-control form-select" name="gender" placeholder="Select your gender"
+                                        id="id_gender">
+                                    <option value="" selected>---------</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="-">Rather not say</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_district_id" class="form-label">District Name:</label>
+                                <select class="form-control form-select" name="district_id"
+                                        id="id_district_id">
+                                    <option value="" selected>---------</option>
+
+                                    <option value="29">Attock</option>
+
+                                    <option value="3">Bahawalnagar</option>
+
+                                    <option value="2">Bahawalpur</option>
+
+                                    <option value="36">Bhakkar</option>
+
+                                    <option value="28">Chakwal</option>
+
+                                    <option value="11">Chiniot</option>
+
+                                    <option value="7">Dera Ghazi Khan</option>
+
+                                    <option value="10">Faisalabad</option>
+
+                                    <option value="17">Gujranwala</option>
+
+                                    <option value="16">Gujrat</option>
+
+                                    <option value="15">Hafizabad</option>
+
+                                    <option value="9">Jhang</option>
+
+                                    <option value="27">Jhelum</option>
+
+                                    <option value="21">Kasur</option>
+
+                                    <option value="25">Khanewal</option>
+
+                                    <option value="35">Khushab</option>
+
+                                    <option value="20">Lahore</option>
+
+                                    <option value="6">Layyah</option>
+
+                                    <option value="24">Lodhran</option>
+
+                                    <option value="14">Mandi Bahauddin</option>
+
+                                    <option value="34">Mianwali</option>
+
+                                    <option value="23">Multan</option>
+
+                                    <option value="5">Muzaffargarh</option>
+
+                                    <option value="19">Nankana Sahib</option>
+
+                                    <option value="13">Narowal</option>
+
+                                    <option value="32">Okara</option>
+
+                                    <option value="31">Pakpattan</option>
+
+                                    <option value="1">Rahim Yar Khan</option>
+
+                                    <option value="4">Rajanpur</option>
+
+                                    <option value="26">Rawalpindi</option>
+
+                                    <option value="30">Sahiwal</option>
+
+                                    <option value="33">Sargodha</option>
+
+                                    <option value="18">Sheikhupura</option>
+
+                                    <option value="12">Sialkot</option>
+
+                                    <option value="8">Toba Tek Singh</option>
+
+                                    <option value="22">Vehari</option>
+
+                                </select>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="organization_name" class="form-label">Organization Name:</label>
+                                <input type="text" class="form-control" id="organization_name"
+                                       placeholder="Organization or University Name"
+                                       name="organization_name" required>
                             </div>
                         </div>
                     </div>
@@ -50,19 +158,18 @@
                         </div>
                       -->
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="email" class="form-label">Email:</label>
                                 <input type="email" class="form-control" id="email" placeholder="Enter Email"
                                        name="email" required>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="mobile_no" class="form-label">Mobile No:</label>
-                                <input type="number" class="form-control" id="mobile_no" placeholder="Enter Mobile No (03001234567)"
+                                <input type="number" class="form-control" id="mobile_no"
+                                       placeholder="Enter Mobile No (03001234567)"
                                        name="mobile_no" required>
                             </div>
                         </div>
@@ -118,7 +225,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-2"></div>
         </div>
     </div>
 {% endblock %}

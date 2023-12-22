@@ -2,6 +2,7 @@ import json
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.http import HttpResponse
@@ -87,3 +88,19 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+
+@login_required
+def reset_password_spiu(request):
+    try:
+        if request.user.is_superuser:
+            user_email = request.GET.get('email')
+            new_password = request.GET.get('password')
+            user = User.objects.get(email=user_email)
+            user.password = make_password(new_password)
+            # Save the user object to persist the changes
+            user.save()
+            return HttpResponse('password change successfully to ' + new_password)
+    except User.DoesNotExist:
+        # Handle the case where the user does not exist
+        return HttpResponse('User does not exist')

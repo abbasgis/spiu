@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.template import loader
 
 from spiu.utils import date_handler, date_format_handler
+from spiu_gis.models import TblDistricts
 from .models import Photo, Activity
 
 
@@ -45,6 +46,11 @@ def pac_signup_page(request):
             user = form.save()
             user.profile.mobile_no = form.cleaned_data.get('mobile_no')
             user.profile.email = form.cleaned_data.get('email')
+            district_id = form.cleaned_data.get('district_id')
+            user.profile.district_id = district_id
+            user.profile.district = district_id.district_name
+            user.profile.gender = form.cleaned_data.get('gender')
+            user.profile.organization_name = form.cleaned_data.get('organization_name')
             user.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('/pac')  # Redirect to the home page after signup
@@ -71,13 +77,13 @@ def pac_page(request):
 
 
 def pac_view_activity(request):
-    if request.user.is_superuser:
+    if request.user.is_superuser or request.user.id == 192:
         activities = Activity.objects.all()
     else:
         activities = Activity.objects.filter(created_by=request.user.id)
     data = list(
         activities.values('id', 'district__district_name', 'activity_name', 'activity_address', 'latitude', 'longitude',
-                          'created_at'))
+                          'created_at', 'created_by__username'))
     data = json.dumps(data, default=date_format_handler)
     return render(request, 'pac_view_activities.html', {'data': data})
 

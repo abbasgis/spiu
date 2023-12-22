@@ -62,8 +62,9 @@ class TblReportsAdmin(ModelAdmin):
     # geomap_height = "400px"
     geomap_show_map_on_list = False
     arr_list_display = [field.name for field in TblReports._meta.fields if
-                        field.name not in ("created_at", "created_by","updated_at", "updated_by")]
+                        field.name not in ("created_at","created_by", "updated_at", "updated_by")]
     arr_list_display.insert(7, 'sample_location')
+    arr_list_display.insert(3, 'created_at')
     list_display = arr_list_display
     inlines = [TblLabAnalysisInline, ]
     # list_filter = ('report_title',)

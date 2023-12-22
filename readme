@@ -1,0 +1,5 @@
+For any user password changes
+login with super user
+then call this url
+
+https://idm.pgdp.pk/reset_password/?email=21011561-164@uog.edu.pk&password=fatima123@abc

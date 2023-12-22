@@ -13,6 +13,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static "assets/css/pac_main.css" %}" rel="stylesheet">
+
 {% endblock %}
 {% block title %}Home{% endblock %}
 {% block main_content %}
@@ -22,10 +23,21 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 text-center">
-                        <h2 data-aos="fade-down"><span>Public Awareness Campaign on Single-Use Plastics</span></h2>
+                        <h2 data-aos="fade-down"><span>Public Communication Campaigns on The Negative Environmental and Health Impacts of Single-Use Plastics</span>
+                        </h2>
                         <p data-aos="fade-up">By Punjab Green Development Program, Environment Protection Department,
                             Government of the Punjab
                         </p>
+
+                        <p data-aos="fade-up">The awareness campaign commenced on
+                            <b><u class="glow" style="color: gold">Nov 23,
+                                2023
+                            </u></b>
+                            , and is
+                            scheduled to conclude on
+                            <b><s style="text-decoration-color: red; text-decoration-thickness: 2px;">Dec 20, 2023 </s> <u class="glow" style="color: gold"> Jan 31, 2024</u></b>
+                        </p>
+
                         {% if user.is_authenticated %}
                             <a data-aos="fade-up" data-aos-delay="200" href="/pac/pac_add_activity"
                                class="btn-get-started">Add
@@ -62,13 +74,10 @@
 
         <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
-            <div class="carousel-item active" style="background-image: url({% static "assets/img/plastic/1.png" %})">
+            <div class="carousel-item active" style="background-image: url({% static "assets/img/plastic/3.jpg" %})">
             </div>
-            <div class="carousel-item" style="background-image: url({% static "assets/img/plastic/2.jpg" %})"></div>
-            <div class="carousel-item" style="background-image: url({% static "assets/img/plastic/3.jpg" %})"></div>
-            <div class="carousel-item" style="background-image: url({% static "assets/img/plastic/4.jpg" %})"></div>
-            <div class="carousel-item" style="background-image: url({% static "assets/img/plastic/5.jpg" %})"></div>
-
+            <div class="carousel-item" style="background-image: url({% static "assets/img/plastic/12.jpg" %})"></div>
+            <div class="carousel-item" style="background-image: url({% static "assets/img/plastic/1.jpg" %})"></div>
 
             <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
@@ -99,7 +108,7 @@
                             <i class="fa-solid fa-mountain-city"></i>
                         </div>
                         <h3>Good</h3>
-                        <p>One to Five Schools Visited for Awareness Activity</p>
+                        <p>One to Five Schools Visited for Awareness Activities</p>
                         <span class="fa fa-star start_checked"></span> <i
                             class="bi bi-arrow-right"></i>
                     </div>
@@ -111,7 +120,7 @@
                             <i class="fa-solid fa-arrow-up-from-ground-water"></i>
                         </div>
                         <h3>Very Good</h3>
-                        <p>Six to Seven Schools Visited for Awareness Activity</p>
+                        <p>Six to Seven Schools Visited for Awareness Activities</p>
                         <span class="fa fa-star start_checked"></span><span class="fa fa-star start_checked"></span>
                     </div>
                 </div><!-- End Service Item -->
@@ -122,7 +131,7 @@
                             <i class="fa-solid fa-compass-drafting"></i>
                         </div>
                         <h3>Excellent</h3>
-                        <p>Eight to Ten Schools Visited for Awareness Activity</p>
+                        <p>Eight to Ten Schools Visited for Awareness Activities</p>
                         <span class="fa fa-star start_checked"></span><span
                             class="fa fa-star start_checked"></span><span class="fa fa-star start_checked"></span>
                     </div>
@@ -130,6 +139,69 @@
 
             </div>
 
+        </div>
+    </section><!-- End Services Section -->
+    <!-- ======= Downloads Section ======= -->
+    <section id="downloads" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+            <div class="section-header">
+                <h2>Downloads</h2>
+                <p>You can download activity guidelines and instruction for using of
+                    portal by clicking on the desired english or urdu version link available below</p>
+            </div>
+            <div class="row gy-4">
+                <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-item  position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-mountain-city"></i>
+                        </div>
+                        <h3>Guidelines</h3>
+                        <p>Guidelines for Young Environmental Activists for carrying out awareness activities on the
+                            Negative Environmental and Health Impacts of Single-Use Plastics</p>
+                        <a href="/media/pac/Guidelines (Eng).pdf" target="_blank" style="color: #0a53be"
+                           class="fa fa-download"> Download English
+                            Version</a> <br/>
+                        <a href="/media/pac/Guidelines (Urdu).pdf" target="_blank" class="fa fa-download"
+                           style="color: #0a53be"> Download Urdu
+                            Version</a>
+                    </div>
+                </div><!-- End Service Item -->
+                <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="200"></div>
+                <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-arrow-up-from-ground-water"></i>
+                        </div>
+                        <h3>Instructions</h3>
+                        <p>Guidelines for Young Environmental Activists on how to register, add activity or view their
+                            uploaded activities on this portal</p>
+                        <a href="/media/pac/Public Awareness Campaign Instructions (Eng).pdf" target="_blank"
+                           style="color: #0a53be" class="fa fa-download"> Download English
+                            Version</a> <br/>
+                        <a href="/media/pac/Public Awareness Campaign (Urdu).pdf" target="_blank" class="fa fa-download"
+                           style="color: #0a53be"> Download Urdu
+                            Version</a>
+                    </div>
+                </div><!-- End Service Item -->
+            </div>
+            <hr/>
+            <div class="row gy-4">
+                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <img src="{% static "assets/img/brouchers/1.jpeg" %}" height="600px" alt="">
+                </div>
+                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <img src="{% static "assets/img/brouchers/2.jpeg" %}" height="600px" alt="">
+                </div>
+            </div>
+            <hr/>
+            <div class="row gy-4">
+                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <img src="{% static "assets/img/brouchers/3.jpeg" %}" height="600px" alt="">
+                </div>
+                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <img src="{% static "assets/img/brouchers/4.jpeg" %}" height="600px" alt="">
+                </div>
+            </div>
         </div>
     </section><!-- End Services Section -->
 

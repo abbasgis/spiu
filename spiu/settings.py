@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'wwtp',
     'giz',
     'crs',
-    'pac' #palstic awareness campaign
+    'pac'  # palstic awareness campaign
 ]
 GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
 GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
@@ -94,11 +94,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'USER': 'postgres',  # Not used with sqlite3.
-        'NAME': 'spiu_231115',
         # For server below
+        # 'NAME': 'spiu',
         # 'HOST': '103.119.125.200',
         # 'PASSWORD': 'postgres@spiu',  # 'postgres@spiu',  # '123',  #  # Not used with sqlite3.
         # 'PORT': '5432',
+        # For Local
+        'NAME': 'spiu_231115',
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PASSWORD': '123',
         'PORT': '5433'
@@ -136,7 +138,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

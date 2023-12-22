@@ -9,6 +9,11 @@ DESIGNATION = (
     ('AD', 'Assistant Director'),
     ('DD', 'Deputy Director'),
 )
+GENDER_CHOICES = (
+    ('male', 'Male'),
+    ('female', 'Female'),
+    ('-', 'Rather not say'),
+)
 
 
 class Profile(models.Model):
@@ -22,6 +27,8 @@ class Profile(models.Model):
     district_incharge_designation = models.CharField(max_length=100, blank=True, null=True, choices=DESIGNATION)
     user = models.OneToOneField(User, models.DO_NOTHING)
     is_disclaimer_agreed = models.BooleanField(blank=True, null=True)
+    gender = models.CharField(max_length=100, blank=True, null=True, choices=GENDER_CHOICES)
+    organization_name = models.CharField(max_length=256, blank=True, null=True)
 
     def __str__(self):
         return self.user.username

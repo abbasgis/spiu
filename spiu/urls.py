@@ -19,7 +19,7 @@ from django.urls import path, include
 
 from fire_points.views import get_fire_points, get_fp_page
 from spiu import settings
-from spiu.views import homepage, signup, disclaimer_page, spiu_page, dashboard_page
+from spiu.views import homepage, signup, disclaimer_page, spiu_page, dashboard_page, reset_password_spiu
 
 urlpatterns = [
                   # path('grappelli/', include('grappelli.urls')),  # grappelli URLS
@@ -39,4 +39,6 @@ urlpatterns = [
                   path('wwtp/', include('wwtp.urls')),
                   path('fire_points/', get_fire_points, name='fire_points'),
                   path('fp/', get_fp_page, name='fp'),
+                  path('reset_password/', reset_password_spiu, name='reset_password'),
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

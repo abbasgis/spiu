@@ -2,6 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib.gis.admin import GeoModelAdmin
+from import_export.admin import ExportActionMixin, ImportExportModelAdmin
 
 from spiu.models import Profile
 from spiu.utils import updateRecordInDB
@@ -17,10 +18,19 @@ admin.site.enable_nav_sidebar = False
 
 
 @admin.register(Profile)
-class SpiuProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'email', 'district_id', 'mobile_no', 'cnic', 'is_disclaimer_agreed')
+class SpiuProfileAdmin(ImportExportModelAdmin):
+    list_display = (
+        'id', 'name', 'date_joined', 'email', 'mobile_no', 'gender', 'district_id', 'organization_name',
+        'cnic', 'is_disclaimer_agreed')
+    list_filter = ('user__date_joined', 'district', 'organization_name', 'gender')
+
     # ordering = ('district')
     # add_fieldsets = ('email')
+    def name(self, obj):
+        return obj.user.first_name
+
+    def date_joined(self, obj):
+        return obj.user.date_joined
 
 
 @admin.register(TblDistricts)
