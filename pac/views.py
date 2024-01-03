@@ -3,6 +3,7 @@ import json
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template import loader
@@ -73,7 +74,9 @@ def pac_add_activity(request):
 
 
 def pac_page(request):
-    return render(request, 'pac_index.html', {})
+    reg_users = User.objects.filter(id__gt=95).count()
+    act_count = Activity.objects.all().count()
+    return render(request, 'pac_index.html', {'reg_users': reg_users, 'activities_count': act_count})
 
 
 def pac_view_activity(request):

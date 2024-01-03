@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'wwtp',
     'giz',
     'crs',
-    'pac'  # palstic awareness campaign
+    'pac',  # palstic awareness campaign
+    "pim"  # pre industrial mapping
 ]
 GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
 GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
