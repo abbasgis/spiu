@@ -25,13 +25,6 @@
         <div class="row ">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">
-                    </div>
-                    <div id="map" class="card-body"></div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
                     <div class="card-header"></div>
                     <div id="tbl_attr" class="card-body">
                         <table id="attr_table" class="display">
@@ -45,6 +38,14 @@
                             </tr>
                             </thead>
                         </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header"></div>
+                    <div id="photo_panel" class="card-body">
+                        <div class="row photos-container" id="photos" style="height:400px; overflow-x: auto; !important;"></div>
                     </div>
                 </div>
             </div>
@@ -65,10 +66,9 @@
             <div class="card">
                 <div class="card-header">
                 </div>
-                <div id="photo_panel" class="card-body">
-                    <div class="row photos-container" id="photos"></div>
-                </div>
+                <div id="map" class="card-body"></div>
             </div>
         </div>
+
     </div>
 {% endblock %}

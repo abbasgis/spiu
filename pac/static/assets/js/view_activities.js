@@ -180,7 +180,8 @@ class ViewActivitiesMap {
             ],
             scrollY: '40vh', // Adjust the height as needed
             scrollCollapse: true,
-            order: [[3, 'desc']]
+            order: [[0, 'desc']],
+            pageLength: 100,
         });
         $('#attr_table tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
