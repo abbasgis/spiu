@@ -48,13 +48,17 @@ class TblTehsils(models.Model):
 
     # geom = models.GeometryField(srid=0, blank=True, null=True)
     # extent = models.CharField(max_length=254, blank=True, null=True)
+    def __str__(self):
+        return self.tehsil_name
 
     class Meta:
         managed = False
         db_table = 'tbl_tehsils'
+        ordering = ['tehsil_name', ]
+
+    #
 
 
-#
 # class SpiuProfile(models.Model):
 #     DESIGNATION = (
 #         ('AD', 'Assistant Director'),
@@ -207,7 +211,7 @@ class PoultryFarms(models.Model):
                                          verbose_name="Type of Poultry Farm / Control Shed")
     area_poultry_farm = models.FloatField(blank=True, null=True, verbose_name="Area in Kanals")
     owner_name = models.CharField(max_length=255, blank=True, null=True, verbose_name="Name of Owner")
-    production_capacity = models.IntegerField(blank=True, null=True,verbose_name="No of Birds")
+    production_capacity = models.IntegerField(blank=True, null=True, verbose_name="No of Birds")
     latitude = models.FloatField(blank=True, null=True,
                                  help_text="Latitude in Decimal Degree format upto 6 decimals like XX.XXXXXX, value would be between 25 to 40")
     longitude = models.FloatField(blank=True, null=True,

@@ -1,14 +1,14 @@
 from django.contrib import admin
 
-from django_admin_geomap import ModelAdmin
+from import_export.admin import ExportMixin
+from import_export.formats import base_formats
 
 from spiu.models import Profile
-from spiu_gis.models import TblDistricts
 from .models import WwtpDetail
 
 
 @admin.register(WwtpDetail)
-class WwtpDetailAdmin(ModelAdmin):
+class WwtpDetailAdmin(ExportMixin, admin.ModelAdmin):
     geomap_field_longitude = "id_longitude"
     geomap_field_latitude = "id_latitude"
     geomap_default_longitude = "74.1849"
@@ -22,6 +22,7 @@ class WwtpDetailAdmin(ModelAdmin):
     exclude = ('created_by', 'updated_by', 'created_at', 'updated_at')
     search_fields = ['name']
     list_filter = ('wwtp_type', 'district_id__district_name', 'is_valid', 'updated_at')
+    formats = [base_formats.XLSX]
 
     def save_model(self, request, obj, form, change):
         if obj.id is None:

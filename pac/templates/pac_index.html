@@ -29,37 +29,18 @@
                         <p data-aos="fade-up">By Punjab Green Development Program, Environment Protection Department,
                             Government of the Punjab
                         </p>
-                        <p data-aos="fade-up">The awareness campaign commenced on
-                            <b><u class="glow" style="color: gold">Nov 23,
-                                2023
-                            </u></b>
-                            , and is
-                            scheduled to conclude on
-                            <b><s style="text-decoration-color: red; text-decoration-thickness: 2px;">Dec 20, 2023 </s>
-                                <u class="glow" style="color: gold"> Jan 31, 2024</u></b>
+                        <p data-aos="fade-up">
+                            <b>
+                                <u class="glow" style="color: gold"> Attention </u></b> Young Environmental
+                            Activists! <u class="glow" style="color: gold">Your certificates are ready for
+                            download.</u></b>
                         </p>
-
-                        {% if user.is_authenticated %}
-                            <a data-aos="fade-up" data-aos-delay="200" href="/pac/pac_add_activity"
-                               class="btn-get-started">Add
-                                New
-                                Activity
-                            </a>
-                            <a data-aos="fade-up" data-aos-delay="200" href="/pac/pac_view_activity"
-                               class="btn-outline-secondary btn-get-started">
-                                View Your Activities</a>
-                        {% else %}
-                            <a data-aos="fade-up" data-aos-delay="200" href="/pac/pac_login?next=/pac/pac_add_activity"
-                               class="btn-get-started">Add
-                                New
-                                Activity
-                            </a>
-                            <a data-aos="fade-up" data-aos-delay="200" href="/pac/pac_login?next=/pac/pac_view_activity"
-                               class="btn-outline-secondary btn-get-started">
-                                View Your Activities</a>
-                        {% endif %}
-
-
+                        <a data-aos="fade-up" data-aos-delay="200" href="/pac/download_certificate/r/"
+                           class="btn-outline-secondary btn-get-started">
+                            Download Registration Certificate</a>
+                        <a data-aos="fade-up" data-aos-delay="200" href="/pac/download_certificate/a/"
+                           class="btn-outline-secondary btn-get-started">
+                            Download Appreciation Certificate</a>
                     </div>
                 </div>
                 <hr/>
@@ -154,6 +135,45 @@
                 <!-- End Service Item -->
 
             </div>
+            <hr/>
+            <div class="row gy-4">
+                <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-item  position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-mountain-city"></i>
+                        </div>
+                        <a href="/pac/download_certificate/r/" style="color: #0c0c0c">
+                            <h3>CERTIFICATE OF REGISTRATION</h3>
+                            <p>This certificate is for Young Environmental Activists who registered themselves for
+                                carrying
+                                out an awareness campaign on the
+                                Negative Environmental and Health Impacts of Single-Use Plastics</p></a>
+                        <a href="/pac/download_certificate/r/" style="color: #0a53be"
+                           class="fa fa-download"> Click to Download Your Registration Certificate</a> <br/>
+                    </div>
+                </div>
+                <!-- End Service Item -->
+                <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="200"></div>
+                <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-item position-relative">
+                        <div class="icon">
+                            <i class="fa-solid fa-arrow-up-from-ground-water"></i>
+                        </div>
+                        <a href="/pac/download_certificate/a/" style="color: #0c0c0c">
+                            <h3>CERTIFICATE OF APPRECIATION</h3>
+                            <p>This certificate is for Young Environmental Activists who conducted an awareness
+                                activities
+                                in different schools on the
+                                Negative Environmental and Health Impacts of Single-Use Plastics</p></a>
+                        <a href="/pac/download_certificate/a/"
+                           style="color: #0a53be" class="fa fa-download"> Click to Download Your Appreciation
+                            Certificate
+                        </a> <br/>
+                    </div>
+                </div>
+                <!-- End Service Item -->
+            </div>
+            <hr/>
 
         </div>
     </section><!-- End Services Section -->
