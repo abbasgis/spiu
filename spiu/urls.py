@@ -19,7 +19,8 @@ from django.urls import path, include
 
 from fire_points.views import get_fire_points, get_fp_page
 from spiu import settings
-from spiu.views import homepage, signup, disclaimer_page, spiu_page, dashboard_page, reset_password_spiu
+from spiu.views import homepage, signup, disclaimer_page, spiu_page, dashboard_page, reset_password_spiu, redirect_ippi, \
+    redirect_ippi_soe
 
 urlpatterns = [
                   # path('grappelli/', include('grappelli.urls')),  # grappelli URLS
@@ -40,5 +41,7 @@ urlpatterns = [
                   path('fire_points/', get_fire_points, name='fire_points'),
                   path('fp/', get_fp_page, name='fp'),
                   path('reset_password/', reset_password_spiu, name='reset_password'),
+                  path('ippi/', redirect_ippi, name='ippi'),
+                  path('ippi/soe23/', redirect_ippi_soe, name='soe23'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

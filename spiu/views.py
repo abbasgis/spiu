@@ -92,6 +92,7 @@ def signup(request):
 
 @login_required
 def reset_password_spiu(request):
+    # https://idm.pgdp.pk/reset_password/?email=jasmineorganicspk@gmail.com&password=idm123@abc
     try:
         if request.user.is_superuser:
             user_email = request.GET.get('email')
@@ -104,3 +105,11 @@ def reset_password_spiu(request):
     except User.DoesNotExist:
         # Handle the case where the user does not exist
         return HttpResponse('User does not exist')
+
+
+def redirect_ippi(request):
+    return redirect("http://idm.pgdp.pk:8082/")
+
+
+def redirect_ippi_soe(request):
+    return redirect("http://idm.pgdp.pk:8082/docs?id=1")

@@ -12,7 +12,7 @@ from django.template import loader
 from spiu.settings import MEDIA_ROOT
 from spiu.utils import date_handler, date_format_handler
 from spiu_gis.models import TblDistricts
-from .models import Photo, Activity
+from .models import Photo, Activity, PacCertificates
 
 
 # Create your views here.
@@ -109,13 +109,23 @@ def get_activity_photos(request):
 def download_certificate(request, certificate):
     try:
         user_id = request.user.id
+        certificate_instance = PacCertificates.objects.filter(pk=user_id)
+        if certificate_instance.count() == 0:
+            return HttpResponse(
+                "Message: You are not registered with this campaign",
+                status=500)
+        else:
+            certificate_instance = PacCertificates.objects.get(pk=user_id)
         # file_name = '1.png'
-        file_name = str(user_id) + '.png'
-        url = MEDIA_ROOT + '/pac/certificates/registration/' + file_name
+        file_name = str(user_id) + '.pdf'
         if certificate and certificate == 'a':
             url = MEDIA_ROOT + '/pac/certificates/awards/' + file_name
-        content_type = get_content_type(file_name)
-        response = FileResponse(open(url, 'rb'), content_type=content_type)
+            certificate_instance.award_download = True
+        else:
+            url = MEDIA_ROOT + '/pac/certificates/registration/' + file_name
+            certificate_instance.reg_download = True
+        # content_type = get_content_type(file_name)
+        response = FileResponse(open(url, 'rb'), content_type='application/pdf')
         response["Access-Control-Allow-Origin"] = "*"
         response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
         response["Access-Control-Max-Age"] = "1000"
@@ -124,9 +134,12 @@ def download_certificate(request, certificate):
         # response['Content-Security-Policy'] = "frame-ancestors 'self' http://localhost:86"
         # response["Content-Disposition"] = "filename={}".format(file_name)
         response["Content-Disposition"] = "attachment; filename={}".format(file_name)
+        certificate_instance.save()
         return response
     except Exception as e:
-        return HttpResponse("Error downloading certificate", status=500)
+        return HttpResponse(
+            "Award certificate is only issued to those who conducted activities in schools, For any query please contact at 0333-6862840 or email at adgis@epd.punjab.gov.pk ",
+            status=500)
 
 
 def get_content_type(file_name):

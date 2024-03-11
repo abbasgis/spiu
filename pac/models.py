@@ -22,3 +22,17 @@ class Photo(models.Model):
     image = models.ImageField(upload_to='activity_photos/')
     image_name = models.CharField(max_length=255, blank=True, null=True)
     activities = models.ForeignKey(Activity, on_delete=models.CASCADE, blank=True, null=True)
+
+
+class PacCertificates(models.Model):
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    district = models.CharField(max_length=255, blank=True, null=True)
+    organization_name = models.CharField(max_length=255, blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True)
+    remarks = models.CharField(max_length=255, blank=True, null=True)
+    reg_download = models.BooleanField(blank=True, null=True)
+    award_download = models.BooleanField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'pac_certificates'
