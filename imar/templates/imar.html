@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}IMAR{% endblock %}
+{% block extra_styles %}
+
+    <style>
+        body {
+            font-family: "open sans", Arial, sans-serif;
+            color: #000;
+            background-color: #b6d4ec;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .panel-heading {
+            background-color: #1192A5 !important;
+            color: white !important;
+            margin-top: 10px !important;
+        {#margin-bottom: 10px !important;#} padding: 10px !important;
+        }
+    </style>
+{% endblock %}
+{% block extra_scripts %}
+    <script type="text/javascript" src="{% static "assets/js/imar.js" %}"></script>
+{% endblock extra_scripts %}
+{% block main_content %}
+    <div class="container" style="background-color: #f5f5f5">
+        <div class="row-cols-6" style="margin-bottom: 5px">
+            <label for="schemeSelect" class="form-label">Select Scheme</label>
+            <select class="form-select" id="schemeSelect" name="scheme_select">
+                <option value="" selected>Select a scheme</option>
+                {% for scheme in schemes %}
+                    <option value="{{ scheme.id }}">{{ scheme.scheme_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                            aria-controls="panelsStayOpen-collapseOne">
+                        Scheme Detail
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                     aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <form id="schemeDetailForm">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="approvedCost" class="form-label">Approved Cost</label>
+                                    <input type="number" class="form-control" id="approvedCost" name="approved_cost"
+                                           step="0.01"
+                                           value="" disabled>
+                                </div>
+                                <div class="col">
+                                    <label for="completionDate" class="form-label">Completion Date</label>
+                                    <input type="date" class="form-control" id="completionDate" name="completion_date"
+                                           value=""
+                                           disabled>
+                                </div>
+                                <div class="col">
+                                    <label for="gestationStartDate" class="form-label">Gestation Start Date</label>
+                                    <input type="date" class="form-control" id="gestationStartDate"
+                                           name="gestation_start_date" value=""
+                                           disabled>
+                                </div>
+                                <div class="col">
+                                    <label for="gestationEndDate" class="form-label">Gestation End Date</label>
+                                    <input type="date" class="form-control" id="gestationEndDate"
+                                           name="gestation_end_date" value=""
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="ddscDate" class="form-label">DDSC Date</label>
+                                    <input type="date" class="form-control" id="ddscDate" name="ddsc_date" value=""
+                                           disabled>
+                                </div>
+
+                                <div class="col">
+                                    <label for="ddscMomIssueDate" class="form-label">DDSC MOM Issue
+                                        Date</label>
+                                    <input type="date" class="form-control" id="ddscMomIssueDate"
+                                           name="ddsc_mom_issue_date" value=""
+                                           disabled>
+                                </div>
+                                <div class="col">
+                                    <label for="revisedDdscDate" class="form-label">Revised DDSC Date</label>
+                                    <input type="date" class="form-control" id="revisedDdscDate"
+                                           name="revised_ddsc_date" value=""
+                                           disabled>
+                                </div>
+                                <div class="col">
+                                    <label for="revisedDdscMomIssueDate" class="form-label">Revised DDSC MOM Issue
+                                        Date</label>
+                                    <input type="date" class="form-control" id="revisedDdscMomIssueDate"
+                                           name="revised_ddsc_mom_issue_date" value="" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="approvalStatus" class="form-label">Approval Status</label>
+                                    <input type="text" class="form-control" id="approvalStatus"
+                                           name="approval_status" disabled>
+                                </div>
+                                <div class="col">
+                                    <label for="aaDate" class="form-label">Admin Approval Date</label>
+                                    <input type="date" class="form-control" id="aaDate" name="aa_date" value=""
+                                           disabled>
+                                </div>
+
+                                <div class="col">
+                                    <label for="tenderedDate" class="form-label">Tendered Date</label>
+                                    <input type="date" class="form-control" id="tenderedDate" name="tendered_date"
+                                           value="" disabled>
+                                </div>
+                                <div class="col">
+                                    <label for="awardDate" class="form-label">Award Date</label>
+                                    <input type="date" class="form-control" id="awardDate" name="award_date" value=""
+                                           disabled>
+                                </div>
+                                <div class="col">
+                                    <label for="companyName" class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" id="companyName" name="company_name"
+                                           value="" disabled>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseTwo">
+                        Attachments
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                     aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <div class="row">
+
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <a href="https://www.google.com/" id="uploadPc1Pdf" target="_blank"
+                                       class=" form-control">PC-I (PDF
+                                        File)</a>
+                                </div>
+                                <div class="col">
+                                    <a href="#" id="uploadPc1Word" class=" form-control">PC-I (Word
+                                        File)</a>
+
+                                </div>
+                                <div class="col">
+                                    <a href="#" id="uploadRevisedPc1Pdf" class=" form-control">Revised
+                                        PC-I (PDF
+                                        File)</a>
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <a href="#" id="uploadRevisedPc1Word" class="form-control">Revised
+                                        PC-I (Word
+                                        File)</a>
+
+                                </div>
+                                <div class="col">
+                                    <a href="#" id="uploadDdscMeetingNotice" class="form-control">DDSC Meeting
+                                        Notice
+                                        File)</a>
+                                </div>
+                                <div class="col">
+                                    <a href="#" id="revisedUploadDdscMeetingNotice" class="form-control">Revised DDSC
+                                        Meeting
+                                        Notice
+                                    </a>
+
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <a href="#" id="uploadDdscMom" class="form-control">DDSC Minute of Meeting
+                                        (PDF)</a>
+
+                                </div>
+                                <div class="col">
+                                    <a href="#" id="uploadRevisedDdscMom" class="form-control">Revised DDSC Minute of
+                                        Meeting
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a href="#" id="uploadAa" class="form-control"> Administrative Approval
+                                        (PDF)</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseThree">
+                        Progress Detail
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                     aria-labelledby="panelsStayOpen-headingThree">
+                    <div class="accordion-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Remarks</th>
+                            </tr>
+                            </thead>
+                            <tbody id="progressTableBody">
+                            <!-- Table rows will be dynamically populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

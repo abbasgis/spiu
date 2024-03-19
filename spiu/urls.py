@@ -43,5 +43,6 @@ urlpatterns = [
                   path('reset_password/', reset_password_spiu, name='reset_password'),
                   path('ippi/', redirect_ippi, name='ippi'),
                   path('ippi/soe23/', redirect_ippi_soe, name='soe23'),
+                  path('imar/', include('imar.urls')),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

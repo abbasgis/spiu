@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'giz',
     'crs',
     'pac',  # palstic awareness campaign
-    "pim"  # pre industrial mapping
+    "pim",  # pre industrial mapping
+    "imar"  # Internal Module for ADP Review
 ]
 GEOS_LIBRARY_PATH = r'C:\OSGeo4W64\bin\geos_c.dll'
 GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal305'
