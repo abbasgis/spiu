@@ -12,7 +12,7 @@ class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
     district_id = forms.ModelChoiceField(label='District Name',
                                          queryset=TblDistricts.objects.all().order_by('district_name'))
-    organization_name = forms.CharField(required=True,max_length=250, label="Organization Name")
+    organization_name = forms.CharField(required=True, max_length=250, label="Organization Name")
     gender = forms.CharField(
         max_length=100,
         required=False,  # You can set this to True if the field is mandatory
@@ -28,32 +28,52 @@ class SignupForm(UserCreationForm):
         labels = {'mobile_no': 'Mobile Number', }
 
 
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("widget", MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = single_file_clean(data, initial)
+        return result
+
+
 class ActivityPhotoForm(forms.ModelForm):
     district = forms.ModelChoiceField(
         queryset=TblDistricts.objects.all().order_by('district_name'),
         empty_label="Select a District",
         widget=forms.Select(attrs={'class': 'form-select'})
     )
+    images = MultipleFileField(label='Select files', required=False)
 
     class Meta:
         model = Activity
-        fields = ['district', 'activity_name', 'activity_address', 'activity_remarks', 'latitude', 'longitude']
-
-    # Add the 'image' field from the Photo model to the form
-    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False, label='Images')
-
-    # You can also add additional fields or customize the form as needed
+        fields = ['district', 'activity_name', 'activity_address', 'activity_remarks', 'latitude', 'longitude',
+                  'images']
 
     def save(self, commit=True, request=None):
-        activity = super().save(commit=True)
+        activity = super().save(commit=False)
         images = self.files.getlist('images')
+
         if request:
             user = request.user
             if user.is_authenticated:
                 activity.created_by = user
+
+        if commit:
             activity.save()
-        # Create a new Photo instance and associate it with the activity
+
+        # Create a new Photo instance for each uploaded image
         if images:
             for image in images:
                 Photo.objects.create(activities=activity, image=image)
+
         return activity
